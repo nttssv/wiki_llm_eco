@@ -1,0 +1,390 @@
+{
+  "nodes": [
+    {
+      "id": "article_a8fcc6e1e3cbea2b",
+      "label": "Take the iPhone, garnish with globalisation",
+      "type": "article"
+    },
+    {
+      "id": "article_9f7fcefbcece8360",
+      "label": "Too many Cooks, not enough Jobs?",
+      "type": "article"
+    },
+    {
+      "id": "entity_4945273938c7b982",
+      "label": "AI",
+      "type": "entity"
+    },
+    {
+      "id": "entity_15a0a675e1efa625",
+      "label": "Apple",
+      "type": "entity"
+    },
+    {
+      "id": "entity_5728d8429d63a409",
+      "label": "Apple smartphone model",
+      "type": "entity"
+    },
+    {
+      "id": "entity_1127b4b5f857a053",
+      "label": "Apple supply chain",
+      "type": "entity"
+    },
+    {
+      "id": "entity_c17bce3700bc112f",
+      "label": "China",
+      "type": "entity"
+    },
+    {
+      "id": "entity_ca2788f42cd8b203",
+      "label": "China",
+      "type": "entity"
+    },
+    {
+      "id": "entity_5028327489c480de",
+      "label": "Gemini",
+      "type": "entity"
+    },
+    {
+      "id": "entity_2dda6c4978dfed74",
+      "label": "India",
+      "type": "entity"
+    },
+    {
+      "id": "entity_7603c98e1a7a9aae",
+      "label": "iPhone",
+      "type": "entity"
+    },
+    {
+      "id": "entity_a26ff1dfada9fa9c",
+      "label": "John Ternus",
+      "type": "entity"
+    },
+    {
+      "id": "entity_cf416a69078a158a",
+      "label": "Steve Jobs",
+      "type": "entity"
+    },
+    {
+      "id": "entity_972dab80f658271e",
+      "label": "Tim Cook",
+      "type": "entity"
+    },
+    {
+      "id": "narrative_bf30bb6882c58082",
+      "label": "Apple's Future Strategy",
+      "type": "narrative"
+    },
+    {
+      "id": "narrative_6a0e00285fce8792",
+      "label": "Apple's globalised iPhone model under pressure",
+      "type": "narrative"
+    },
+    {
+      "id": "narrative_589b1685bc04e8ca",
+      "label": "Challenges of Leadership",
+      "type": "narrative"
+    },
+    {
+      "id": "narrative_b328d48373531d6b",
+      "label": "Innovation in the AI Era",
+      "type": "narrative"
+    },
+    {
+      "id": "theme_b70e8ff5d14fc6ad",
+      "label": "AI Integration",
+      "type": "theme"
+    },
+    {
+      "id": "theme_8f7eefe3ae0361d6",
+      "label": "Globalisation",
+      "type": "theme"
+    },
+    {
+      "id": "theme_bac54e284bb8b0d8",
+      "label": "Leadership Transition",
+      "type": "theme"
+    },
+    {
+      "id": "theme_09542193cee60ba1",
+      "label": "Manufacturing Strategy",
+      "type": "theme"
+    },
+    {
+      "id": "theme_a49e57e2cc774ea4",
+      "label": "supply chains",
+      "type": "theme"
+    },
+    {
+      "id": "theme_f51c71dcad5ee9a1",
+      "label": "Technology Evolution",
+      "type": "theme"
+    },
+    {
+      "id": "theme_46674d5cd02df6ef",
+      "label": "trade wars",
+      "type": "theme"
+    }
+  ],
+  "edges": [
+    {
+      "source": "article_9f7fcefbcece8360",
+      "target": "entity_15a0a675e1efa625",
+      "relationship": "MENTIONS_TECHNOLOGY_COMPANY",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_9f7fcefbcece8360",
+      "target": "entity_5028327489c480de",
+      "relationship": "MENTIONS_AI_MODEL",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_9f7fcefbcece8360",
+      "target": "entity_a26ff1dfada9fa9c",
+      "relationship": "MENTIONS_CEO",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_9f7fcefbcece8360",
+      "target": "entity_cf416a69078a158a",
+      "relationship": "MENTIONS_FORMER_CEO",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_9f7fcefbcece8360",
+      "target": "entity_972dab80f658271e",
+      "relationship": "MENTIONS_FORMER_CEO",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "entity_4945273938c7b982",
+      "relationship": "MENTIONS_TREND",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "entity_15a0a675e1efa625",
+      "relationship": "MENTIONS_SUBJECT",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "entity_c17bce3700bc112f",
+      "relationship": "MENTIONS_MANUFACTURING_BASE",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "entity_ca2788f42cd8b203",
+      "relationship": "MENTIONS_MARKET",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "entity_2dda6c4978dfed74",
+      "relationship": "MENTIONS_EXPANSION_BASE",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "entity_a26ff1dfada9fa9c",
+      "relationship": "MENTIONS_INCOMING_CEO",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "entity_972dab80f658271e",
+      "relationship": "MENTIONS_FORMER_CEO",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "entity_7603c98e1a7a9aae",
+      "relationship": "MENTIONS_CORE_REVENUE_ENGINE",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_9f7fcefbcece8360",
+      "target": "theme_b70e8ff5d14fc6ad",
+      "relationship": "HAS_THEME",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_9f7fcefbcece8360",
+      "target": "theme_bac54e284bb8b0d8",
+      "relationship": "HAS_THEME",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_9f7fcefbcece8360",
+      "target": "theme_09542193cee60ba1",
+      "relationship": "HAS_THEME",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "theme_8f7eefe3ae0361d6",
+      "relationship": "HAS_THEME",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "theme_f51c71dcad5ee9a1",
+      "relationship": "HAS_THEME",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "theme_a49e57e2cc774ea4",
+      "relationship": "HAS_THEME",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "theme_46674d5cd02df6ef",
+      "relationship": "HAS_THEME",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_9f7fcefbcece8360",
+      "target": "narrative_589b1685bc04e8ca",
+      "relationship": "HAS_NARRATIVE",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_9f7fcefbcece8360",
+      "target": "narrative_b328d48373531d6b",
+      "relationship": "HAS_NARRATIVE",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "narrative_bf30bb6882c58082",
+      "relationship": "HAS_NARRATIVE",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "article_a8fcc6e1e3cbea2b",
+      "target": "narrative_6a0e00285fce8792",
+      "relationship": "HAS_NARRATIVE",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 1.0
+    },
+    {
+      "source": "entity_15a0a675e1efa625",
+      "target": "entity_c17bce3700bc112f",
+      "relationship": "AFFECTS",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 0.8
+    },
+    {
+      "source": "entity_4945273938c7b982",
+      "target": "entity_5728d8429d63a409",
+      "relationship": "CHALLENGES",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 0.89
+    },
+    {
+      "source": "entity_15a0a675e1efa625",
+      "target": "entity_5028327489c480de",
+      "relationship": "DEPENDS_ON",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 0.8
+    },
+    {
+      "source": "entity_15a0a675e1efa625",
+      "target": "entity_7603c98e1a7a9aae",
+      "relationship": "DEPENDS_ON",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 0.95
+    },
+    {
+      "source": "entity_15a0a675e1efa625",
+      "target": "entity_2dda6c4978dfed74",
+      "relationship": "EXPANDS_TO",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 0.91
+    },
+    {
+      "source": "entity_15a0a675e1efa625",
+      "target": "entity_972dab80f658271e",
+      "relationship": "LED_BY",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 0.98
+    },
+    {
+      "source": "entity_a26ff1dfada9fa9c",
+      "target": "entity_cf416a69078a158a",
+      "relationship": "LED_BY",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 0.7
+    },
+    {
+      "source": "entity_15a0a675e1efa625",
+      "target": "entity_c17bce3700bc112f",
+      "relationship": "MANUFACTURES_IN",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 0.94
+    },
+    {
+      "source": "theme_46674d5cd02df6ef",
+      "target": "entity_1127b4b5f857a053",
+      "relationship": "PRESSURE_ON",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 0.9
+    },
+    {
+      "source": "entity_15a0a675e1efa625",
+      "target": "entity_4945273938c7b982",
+      "relationship": "RELATED_TO",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 0.7
+    },
+    {
+      "source": "entity_15a0a675e1efa625",
+      "target": "entity_a26ff1dfada9fa9c",
+      "relationship": "SUCCESSOR",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 0.72
+    },
+    {
+      "source": "entity_a26ff1dfada9fa9c",
+      "target": "entity_972dab80f658271e",
+      "relationship": "SUCCESSOR",
+      "evidence_article_id": "article_9f7fcefbcece8360",
+      "confidence": 0.9
+    },
+    {
+      "source": "entity_972dab80f658271e",
+      "target": "entity_a26ff1dfada9fa9c",
+      "relationship": "SUCCESSOR",
+      "evidence_article_id": "article_a8fcc6e1e3cbea2b",
+      "confidence": 0.9
+    }
+  ]
+}

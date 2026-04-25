@@ -1,0 +1,7 @@
+.env
+.env_local
+.venv/
+__pycache__/
+.DS_Store
+data/raw_articles/*.docx
+data/raw_articles/~$*.docx

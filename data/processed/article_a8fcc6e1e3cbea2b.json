@@ -1,0 +1,96 @@
+{
+  "article_id": "article_a8fcc6e1e3cbea2b",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Leaders_25_apr_2026.docx",
+  "chart_references": [
+    "Chart: The Economist"
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Leaders",
+    "title": "Take the iPhone, garnish with globalisation",
+    "subtitle": "Tim Cook wrote a winning recipe for Apple Will it work for his successor?",
+    "published_date": "26 Apr 2026",
+    "category": "Leaders",
+    "summary": "As Tim Cook's tenure at Apple comes to an end, his successor John Ternus faces the challenge of adapting Apple's successful formula of smartphones and global supply chains to the evolving landscape of AI and geopolitical tensions. Cook's leadership saw Apple's market value grow significantly, but the future may require a shift in strategy.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Apple",
+        "type": "Company",
+        "role": "Subject",
+        "description": "A leading technology company known for its iPhone and other consumer electronics."
+      },
+      {
+        "name": "Tim Cook",
+        "type": "Person",
+        "role": "Former CEO",
+        "description": "The CEO of Apple who led the company for 15 years, significantly increasing its market value."
+      },
+      {
+        "name": "John Ternus",
+        "type": "Person",
+        "role": "Incoming CEO",
+        "description": "The successor to Tim Cook, tasked with continuing Apple's success."
+      },
+      {
+        "name": "China",
+        "type": "Country",
+        "role": "Market",
+        "description": "A key market for Apple, both for manufacturing and sales."
+      },
+      {
+        "name": "AI",
+        "type": "Technology",
+        "role": "Trend",
+        "description": "Artificial intelligence, a growing field that may impact Apple's future strategy."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-09-01",
+        "event_summary": "Tim Cook's tenure as CEO of Apple ends.",
+        "location": "Apple Headquarters, Cupertino, California",
+        "importance_score": 9
+      }
+    ],
+    "themes": [
+      {
+        "name": "Globalisation",
+        "description": "The integration of economies and cultures, significantly impacting Apple's business model."
+      },
+      {
+        "name": "Technology Evolution",
+        "description": "The shift towards AI and its implications for traditional tech companies like Apple."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Apple's Future Strategy",
+        "thesis": "John Ternus must adapt Apple's strategy to the challenges posed by AI and geopolitical tensions.",
+        "status": "emerging",
+        "importance_score": 8
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Tim Cook",
+        "relationship": "SUCCESSOR",
+        "target_node": "John Ternus",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Apple",
+        "relationship": "AFFECTS",
+        "target_node": "China",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Apple",
+        "relationship": "RELATED_TO",
+        "target_node": "AI",
+        "confidence": 0.7
+      }
+    ]
+  }
+}
