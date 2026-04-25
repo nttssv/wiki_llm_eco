@@ -67,3 +67,43 @@ RuntimeError: LLM extraction failed after 3 attempts: OpenAI API rejected the co
 2026-04-25 06:56:36,665 | INFO | Processed article_id=article_9f7fcefbcece8360 file=Business_Apple_new_boss_25_apr_2026.docx extractor=llm json=article_9f7fcefbcece8360.json markdown=too-many-cooks-not-enough-jobs-cece8360.md
 2026-04-25 06:56:36,665 | INFO | Skipping already processed file=Leaders_25_apr_2026.docx
 2026-04-25 06:56:36,668 | INFO | Updated wiki indexes root=index.md entities=index.md narratives=index.md
+2026-04-26 01:27:58,873 | INFO | Starting weekly extraction for week=2026-04-26 input=/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles extractor=mock
+2026-04-26 01:27:58,890 | INFO | Processed article_id=article_9f7fcefbcece8360 file=Business_Apple_new_boss_25_apr_2026.docx extractor=mock json=article_9f7fcefbcece8360.json markdown=too-many-cooks-not-enough-jobs-cece8360.md
+2026-04-26 01:27:58,896 | INFO | Processed article_id=article_a8fcc6e1e3cbea2b file=Leaders_25_apr_2026.docx extractor=mock json=article_a8fcc6e1e3cbea2b.json markdown=take-the-iphone-garnish-with-globalisation-e3cbea2b.md
+2026-04-26 01:27:58,897 | INFO | Updated wiki indexes root=index.md entities=index.md narratives=index.md
+2026-04-26 01:28:24,643 | INFO | Starting weekly extraction for week=2026-04-26 input=/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles extractor=mock
+2026-04-26 01:28:24,643 | INFO | Starting weekly extraction for week=2026-04-26 input=/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles extractor=mock
+2026-04-26 01:28:24,649 | INFO | Skipping already processed file=Business_Apple_new_boss_25_apr_2026.docx
+2026-04-26 01:28:24,649 | INFO | Skipping already processed file=Leaders_25_apr_2026.docx
+2026-04-26 01:28:24,650 | INFO | Updated wiki indexes root=index.md entities=index.md narratives=index.md
+2026-04-26 01:28:24,683 | INFO | Processed article_id=article_9f7fcefbcece8360 file=Business_Apple_new_boss_25_apr_2026.docx extractor=mock json=article_9f7fcefbcece8360.json markdown=too-many-cooks-not-enough-jobs-cece8360.md
+2026-04-26 01:28:24,691 | INFO | Processed article_id=article_a8fcc6e1e3cbea2b file=Leaders_25_apr_2026.docx extractor=mock json=article_a8fcc6e1e3cbea2b.json markdown=take-the-iphone-garnish-with-globalisation-e3cbea2b.md
+2026-04-26 01:28:24,695 | INFO | Updated wiki indexes root=index.md entities=index.md narratives=index.md
+2026-04-26 01:31:45,922 | INFO | Starting weekly extraction for week=2026-04-26 input=/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles extractor=mock
+2026-04-26 01:31:45,936 | INFO | Processed article_id=article_9f7fcefbcece8360 file=Business_Apple_new_boss_25_apr_2026.docx extractor=mock json=article_9f7fcefbcece8360.json markdown=too-many-cooks-not-enough-jobs-cece8360.md
+2026-04-26 01:31:45,942 | INFO | Processed article_id=article_a8fcc6e1e3cbea2b file=Leaders_25_apr_2026.docx extractor=mock json=article_a8fcc6e1e3cbea2b.json markdown=take-the-iphone-garnish-with-globalisation-e3cbea2b.md
+2026-04-26 01:31:45,943 | INFO | Updated wiki indexes root=index.md entities=index.md narratives=index.md
+2026-04-26 01:32:05,212 | INFO | Starting weekly extraction for week=2026-04-26 input=/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles extractor=mock
+2026-04-26 01:32:05,218 | INFO | Skipping already processed file=Business_Apple_new_boss_25_apr_2026.docx
+2026-04-26 01:32:05,219 | INFO | Skipping already processed file=Leaders_25_apr_2026.docx
+2026-04-26 01:32:05,219 | INFO | Updated wiki indexes root=index.md entities=index.md narratives=index.md
+2026-04-26 01:33:34,634 | INFO | Starting weekly extraction for week=2026-04-26 input=/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles extractor=mock
+2026-04-26 01:33:34,641 | INFO | Skipping already processed file=Business_Apple_new_boss_25_apr_2026.docx
+2026-04-26 01:33:34,641 | INFO | Skipping already processed file=Leaders_25_apr_2026.docx
+2026-04-26 01:33:34,642 | INFO | Updated wiki indexes root=index.md entities=index.md narratives=index.md
+2026-04-26 01:39:57,659 | INFO | Starting weekly extraction for week=2026-04-26 input=/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles extractor=mock
+2026-04-26 01:39:57,666 | INFO | Skipping already processed file=Business_Apple_new_boss_25_apr_2026.docx
+2026-04-26 01:39:57,666 | INFO | Skipping already processed file=Leaders_25_apr_2026.docx
+2026-04-26 01:39:57,667 | INFO | Updated wiki indexes root=index.md entities=index.md narratives=index.md
+2026-04-26 02:03:47,113 | INFO | Starting weekly extraction for week=2026-04-26 input=/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles extractor=mock
+2026-04-26 02:03:47,132 | INFO | Processed article_id=article_9f7fcefbcece8360 file=Business_Apple_new_boss_25_apr_2026.docx extractor=mock json=article_9f7fcefbcece8360.json markdown=too-many-cooks-not-enough-jobs-cece8360.md
+2026-04-26 02:03:47,142 | INFO | Processed article_id=article_a8fcc6e1e3cbea2b file=Leaders_25_apr_2026.docx extractor=mock json=article_a8fcc6e1e3cbea2b.json markdown=take-the-iphone-garnish-with-globalisation-e3cbea2b.md
+2026-04-26 02:03:47,143 | INFO | Updated wiki indexes root=index.md entities=index.md narratives=index.md
+2026-04-26 02:07:07,094 | INFO | Starting weekly extraction for week=2026-04-26 input=/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles extractor=mock
+2026-04-26 02:07:07,100 | INFO | Skipping already processed file=Business_Apple_new_boss_25_apr_2026.docx
+2026-04-26 02:07:07,100 | INFO | Skipping already processed file=Leaders_25_apr_2026.docx
+2026-04-26 02:07:07,101 | INFO | Updated wiki indexes root=index.md entities=index.md narratives=index.md
+2026-04-26 02:12:56,855 | INFO | Starting weekly extraction for week=2026-04-26 input=/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles extractor=mock
+2026-04-26 02:12:56,863 | INFO | Skipping already processed file=Business_Apple_new_boss_25_apr_2026.docx
+2026-04-26 02:12:56,863 | INFO | Skipping already processed file=Leaders_25_apr_2026.docx
+2026-04-26 02:12:56,864 | INFO | Updated wiki indexes root=index.md entities=index.md narratives=index.md

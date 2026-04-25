@@ -48,9 +48,75 @@ def mock_extract_article(text: str, metadata: dict[str, str]) -> ArticleExtracti
     """Return a structured extraction without calling an external LLM."""
 
     combined_text = f"{metadata.get('title', '')}\n{metadata.get('subtitle', '')}\n{text}"
+    normalized_text = combined_text.lower()
 
     if any(keyword in combined_text for keyword in ("Apple", "Tim Cook", "iPhone")):
         published_date = metadata.get("published_date", "")
+        narratives: list[Narrative] = []
+
+        has_global_model_pressure = any(
+            keyword in normalized_text
+            for keyword in (
+                "globalisation",
+                "globalization",
+                "china",
+                "india",
+                "trade wars",
+                "supply chain",
+                "artificial-intelligence",
+                "artificial intelligence",
+                "ai",
+            )
+        )
+        has_ceo_transition = any(
+            keyword in normalized_text
+            for keyword in (
+                "john ternus",
+                "new chief executive",
+                "chief executive",
+                "successor",
+                "take over in september",
+                "replacing",
+                "new boss",
+            )
+        )
+
+        if has_global_model_pressure:
+            narratives.append(
+                Narrative(
+                    name="Apple's globalised iPhone model under pressure",
+                    thesis=(
+                        "Apple's globalised iPhone model is under pressure from AI and "
+                        "geopolitical fragmentation."
+                    ),
+                    status="strengthening",
+                    importance_score=9,
+                )
+            )
+
+        if has_ceo_transition:
+            narratives.append(
+                Narrative(
+                    name="Apple enters a post-Tim Cook succession era",
+                    thesis=(
+                        "Apple's handover from Tim Cook to John Ternus creates a new leadership-era "
+                        "narrative around whether operational continuity is enough for the AI age."
+                    ),
+                    status="emerging",
+                    importance_score=8,
+                )
+            )
+
+        if not narratives:
+            narratives.append(
+                Narrative(
+                    name="Apple faces strategic adaptation pressure",
+                    thesis="Apple is under pressure to adapt its strategy to a changing technology and geopolitical environment.",
+                    status="stable",
+                    importance_score=6,
+                )
+            )
+
         return ArticleExtraction(
             source=metadata.get("source", "Unknown"),
             section=metadata.get("section", ""),
@@ -135,17 +201,7 @@ def mock_extract_article(text: str, metadata: dict[str, str]) -> ArticleExtracti
                     description="Geopolitical conflict that increases costs and fragility across production networks.",
                 ),
             ],
-            narratives=[
-                Narrative(
-                    name="Apple's globalised iPhone model under pressure",
-                    thesis=(
-                        "Apple's globalised iPhone model is under pressure from AI and "
-                        "geopolitical fragmentation."
-                    ),
-                    status="strengthening",
-                    importance_score=9,
-                )
-            ],
+            narratives=narratives,
             graph_edges=[
                 GraphEdge(source_node="Apple", relationship="LED_BY", target_node="Tim Cook", confidence=0.98),
                 GraphEdge(
@@ -202,4 +258,3 @@ def mock_extract_article(text: str, metadata: dict[str, str]) -> ArticleExtracti
         narratives=[],
         graph_edges=[],
     )
-

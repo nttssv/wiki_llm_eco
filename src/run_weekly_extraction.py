@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Iterable
 
 from .config import get_openai_api_key, load_env
-from .db import NarrativeDatabase, PersistenceStats
+from .db import NarrativeDatabase, PersistenceStats, normalize_article_file_key
 from .extract_article import generate_article_id, processed_json_path_name, mock_extract_article
 from .generate_markdown import write_article_markdown, write_wiki_indexes
 from .ingest_docx import read_docx_article
@@ -74,17 +74,6 @@ def save_extraction_json(output_dir: Path, article_id: str, payload: dict[str, o
     return output_path
 
 
-def article_file_key(path_value: str | Path) -> str:
-    """Normalize file paths so host and Docker mounts map to the same article key."""
-
-    path = Path(str(path_value).strip())
-    parts = path.parts
-    if "data" in parts:
-        data_index = parts.index("data")
-        return "/".join(parts[data_index:])
-    return path.name
-
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run weekly narrative extraction over DOCX articles.")
     parser.add_argument("--input", required=True, help="Folder containing DOCX article files.")
@@ -124,15 +113,13 @@ def main() -> None:
     database = NarrativeDatabase(DB_PATH)
     database.initialize()
     summary = RunSummary()
-    existing_file_keys = (
-        {article_file_key(file_path) for file_path in database.fetch_article_file_paths()}
-        if args.new_only
-        else set()
-    )
+    existing_article_ids_by_file_key = database.fetch_article_ids_by_file_key()
+    existing_file_keys = set(existing_article_ids_by_file_key) if args.new_only else set()
 
     try:
         for docx_path in iter_docx_files(input_dir):
-            if args.new_only and article_file_key(docx_path) in existing_file_keys:
+            file_key = normalize_article_file_key(docx_path)
+            if args.new_only and file_key in existing_file_keys:
                 summary.articles_skipped += 1
                 logging.info("Skipping already processed file=%s", docx_path.name)
                 continue
@@ -140,7 +127,7 @@ def main() -> None:
             raw_article = read_docx_article(docx_path)
             raw_article.metadata["original_file_path"] = str(docx_path)
 
-            article_id = generate_article_id(
+            article_id = existing_article_ids_by_file_key.get(file_key) or generate_article_id(
                 raw_article.metadata.get("source", ""),
                 raw_article.metadata.get("title", ""),
                 raw_article.metadata.get("published_date", ""),

@@ -348,6 +348,66 @@ Open the generated wiki files directly:
 - `wiki/narratives/index.md`
 - `reports/`
 
+## Recent Changes
+
+Implemented in the current working session:
+
+- improved DOCX date parsing so the ingester recognizes more byline formats and strips boilerplate from previews
+- made article IDs stable across reprocessing by reusing IDs for existing files
+- cleaned up stale child rows on re-extraction so article-linked entities, narratives, events, and graph edges stay in sync
+- expanded the mock extractor so Apple articles can surface both the globalisation pressure narrative and the Tim Cook / John Ternus succession narrative
+- redesigned the Streamlit dashboard with a stronger overview, a more readable article detail layout, and a combined document-plus-image reading board
+
+What this does not do yet:
+
+- content-hash based reprocessing
+- extraction version tracking
+- a real LLM prompt/normalization pass for general articles
+- automated tests for schema, migrations, or reports
+
+## Next steps
+
+Suggested next improvements, in a practical order:
+
+1. Improve extraction quality
+   - tighten the LLM prompt so entity types, event dates, and relationship labels are more consistent
+   - add a post-processing normalization layer for sources, categories, countries, company names, and narrative labels
+   - add a confidence threshold or review queue for weak extractions
+
+2. Make file ingestion smarter
+   - detect changed files by content hash, not just file path
+   - store ingestion metadata such as `file_hash`, `processed_at`, and extraction version
+   - support reprocessing only files changed since the last run
+
+3. Strengthen narrative tracking
+   - track narrative movement across more than one week window
+   - add explicit trend metrics such as week-over-week mention delta
+   - detect merges and near-duplicate narratives using normalized names or similarity rules
+
+4. Expand the dashboard
+   - add article-to-article similarity or related coverage views
+   - add timeline charts for narrative mentions, themes, and entity frequency
+   - add filters for importance score, entity type, and narrative change class
+
+5. Improve data quality controls
+   - add automated tests for extraction schema validation, DB migrations, and report generation
+   - add stronger validation rules for placeholder metadata such as `Unknown` sources
+   - log extraction failures into a separate review file for manual QA
+
+6. Prepare for production use
+   - add backup/export scripts for the SQLite database
+   - add scheduled runs with cron or GitHub Actions
+   - separate dev/demo data from real weekly article data
+
+Good next session starting point for tomorrow:
+
+1. Reprocess 3-5 more articles from different weeks with the current pipeline.
+2. Check whether the two Apple narratives remain stable when more articles are added.
+3. Decide whether the next increment should be:
+   - content-hash based ingestion, or
+   - better normalization and extraction quality.
+4. If dashboard work is next, add trend charts and article similarity views after the data model is stable.
+
 ## Notes
 
 - Full article text is read only during extraction and is not stored in SQLite.

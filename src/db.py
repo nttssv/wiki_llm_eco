@@ -13,6 +13,17 @@ from .extract_article import stable_id
 from .extract_schema import ArticleExtraction, Entity, Event, GraphEdge, Narrative, Theme
 
 
+def normalize_article_file_key(path_value: str | Path) -> str:
+    """Normalize file paths so host and Docker mounts map to the same article key."""
+
+    path = Path(str(path_value).strip())
+    parts = path.parts
+    if "data" in parts:
+        data_index = parts.index("data")
+        return "/".join(parts[data_index:])
+    return path.name
+
+
 @dataclass(slots=True)
 class PersistenceStats:
     entities_created: int = 0
@@ -206,6 +217,19 @@ class NarrativeDatabase:
             )
         ]
 
+    def fetch_article_ids_by_file_key(self) -> dict[str, str]:
+        rows = self.fetch_all(
+            """
+            SELECT id, original_file_path
+            FROM articles
+            WHERE COALESCE(original_file_path, '') != ''
+            """
+        )
+        return {
+            normalize_article_file_key(str(row["original_file_path"] or "")): str(row["id"])
+            for row in rows
+        }
+
     def fetch_entities(self) -> list[sqlite3.Row]:
         return self.fetch_all(
             """
@@ -281,6 +305,11 @@ class NarrativeDatabase:
     ) -> PersistenceStats:
         stats = PersistenceStats()
         timestamp = datetime.now(timezone.utc).isoformat()
+        entity_ids_for_article: set[str] = set()
+        event_ids_for_article: set[str] = set()
+        theme_ids_for_article: set[str] = set()
+        narrative_ids_for_article: set[str] = set()
+        graph_edge_ids_for_article: set[str] = set()
 
         self.connection.execute(
             """
@@ -317,6 +346,7 @@ class NarrativeDatabase:
         for entity in extraction.entities:
             entity_id, created = self._upsert_entity(entity)
             stats.entities_created += int(created)
+            entity_ids_for_article.add(entity_id)
             self.connection.execute(
                 """
                 INSERT INTO article_entities (article_id, entity_id, role)
@@ -327,11 +357,13 @@ class NarrativeDatabase:
             )
 
         for event in extraction.events:
-            _, created = self._upsert_event(article_id, event)
+            event_id, created = self._upsert_event(article_id, event)
             stats.events_created += int(created)
+            event_ids_for_article.add(event_id)
 
         for theme in extraction.themes:
             theme_id = self._upsert_theme(theme)
+            theme_ids_for_article.add(theme_id)
             self.connection.execute(
                 """
                 INSERT OR IGNORE INTO article_themes (article_id, theme_id)
@@ -343,13 +375,131 @@ class NarrativeDatabase:
         for narrative in extraction.narratives:
             narrative_id, created = self._upsert_narrative(narrative, article_id, current_week)
             stats.narratives_created += int(created)
+            narrative_ids_for_article.add(narrative_id)
 
         for edge in extraction.graph_edges:
-            _, created = self._upsert_graph_edge(article_id, edge)
+            edge_id, created = self._upsert_graph_edge(article_id, edge)
             stats.graph_edges_created += int(created)
+            graph_edge_ids_for_article.add(edge_id)
+
+        self._delete_missing_article_links("article_entities", "entity_id", article_id, entity_ids_for_article)
+        self._delete_missing_article_links("article_themes", "theme_id", article_id, theme_ids_for_article)
+        self._delete_missing_article_links(
+            "article_narratives",
+            "narrative_id",
+            article_id,
+            narrative_ids_for_article,
+        )
+        self._delete_missing_article_rows("events", "article_id", article_id, event_ids_for_article)
+        self._delete_missing_article_rows(
+            "graph_edges",
+            "evidence_article_id",
+            article_id,
+            graph_edge_ids_for_article,
+        )
+        self._refresh_narrative_aggregates()
 
         self.connection.commit()
         return stats
+
+    def _delete_missing_article_links(
+        self,
+        table_name: str,
+        value_column: str,
+        article_id: str,
+        keep_ids: set[str],
+    ) -> None:
+        if keep_ids:
+            placeholders = ", ".join("?" for _ in keep_ids)
+            parameters = (article_id, *sorted(keep_ids))
+            self.connection.execute(
+                f"""
+                DELETE FROM {table_name}
+                WHERE article_id = ?
+                  AND {value_column} NOT IN ({placeholders})
+                """,
+                parameters,
+            )
+            return
+
+        self.connection.execute(
+            f"DELETE FROM {table_name} WHERE article_id = ?",
+            (article_id,),
+        )
+
+    def _delete_missing_article_rows(
+        self,
+        table_name: str,
+        article_column: str,
+        article_id: str,
+        keep_ids: set[str],
+    ) -> None:
+        if keep_ids:
+            placeholders = ", ".join("?" for _ in keep_ids)
+            parameters = (article_id, *sorted(keep_ids))
+            self.connection.execute(
+                f"""
+                DELETE FROM {table_name}
+                WHERE {article_column} = ?
+                  AND id NOT IN ({placeholders})
+                """,
+                parameters,
+            )
+            return
+
+        self.connection.execute(
+            f"DELETE FROM {table_name} WHERE {article_column} = ?",
+            (article_id,),
+        )
+
+    def _refresh_narrative_aggregates(self) -> None:
+        narrative_rows = self.connection.execute(
+            """
+            SELECT id
+            FROM narratives
+            WHERE id IN (SELECT DISTINCT narrative_id FROM article_narratives)
+            """
+        ).fetchall()
+
+        self.connection.execute(
+            """
+            DELETE FROM narratives
+            WHERE id NOT IN (SELECT DISTINCT narrative_id FROM article_narratives)
+            """
+        )
+
+        for narrative_row in narrative_rows:
+            narrative_id = str(narrative_row["id"])
+            linked_rows = self.connection.execute(
+                """
+                SELECT DISTINCT an.article_id, a.published_date
+                FROM article_narratives AS an
+                JOIN articles AS a ON a.id = an.article_id
+                WHERE an.narrative_id = ?
+                """,
+                (narrative_id,),
+            ).fetchall()
+            week_labels = sorted(
+                {
+                    week_label
+                    for row in linked_rows
+                    for week_label in [week_label_for_published_date(str(row["published_date"] or ""))]
+                    if week_label is not None
+                }
+            )
+            mention_count = len({str(row["article_id"]) for row in linked_rows}) or 1
+            first_seen_date = week_labels[0] if week_labels else ""
+            last_seen_date = week_labels[-1] if week_labels else ""
+            self.connection.execute(
+                """
+                UPDATE narratives
+                SET first_seen_date = ?,
+                    last_seen_date = ?,
+                    mention_count = ?
+                WHERE id = ?
+                """,
+                (first_seen_date, last_seen_date, mention_count, narrative_id),
+            )
 
     def _upsert_entity(self, entity: Entity) -> tuple[str, bool]:
         entity_id = stable_id("entity", entity.type, entity.name)

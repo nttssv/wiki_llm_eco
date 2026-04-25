@@ -3,43 +3,51 @@ id: article_a8fcc6e1e3cbea2b
 source: Unknown
 date: 26 Apr 2026
 category: Leaders
-themes: ["Globalisation", "Technology Evolution"]
-narratives: ["Apple's Future Strategy"]
-importance_score: 8
+themes: ["globalisation", "supply chains", "trade wars"]
+narratives: ["Apple's globalised iPhone model under pressure", "Apple enters a post-Tim Cook succession era"]
+importance_score: 9
 ---
 
 # Take the iPhone, garnish with globalisation
 
 ## Core thesis
 
-John Ternus must adapt Apple's strategy to the challenges posed by AI and geopolitical tensions.
+Apple's globalised iPhone model is under pressure from AI and geopolitical fragmentation.
 
 ## Summary
 
-As Tim Cook's tenure at Apple comes to an end, his successor John Ternus faces the challenge of adapting Apple's successful formula of smartphones and global supply chains to the evolving landscape of AI and geopolitical tensions. Cook's leadership saw Apple's market value grow significantly, but the future may require a shift in strategy.
+Apple's iPhone-centered operating model is facing simultaneous pressure from AI disruption, geopolitical tension, and the need to diversify manufacturing.
 
 ## Key entities
 
-- **Apple** (Company): Subject. A leading technology company known for its iPhone and other consumer electronics.
-- **Tim Cook** (Person): Former CEO. The CEO of Apple who led the company for 15 years, significantly increasing its market value.
-- **John Ternus** (Person): Incoming CEO. The successor to Tim Cook, tasked with continuing Apple's success.
-- **China** (Country): Market. A key market for Apple, both for manufacturing and sales.
-- **AI** (Technology): Trend. Artificial intelligence, a growing field that may impact Apple's future strategy.
+- **Apple** (company): primary subject. Global technology company whose iPhone franchise anchors the article.
+- **Tim Cook** (person): leader. Apple chief executive associated with the company's global supply-chain era.
+- **John Ternus** (person): potential successor. Apple executive discussed as a potential future leader.
+- **China** (location): manufacturing base. Critical production hub in Apple's current supply chain.
+- **India** (location): expansion base. Growing alternative manufacturing base for Apple's production footprint.
+- **iPhone** (product): core revenue engine. Apple's flagship hardware platform and operational dependency.
+- **AI** (technology): disruptive force. Technological shift challenging the durability of the smartphone model.
 
 ## Key events
 
-- **2026-09-01** | Apple Headquarters, Cupertino, California: Tim Cook's tenure as CEO of Apple ends. (importance: 9)
+- **26 Apr 2026** | China and India: Apple's global manufacturing strategy is reassessed amid geopolitical fragmentation. (importance: 8)
+- **26 Apr 2026** | Global: AI is framed as a strategic challenge to Apple's smartphone-led model. (importance: 9)
 
 ## Narrative shift
 
-- **Apple's Future Strategy** (emerging): John Ternus must adapt Apple's strategy to the challenges posed by AI and geopolitical tensions.
+- **Apple's globalised iPhone model under pressure** (strengthening): Apple's globalised iPhone model is under pressure from AI and geopolitical fragmentation.
+- **Apple enters a post-Tim Cook succession era** (emerging): Apple's handover from Tim Cook to John Ternus creates a new leadership-era narrative around whether operational continuity is enough for the AI age.
 
 ## Graph relationships
 
-- `Tim Cook --SUCCESSOR--> John Ternus` (confidence: 0.90)
-- `Apple --AFFECTS--> China` (confidence: 0.80)
-- `Apple --RELATED_TO--> AI` (confidence: 0.70)
+- `Apple --LED_BY--> Tim Cook` (confidence: 0.98)
+- `Apple --SUCCESSOR--> John Ternus` (confidence: 0.72)
+- `Apple --DEPENDS_ON--> iPhone` (confidence: 0.95)
+- `Apple --MANUFACTURES_IN--> China` (confidence: 0.94)
+- `Apple --EXPANDS_TO--> India` (confidence: 0.91)
+- `AI --CHALLENGES--> Apple smartphone model` (confidence: 0.89)
+- `Trade wars --PRESSURE_ON--> Apple supply chain` (confidence: 0.90)
 
 ## Linked narratives
 
-Apple's Future Strategy
+Apple's globalised iPhone model under pressure, Apple enters a post-Tim Cook succession era

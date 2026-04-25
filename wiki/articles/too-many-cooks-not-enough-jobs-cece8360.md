@@ -1,47 +1,53 @@
 ---
 id: article_9f7fcefbcece8360
 source: Unknown
-date: 2026-04-23
+date: 23 Apr 2026
 category: Business
-themes: ["Leadership Transition", "AI Integration", "Manufacturing Strategy"]
-narratives: ["Innovation in the AI Era", "Challenges of Leadership"]
-importance_score: 8
+themes: ["globalisation", "supply chains", "trade wars"]
+narratives: ["Apple's globalised iPhone model under pressure", "Apple enters a post-Tim Cook succession era"]
+importance_score: 9
 ---
 
 # Too many Cooks, not enough Jobs?
 
 ## Core thesis
 
-John Ternus must lead Apple to innovate beyond hardware improvements to thrive in the AI era.
+Apple's globalised iPhone model is under pressure from AI and geopolitical fragmentation.
 
 ## Summary
 
-John Ternus has been appointed as Apple's new CEO, succeeding Tim Cook. As Apple faces challenges in the AI era, Ternus must innovate beyond hardware improvements to maintain the company's competitive edge. His leadership will be crucial as Apple navigates its reliance on Chinese manufacturing and seeks to integrate AI more effectively into its products.
+Apple's iPhone-centered operating model is facing simultaneous pressure from AI disruption, geopolitical tension, and the need to diversify manufacturing.
 
 ## Key entities
 
-- **John Ternus** (Person): CEO. Newly appointed CEO of Apple, previously the hardware chief.
-- **Tim Cook** (Person): Former CEO. Former CEO of Apple who led the company since 2011.
-- **Steve Jobs** (Person): Former CEO. Co-founder and former CEO of Apple, known for his innovative vision.
-- **Apple** (Company): Technology Company. Multinational technology company known for its consumer electronics and software.
-- **Gemini** (Technology): AI Model. AI model from Google that Apple is relying on for its AI integration.
+- **Apple** (company): primary subject. Global technology company whose iPhone franchise anchors the article.
+- **Tim Cook** (person): leader. Apple chief executive associated with the company's global supply-chain era.
+- **John Ternus** (person): potential successor. Apple executive discussed as a potential future leader.
+- **China** (location): manufacturing base. Critical production hub in Apple's current supply chain.
+- **India** (location): expansion base. Growing alternative manufacturing base for Apple's production footprint.
+- **iPhone** (product): core revenue engine. Apple's flagship hardware platform and operational dependency.
+- **AI** (technology): disruptive force. Technological shift challenging the durability of the smartphone model.
 
 ## Key events
 
-- **2026-09-01** | Apple Headquarters, Cupertino, California: John Ternus officially takes over as CEO of Apple. (importance: 9)
-- **2026-06-01** | Apple Developers Conference: Apple showcases Gemini-powered Siri at the developers' conference. (importance: 7)
+- **23 Apr 2026** | China and India: Apple's global manufacturing strategy is reassessed amid geopolitical fragmentation. (importance: 8)
+- **23 Apr 2026** | Global: AI is framed as a strategic challenge to Apple's smartphone-led model. (importance: 9)
 
 ## Narrative shift
 
-- **Innovation in the AI Era** (emerging): John Ternus must lead Apple to innovate beyond hardware improvements to thrive in the AI era.
-- **Challenges of Leadership** (strengthening): Ternus faces the challenge of succeeding two legendary CEOs while navigating current market dynamics.
+- **Apple's globalised iPhone model under pressure** (strengthening): Apple's globalised iPhone model is under pressure from AI and geopolitical fragmentation.
+- **Apple enters a post-Tim Cook succession era** (emerging): Apple's handover from Tim Cook to John Ternus creates a new leadership-era narrative around whether operational continuity is enough for the AI age.
 
 ## Graph relationships
 
-- `John Ternus --SUCCESSOR--> Tim Cook` (confidence: 0.90)
-- `Apple --DEPENDS_ON--> Gemini` (confidence: 0.80)
-- `John Ternus --LED_BY--> Steve Jobs` (confidence: 0.70)
+- `Apple --LED_BY--> Tim Cook` (confidence: 0.98)
+- `Apple --SUCCESSOR--> John Ternus` (confidence: 0.72)
+- `Apple --DEPENDS_ON--> iPhone` (confidence: 0.95)
+- `Apple --MANUFACTURES_IN--> China` (confidence: 0.94)
+- `Apple --EXPANDS_TO--> India` (confidence: 0.91)
+- `AI --CHALLENGES--> Apple smartphone model` (confidence: 0.89)
+- `Trade wars --PRESSURE_ON--> Apple supply chain` (confidence: 0.90)
 
 ## Linked narratives
 
-Innovation in the AI Era, Challenges of Leadership
+Apple's globalised iPhone model under pressure, Apple enters a post-Tim Cook succession era
