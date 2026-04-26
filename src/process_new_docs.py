@@ -46,7 +46,7 @@ def main() -> None:
 
     _run_step(extraction_command)
     _run_step([sys.executable, "-m", "src.validate_database"])
-    _run_step([sys.executable, "-m", "src.export_graph", "--format", "json"])
+    _run_step([sys.executable, "-m", "src.export_graph", "--format", "json", "--week", args.week])
     _run_step([sys.executable, "-m", "src.generate_weekly_report", "--week", args.week])
 
 

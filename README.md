@@ -4,7 +4,9 @@ Simple Python project for turning weekly DOCX news articles into structured narr
 
 - SQLite records in `data/narrative.db`
 - Structured extraction JSON in `data/processed/`
-- Graph exports in `data/exports/graph.json`
+- Weekly graph exports in `data/exports/graph_<week>.json`
+- Current graph snapshot in `data/exports/graph_latest.json`
+- Backward-compatible graph export in `data/exports/graph.json`
 - Markdown wiki pages in `wiki/articles/`
 - Markdown index pages in `wiki/`, `wiki/entities/`, and `wiki/narratives/`
 - Weekly reports in `reports/`
@@ -21,7 +23,11 @@ narrative_agent/
     raw_articles/
     processed/
     narrative.db
+    narrative_backup_before_reingest.db
   reports/
+  scripts/
+    debug_graph_visibility.py
+    debug_india_graph.py
   wiki/
     index.md
     articles/
@@ -169,13 +175,32 @@ It exits with a non-zero status if any validation issues are found.
 Run:
 
 ```bash
-python -m src.export_graph --format json
+python -m src.export_graph --format json --week 2026-04-26
 ```
 
-This writes `data/exports/graph.json` with:
+This writes:
+
+- `data/exports/graph_2026-04-26.json`
+- `data/exports/graph_latest.json`
+- `data/exports/graph.json`
+
+Each node and edge now carries a `week` field so the dashboard can load historical graph snapshots and compare weekly graph evolution.
+
+The export includes:
 
 - graph nodes for articles, entities, themes, and narratives
-- graph edges from article links and extracted graph relationships
+- direct article context edges for extracted concepts:
+  - `article -> entity` via `MENTIONS_ENTITY`
+  - `article -> theme` via `HAS_THEME`
+  - `article -> narrative` via `HAS_NARRATIVE`
+- extracted relationship edges between concepts from `graph_edges`
+- canonicalized entity nodes so duplicate labels such as `India` collapse to one node while preserving all linked article evidence
+
+Useful debug command:
+
+```bash
+python -m src.export_graph --format json --week 2026-04-26 --debug-node India
+```
 
 ## Generate weekly report
 
@@ -272,13 +297,25 @@ streamlit run src/dashboard.py
 The dashboard reads from:
 
 - `data/narrative.db`
-- `data/exports/graph.json` when available
+- `data/exports/graph_latest.json`
+- `data/exports/graph_<week>.json` when a historical week is selected
 
 The Articles tab includes a two-panel view.
 Selecting an article shows structured extraction on the left and a live DOCX preview on the right.
 The DOCX preview is rendered from the local file and is not stored in the database.
 Preview is truncated for readability.
 If the DOCX contains embedded images, they are rendered in the right panel below the text preview.
+
+The Graph View now supports:
+
+- week selector with latest snapshot as default
+- compare mode against the previous available week
+- change highlighting:
+  - new nodes and edges in green
+  - removed nodes and edges in red
+- graph summary metrics above the canvas
+- top emerging entities based on week-over-week degree growth
+- direct debug output for searched nodes so visible neighbors and edges can be inspected without leaving Streamlit
 
 If the graph export is missing, the Graph View tab shows:
 
@@ -352,26 +389,36 @@ Open the generated wiki files directly:
 
 Implemented in the current working session:
 
-- improved DOCX date parsing so the ingester recognizes more byline formats and strips boilerplate from previews
-- made article IDs stable across reprocessing by reusing IDs for existing files
-- cleaned up stale child rows on re-extraction so article-linked entities, narratives, events, and graph edges stay in sync
-- expanded the mock extractor so Apple articles can surface both the globalisation pressure narrative and the Tim Cook / John Ternus succession narrative
-- redesigned the Streamlit dashboard with a stronger overview, a more readable article detail layout, and a combined document-plus-image reading board
+- refreshed the repository from newly added DOCX articles and rebuilt the weekly wiki/report outputs
+- fixed dashboard staleness by keying Streamlit cache reads to file modification state so new ingestions appear without manual code edits
+- improved the graph canvas readability with centered fit-on-load behavior, smaller default label treatment, richer hover text, and cleaner controls
+- replaced raw HTML text showing up in the graph UI with proper Streamlit-rendered legend and helper content
+- fixed graph neighborhood expansion so search/selection shows the chosen node plus all 1-hop neighbors, including article hubs
+- made article-to-concept edges visually distinct so article provenance is easier to read in the canvas
+- fixed graph data-linking so article context edges are exported explicitly for entities, themes, and narratives
+- added graph canonicalization for duplicate entity labels so concept nodes such as `India` collapse to one canonical node
+- added graph debug utilities in `scripts/debug_india_graph.py` and `scripts/debug_graph_visibility.py` to validate exported node/edge visibility
+- added week-aware graph snapshots:
+  - `graph_<week>.json` for historical views
+  - `graph_latest.json` for the current dashboard
+- added graph comparison mode in Streamlit so weekly node and edge additions/removals can be inspected visually
+- preserved previous weekly graph exports instead of overwriting a single graph file every run
 
 What this does not do yet:
 
 - content-hash based reprocessing
 - extraction version tracking
-- a real LLM prompt/normalization pass for general articles
+- stronger extraction QA for missed or suspicious entities
 - automated tests for schema, migrations, or reports
 
 ## Next steps
 
 Suggested next improvements, in a practical order:
 
-1. Improve extraction quality
+1. Strengthen extraction QA
    - tighten the LLM prompt so entity types, event dates, and relationship labels are more consistent
    - add a post-processing normalization layer for sources, categories, countries, company names, and narrative labels
+   - flag suspicious links where an extracted entity or theme does not appear in the source text
    - add a confidence threshold or review queue for weak extractions
 
 2. Make file ingestion smarter
@@ -379,34 +426,42 @@ Suggested next improvements, in a practical order:
    - store ingestion metadata such as `file_hash`, `processed_at`, and extraction version
    - support reprocessing only files changed since the last run
 
-3. Strengthen narrative tracking
+3. Expand time-aware graph analysis
+   - add article-by-article diffs inside a week comparison view
+   - support multi-week playback, not only current versus previous
+   - add entity/theme/narrative growth charts beside the graph canvas
+   - add saved comparison snapshots or exported change reports
+
+4. Strengthen narrative tracking
    - track narrative movement across more than one week window
    - add explicit trend metrics such as week-over-week mention delta
    - detect merges and near-duplicate narratives using normalized names or similarity rules
 
-4. Expand the dashboard
+5. Expand the dashboard
    - add article-to-article similarity or related coverage views
    - add timeline charts for narrative mentions, themes, and entity frequency
    - add filters for importance score, entity type, and narrative change class
+   - add a detail panel for selected graph nodes with linked evidence articles
 
-5. Improve data quality controls
+6. Improve data quality controls
    - add automated tests for extraction schema validation, DB migrations, and report generation
+   - add tests for graph canonicalization and week-to-week export diffs
    - add stronger validation rules for placeholder metadata such as `Unknown` sources
    - log extraction failures into a separate review file for manual QA
 
-6. Prepare for production use
+7. Prepare for production use
    - add backup/export scripts for the SQLite database
    - add scheduled runs with cron or GitHub Actions
    - separate dev/demo data from real weekly article data
 
 Good next session starting point for tomorrow:
 
-1. Reprocess 3-5 more articles from different weeks with the current pipeline.
-2. Check whether the two Apple narratives remain stable when more articles are added.
+1. Ingest a second real week so the graph comparison mode has meaningful before/after data.
+2. Run the new graph debug scripts against a few high-risk labels such as countries, sectors, and product names.
 3. Decide whether the next increment should be:
    - content-hash based ingestion, or
-   - better normalization and extraction quality.
-4. If dashboard work is next, add trend charts and article similarity views after the data model is stable.
+   - extraction QA and normalization.
+4. If dashboard work is next, add multi-week trend charts after the graph history model is stable.
 
 ## Notes
 
