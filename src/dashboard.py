@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from html import escape
 import json
 from pathlib import Path
 import sqlite3
@@ -9,6 +10,7 @@ import sys
 from typing import Any
 from zipfile import ZipFile
 
+import altair as alt
 from docx import Document
 import networkx as nx
 import pandas as pd
@@ -35,10 +37,10 @@ GRAPH_EXPORT_PATH = EXPORTS_DIR / "graph.json"
 DOCX_PREVIEW_LIMIT = 5000
 DOCX_IMAGE_LIMIT = 4
 NODE_COLORS = {
-    "article": "#2f6fed",
-    "entity": "#2da44e",
-    "theme": "#fb8c00",
-    "narrative": "#8e44ad",
+    "article": "#1d4ed8",
+    "entity": "#0f766e",
+    "theme": "#c2410c",
+    "narrative": "#7c3f00",
 }
 
 
@@ -443,9 +445,611 @@ def render_graph(
     components.html(network.generate_html(), height=760, scrolling=True)
 
 
+def inject_dashboard_css() -> None:
+    """Apply a custom visual treatment to the Streamlit dashboard."""
+
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background:
+                radial-gradient(circle at top left, rgba(29, 78, 216, 0.10), transparent 28%),
+                radial-gradient(circle at top right, rgba(15, 118, 110, 0.10), transparent 26%),
+                linear-gradient(180deg, #f7f3eb 0%, #f9f7f2 36%, #f4efe5 100%);
+            color: #172033;
+        }
+        .block-container {
+            max-width: 1480px;
+            padding-top: 2.1rem;
+            padding-bottom: 3rem;
+        }
+        h1, h2, h3 {
+            font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+            letter-spacing: -0.02em;
+            color: #172033;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.3rem;
+        }
+        .stMarkdown, [data-testid="stMetricLabel"], [data-testid="stMetricValue"] {
+            font-family: "Avenir Next", "Segoe UI", "Trebuchet MS", sans-serif;
+        }
+        [data-testid="stSidebar"] {
+            background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(244,239,229,0.95));
+            border-right: 1px solid rgba(23, 32, 51, 0.08);
+        }
+        [data-testid="stSidebar"] [data-testid="stMarkdown"] h2,
+        [data-testid="stSidebar"] [data-testid="stMarkdown"] h3 {
+            color: #172033;
+        }
+        [data-baseweb="select"] > div,
+        .stTextInput > div > div,
+        .stTextArea textarea {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 14px;
+        }
+        [data-testid="stTabs"] {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(23, 32, 51, 0.08);
+            border-radius: 24px;
+            padding: 0.4rem 0.6rem 1rem 0.6rem;
+            backdrop-filter: blur(8px);
+        }
+        [data-testid="stTabs"] button[role="tab"] {
+            border-radius: 999px;
+            padding: 0.7rem 1rem;
+            color: #556277;
+        }
+        [data-testid="stTabs"] button[aria-selected="true"] {
+            background: linear-gradient(135deg, #172033 0%, #1d4ed8 100%);
+            color: #ffffff;
+        }
+        .hero-panel {
+            background:
+                linear-gradient(135deg, rgba(23, 32, 51, 0.96), rgba(29, 78, 216, 0.90)),
+                linear-gradient(135deg, #172033, #1d4ed8);
+            color: #f8fafc;
+            border-radius: 28px;
+            padding: 1.6rem 1.8rem;
+            box-shadow: 0 24px 60px rgba(23, 32, 51, 0.18);
+            margin-bottom: 1rem;
+        }
+        .hero-kicker {
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-size: 0.74rem;
+            opacity: 0.72;
+            margin-bottom: 0.45rem;
+        }
+        .hero-title {
+            font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+            font-size: 2.4rem;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+        .hero-copy {
+            max-width: 62rem;
+            font-size: 1rem;
+            color: rgba(248, 250, 252, 0.86);
+            margin-bottom: 1rem;
+        }
+        .hero-badges, .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .hero-badge, .signal-pill {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 0.35rem 0.72rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.10);
+            color: #f8fafc;
+        }
+        .overview-card, .panel-card, .list-card {
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(23, 32, 51, 0.08);
+            border-radius: 24px;
+            padding: 1rem 1.1rem;
+            box-shadow: 0 16px 40px rgba(23, 32, 51, 0.08);
+        }
+        .metric-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(247,243,235,0.92));
+            border: 1px solid rgba(23, 32, 51, 0.08);
+            border-radius: 22px;
+            padding: 1rem 1.1rem;
+            min-height: 8.5rem;
+            box-shadow: 0 14px 32px rgba(23, 32, 51, 0.08);
+        }
+        .metric-label {
+            color: #556277;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.74rem;
+            margin-bottom: 0.45rem;
+        }
+        .metric-value {
+            font-size: 2rem;
+            line-height: 1;
+            font-weight: 700;
+            color: #172033;
+            margin-bottom: 0.35rem;
+        }
+        .metric-note {
+            color: #6a7485;
+            font-size: 0.9rem;
+        }
+        .section-kicker {
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #7c3f00;
+            font-size: 0.72rem;
+            margin-bottom: 0.2rem;
+        }
+        .section-title {
+            font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+            font-size: 1.6rem;
+            color: #172033;
+            margin-bottom: 0.2rem;
+        }
+        .section-copy {
+            color: #5d6676;
+            margin-bottom: 0.6rem;
+        }
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.7rem;
+            margin-bottom: 0.75rem;
+        }
+        .meta-card {
+            background: rgba(247, 243, 235, 0.88);
+            border: 1px solid rgba(23, 32, 51, 0.08);
+            border-radius: 18px;
+            padding: 0.85rem 0.95rem;
+        }
+        .meta-label {
+            color: #6a7485;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.25rem;
+        }
+        .meta-value {
+            color: #172033;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .summary-card {
+            background: linear-gradient(135deg, rgba(29, 78, 216, 0.08), rgba(15, 118, 110, 0.08));
+            border: 1px solid rgba(29, 78, 216, 0.10);
+            border-radius: 22px;
+            padding: 1rem 1.1rem;
+            margin-bottom: 0.9rem;
+        }
+        .summary-title {
+            color: #1d4ed8;
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            margin-bottom: 0.35rem;
+        }
+        .summary-body {
+            color: #172033;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .signal-group {
+            margin-top: 0.85rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid rgba(23, 32, 51, 0.08);
+        }
+        .signal-label {
+            color: #5d6676;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.72rem;
+            margin-bottom: 0.45rem;
+        }
+        .signal-pill {
+            background: rgba(23, 32, 51, 0.06);
+            color: #172033;
+            border: 1px solid rgba(23, 32, 51, 0.08);
+        }
+        .doc-preview {
+            background: rgba(248, 250, 252, 0.9);
+            border: 1px solid rgba(23, 32, 51, 0.08);
+            border-radius: 22px;
+            padding: 1rem;
+            max-height: 40rem;
+            overflow: auto;
+        }
+        .doc-preview pre {
+            font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
+            white-space: pre-wrap;
+            line-height: 1.55;
+            color: #172033;
+            margin: 0;
+        }
+        .media-shell {
+            background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(244,239,229,0.84));
+            border: 1px solid rgba(23, 32, 51, 0.08);
+            border-radius: 28px;
+            padding: 1rem 1rem 0.9rem 1rem;
+            box-shadow: 0 18px 42px rgba(23, 32, 51, 0.08);
+            margin-top: 0.2rem;
+        }
+        .media-intro {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.7rem;
+            margin-bottom: 0.9rem;
+        }
+        .media-title {
+            font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+            font-size: 1.32rem;
+            color: #172033;
+        }
+        .media-note {
+            color: #5d6676;
+            font-size: 0.92rem;
+            max-width: 34rem;
+        }
+        .media-chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-bottom: 0.8rem;
+        }
+        .media-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            border-radius: 999px;
+            padding: 0.38rem 0.72rem;
+            background: rgba(23, 32, 51, 0.06);
+            border: 1px solid rgba(23, 32, 51, 0.08);
+            color: #172033;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+        .image-rail {
+            background: rgba(248, 250, 252, 0.82);
+            border: 1px solid rgba(23, 32, 51, 0.08);
+            border-radius: 22px;
+            padding: 0.85rem;
+            min-height: 100%;
+        }
+        .image-rail-title {
+            color: #7c3f00;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-size: 0.72rem;
+            margin-bottom: 0.35rem;
+        }
+        .image-rail-copy {
+            color: #5d6676;
+            font-size: 0.92rem;
+            margin-bottom: 0.75rem;
+        }
+        .image-empty {
+            border: 1px dashed rgba(23, 32, 51, 0.18);
+            border-radius: 18px;
+            padding: 1rem;
+            color: #5d6676;
+            background: rgba(255,255,255,0.72);
+        }
+        .legend-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin: 0.4rem 0 0.8rem 0;
+        }
+        .legend-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            border-radius: 999px;
+            padding: 0.42rem 0.78rem;
+            background: rgba(255,255,255,0.82);
+            border: 1px solid rgba(23, 32, 51, 0.08);
+            font-size: 0.84rem;
+        }
+        .legend-dot {
+            width: 0.7rem;
+            height: 0.7rem;
+            border-radius: 999px;
+            display: inline-block;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _render_metric_card(label: str, value: str, note: str) -> None:
+    st.markdown(
+        f"""
+        <div class="metric-card">
+          <div class="metric-label">{escape(label)}</div>
+          <div class="metric-value">{escape(value)}</div>
+          <div class="metric-note">{escape(note)}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _render_section_intro(title: str, copy: str, kicker: str = "Briefing") -> None:
+    st.markdown(
+        f"""
+        <div class="section-kicker">{escape(kicker)}</div>
+        <div class="section-title">{escape(title)}</div>
+        <div class="section-copy">{escape(copy)}</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _render_signal_group(label: str, items: list[str], empty_label: str) -> None:
+    pills = "".join(f'<span class="signal-pill">{escape(item)}</span>' for item in items) or (
+        f'<span class="signal-pill">{escape(empty_label)}</span>'
+    )
+    st.markdown(
+        f"""
+        <div class="signal-group">
+          <div class="signal-label">{escape(label)}</div>
+          <div class="pill-row">{pills}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _render_article_metadata(selected_article: pd.Series) -> None:
+    st.markdown(
+        f"""
+        <div class="meta-grid">
+          <div class="meta-card">
+            <div class="meta-label">Source</div>
+            <div class="meta-value">{escape(str(selected_article['source'] or 'Unknown'))}</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Published</div>
+            <div class="meta-value">{escape(str(selected_article['published_date'] or 'Undated'))}</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Category</div>
+            <div class="meta-value">{escape(str(selected_article['category'] or 'Uncategorized'))}</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Importance</div>
+            <div class="meta-value">{escape(str(selected_article['importance_score']))} / 10</div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _render_summary_card(summary: str) -> None:
+    st.markdown(
+        f"""
+        <div class="summary-card">
+          <div class="summary-title">Analyst Summary</div>
+          <div class="summary-body">{escape(summary or 'No summary available.')}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _render_doc_preview(preview_text: str) -> None:
+    st.markdown(
+        f"""
+        <div class="doc-preview">
+          <pre>{escape(preview_text)}</pre>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _render_media_shell_intro(image_count: int, preview_text: str, truncated: bool) -> None:
+    chips = [
+        f'<span class="media-chip">Preview length: {len(preview_text):,} chars</span>',
+        f'<span class="media-chip">Images: {image_count}</span>',
+    ]
+    if truncated:
+        chips.append('<span class="media-chip">Text preview truncated</span>')
+    st.markdown(
+        f"""
+        <div class="media-shell">
+          <div class="media-intro">
+            <div>
+              <div class="media-title">Document And Media Board</div>
+              <div class="media-note">
+                Read the extracted source text and inspect embedded visuals in one place instead of jumping between separate blocks.
+              </div>
+            </div>
+          </div>
+          <div class="media-chip-row">{''.join(chips)}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _render_image_rail(preview_images: list[bytes], docx_missing: bool) -> None:
+    st.markdown(
+        """
+        <div class="image-rail">
+          <div class="image-rail-title">Embedded Visuals</div>
+          <div class="image-rail-copy">Images pulled from the original DOCX are pinned beside the text preview for easier comparison.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if docx_missing:
+        st.markdown(
+            '<div class="image-empty">Image preview unavailable because the source DOCX could not be found.</div>',
+            unsafe_allow_html=True,
+        )
+        return
+
+    if not preview_images:
+        st.markdown(
+            '<div class="image-empty">No embedded images were found in this DOCX.</div>',
+            unsafe_allow_html=True,
+        )
+        return
+
+    st.image(preview_images[0], caption="Lead embedded image", use_container_width=True)
+    if len(preview_images) > 1:
+        st.markdown("**Additional images**")
+        thumbnail_cols = st.columns(2, gap="small")
+        for index, image_payload in enumerate(preview_images[1:], start=2):
+            with thumbnail_cols[(index - 2) % 2]:
+                st.image(
+                    image_payload,
+                    caption=f"Embedded image {index}",
+                    use_container_width=True,
+                )
+    if len(preview_images) == DOCX_IMAGE_LIMIT:
+        st.caption("Image preview limited for display.")
+
+
+def _render_graph_legend() -> None:
+    chips = "".join(
+        f"""
+        <span class="legend-chip">
+          <span class="legend-dot" style="background:{color};"></span>
+          {escape(node_type.title())}
+        </span>
+        """
+        for node_type, color in NODE_COLORS.items()
+    )
+    st.markdown(f'<div class="legend-strip">{chips}</div>', unsafe_allow_html=True)
+
+
+def _render_chart_card(title: str, chart: alt.Chart) -> None:
+    st.markdown(
+        f"""
+        <div class="overview-card">
+          <div class="section-kicker">Distribution</div>
+          <div class="section-title" style="font-size:1.2rem;">{escape(title)}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.altair_chart(chart, use_container_width=True)
+
+
+def _top_count_frame(dataframe: pd.DataFrame, column_name: str, label: str, limit: int = 8) -> pd.DataFrame:
+    counts = (
+        dataframe[column_name]
+        .fillna("")
+        .replace("", "Unspecified")
+        .value_counts()
+        .head(limit)
+        .rename_axis(label)
+        .reset_index(name="count")
+    )
+    return counts
+
+
+def _count_chart(dataframe: pd.DataFrame, category_column: str, label: str, color: str) -> alt.Chart:
+    chart_data = _top_count_frame(dataframe, category_column, label)
+    return (
+        alt.Chart(chart_data)
+        .mark_bar(cornerRadiusTopRight=7, cornerRadiusBottomRight=7, color=color)
+        .encode(
+            x=alt.X("count:Q", title="Articles"),
+            y=alt.Y(f"{label}:N", sort="-x", title=None),
+            tooltip=[alt.Tooltip(f"{label}:N", title=label.title()), alt.Tooltip("count:Q", title="Articles")],
+        )
+        .properties(height=280)
+    )
+
+
+def _render_overview_tab(
+    filtered_articles: pd.DataFrame,
+    filtered_narratives: pd.DataFrame,
+    selected_week: str,
+) -> None:
+    if filtered_articles.empty:
+        st.info("No articles match the current filters.")
+        return
+
+    avg_importance = float(filtered_articles["importance_score"].fillna(0).mean())
+    source_count = int(filtered_articles["source"].replace("", pd.NA).dropna().nunique())
+    narrative_count = int(filtered_narratives["name"].nunique()) if not filtered_narratives.empty else 0
+    high_priority_count = int((filtered_articles["importance_score"].fillna(0) >= 8).sum())
+
+    top_row = st.columns(4)
+    with top_row[0]:
+        _render_metric_card("Articles in Scope", str(len(filtered_articles)), "Current filtered working set")
+    with top_row[1]:
+        _render_metric_card(
+            "Average Importance",
+            f"{avg_importance:.1f}",
+            "Mean article score across the current view",
+        )
+    with top_row[2]:
+        _render_metric_card("Sources Active", str(source_count), "Distinct publications in view")
+    with top_row[3]:
+        _render_metric_card("Priority Coverage", str(high_priority_count), "Articles scoring 8 or higher")
+
+    st.markdown("")
+    left_col, right_col = st.columns([1.15, 0.85], gap="large")
+
+    with left_col:
+        _render_section_intro(
+            "Coverage Shape",
+            "Quick distribution checks help reveal whether the week is concentrated in one source or one topic cluster.",
+            kicker="Overview",
+        )
+        chart_cols = st.columns(2, gap="large")
+        with chart_cols[0]:
+            _render_chart_card("Top Sources", _count_chart(filtered_articles, "source", "source", "#1d4ed8"))
+        with chart_cols[1]:
+            _render_chart_card("Top Categories", _count_chart(filtered_articles, "category", "category", "#0f766e"))
+
+    with right_col:
+        _render_section_intro(
+            "Operating Snapshot",
+            "This panel compresses the current filtered view into the main signals you would scan before reading individual documents.",
+            kicker="Status",
+        )
+        recent_view = filtered_articles[
+            ["title", "source", "published_date", "importance_score"]
+        ].head(8).rename(columns={"published_date": "date", "importance_score": "importance"})
+        st.dataframe(recent_view, use_container_width=True, hide_index=True, height=318)
+        st.markdown(
+            f"""
+            <div class="panel-card" style="margin-top:0.8rem;">
+              <div class="section-kicker">Narratives</div>
+              <div class="section-title" style="font-size:1.25rem;">{narrative_count} active narrative tracks</div>
+              <div class="section-copy">Week filter: {escape(selected_week)}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+
 def main() -> None:
-    st.set_page_config(page_title="Narrative Agent Dashboard", layout="wide")
-    st.title("Narrative Agent Dashboard")
+    st.set_page_config(
+        page_title="Narrative Agent Dashboard",
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
+    inject_dashboard_css()
 
     if not DB_PATH.exists():
         st.error("Database not found. Run weekly extraction first.")
@@ -458,14 +1062,8 @@ def main() -> None:
     narratives_df = load_narratives()
     entities_df = load_entities()
 
-    metric_columns = st.columns(5)
-    metric_columns[0].metric("Total Articles", metrics["articles"])
-    metric_columns[1].metric("Total Entities", metrics["entities"])
-    metric_columns[2].metric("Total Themes", metrics["themes"])
-    metric_columns[3].metric("Total Narratives", metrics["narratives"])
-    metric_columns[4].metric("Total Graph Edges", metrics["graph_edges"])
-
-    st.sidebar.header("Filters")
+    st.sidebar.markdown("## Filters")
+    st.sidebar.caption("Scope the intelligence view before drilling into articles, narratives, and graph relationships.")
     week_options = ["All", *sorted([value for value in articles_df["week_label"].dropna().unique()], reverse=True)]
     source_options = ["All", *sorted([value for value in articles_df["source"].dropna().unique() if value])]
     category_options = ["All", *sorted([value for value in articles_df["category"].dropna().unique() if value])]
@@ -483,77 +1081,109 @@ def main() -> None:
         search_term,
     )
     filtered_article_ids = set(filtered_articles["id"].astype(str))
+    filtered_narratives = _filter_related_rows(narratives_df, filtered_article_ids)
+    active_filters = [
+        f"Week: {selected_week}",
+        f"Source: {selected_source}",
+        f"Category: {selected_category}",
+        f"Search: {search_term or 'None'}",
+    ]
+    hero_badges = "".join(f'<span class="hero-badge">{escape(item)}</span>' for item in active_filters)
+    total_filtered = len(filtered_articles)
+    avg_importance = float(filtered_articles["importance_score"].fillna(0).mean()) if total_filtered else 0.0
 
-    articles_tab, narratives_tab, entities_tab, trends_tab, graph_tab = st.tabs(
-        ["Articles", "Narratives", "Entities", "Narrative Trends", "Graph View"]
+    st.markdown(
+        f"""
+        <div class="hero-panel">
+          <div class="hero-kicker">Narrative Intelligence Console</div>
+          <div class="hero-title">Narrative Agent Dashboard</div>
+          <div class="hero-copy">
+            Structured weekly coverage, entity tracking, narrative movement, and graph relationships in one operating view.
+            Current scope includes {total_filtered} article(s) with an average importance score of {avg_importance:.1f}.
+          </div>
+          <div class="hero-badges">{hero_badges}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
+
+    metric_columns = st.columns(5)
+    with metric_columns[0]:
+        _render_metric_card("Articles", str(metrics["articles"]), "Total article records")
+    with metric_columns[1]:
+        _render_metric_card("Entities", str(metrics["entities"]), "Distinct tracked entities")
+    with metric_columns[2]:
+        _render_metric_card("Themes", str(metrics["themes"]), "Reusable topic clusters")
+    with metric_columns[3]:
+        _render_metric_card("Narratives", str(metrics["narratives"]), "Trackable narrative lines")
+    with metric_columns[4]:
+        _render_metric_card("Graph Edges", str(metrics["graph_edges"]), "Relationship statements")
+
+    overview_tab, articles_tab, narratives_tab, entities_tab, trends_tab, graph_tab = st.tabs(
+        ["Overview", "Articles", "Narratives", "Entities", "Narrative Trends", "Graph View"]
+    )
+
+    with overview_tab:
+        _render_overview_tab(filtered_articles, filtered_narratives, selected_week)
 
     with articles_tab:
         if filtered_articles.empty:
             st.info("No articles match the current filters.")
         else:
-            left_col, right_col = st.columns([1, 1])
+            _render_section_intro(
+                "Article Workbench",
+                "Use this pane to inspect structured extraction alongside the source document preview.",
+                kicker="Primary View",
+            )
+            left_col, right_col = st.columns([0.95, 1.05], gap="large")
             article_options = filtered_articles["selection_label"].tolist()
 
             with left_col:
+                st.caption(f"{len(filtered_articles)} article(s) match the current filter set.")
                 selected_label = st.selectbox("Select article", article_options, key="article_select")
                 selected_article = filtered_articles[
                     filtered_articles["selection_label"] == selected_label
                 ].iloc[0]
 
                 st.markdown(f"## {selected_article['title']}")
-                st.markdown(f"**Source:** {selected_article['source']}")
-                st.markdown(f"**Date:** {selected_article['published_date'] or 'Undated'}")
-                st.markdown(f"**Category:** {selected_article['category'] or 'Uncategorized'}")
-                st.markdown(f"**Importance Score:** {selected_article['importance_score']}")
+                _render_article_metadata(selected_article)
+                _render_summary_card(str(selected_article["summary"] or ""))
 
-                st.markdown("### Summary")
-                st.write(selected_article["summary"] or "No summary available.")
-
-                st.markdown("### Entities")
                 entity_names = _split_names(selected_article["linked_entities"])
-                st.markdown("\n".join(f"- {name}" for name in entity_names) or "- None")
-
-                st.markdown("### Themes")
                 theme_names = _split_names(selected_article["linked_themes"])
-                st.markdown("\n".join(f"- {name}" for name in theme_names) or "- None")
-
-                st.markdown("### Narratives")
                 narrative_names = _split_names(selected_article["linked_narratives"])
-                st.markdown("\n".join(f"- {name}" for name in narrative_names) or "- None")
+                _render_signal_group("Entities", entity_names, "No linked entities")
+                _render_signal_group("Themes", theme_names, "No linked themes")
+                _render_signal_group("Narratives", narrative_names, "No linked narratives")
 
             with right_col:
-                st.markdown("### Original DOCX Preview")
+                _render_section_intro(
+                    "Source Document",
+                    "The reading panel now keeps the source text and embedded visuals visible together so the article can be inspected with less scrolling.",
+                    kicker="Document",
+                )
                 original_file_path = str(selected_article["original_file_path"] or "")
                 preview_text = preview_docx(original_file_path)
                 docx_missing = preview_text == "Original DOCX not found"
-                st.text_area(
-                    "Document preview",
-                    preview_text,
-                    height=600,
-                )
+                preview_images = preview_docx_images(original_file_path)
+                preview_truncated = False if docx_missing else _is_docx_preview_truncated(original_file_path)
+                _render_media_shell_intro(len(preview_images), preview_text, preview_truncated)
+                media_left, media_right = st.columns([1.35, 0.9], gap="large")
+                with media_left:
+                    _render_doc_preview(preview_text)
+                with media_right:
+                    _render_image_rail(preview_images, docx_missing)
                 if docx_missing:
                     st.info("Original DOCX not found")
-                elif _is_docx_preview_truncated(original_file_path):
+                elif preview_truncated:
                     st.caption("Preview truncated for display.")
 
-                st.markdown("### Embedded Images")
-                preview_images = preview_docx_images(original_file_path)
-                if docx_missing:
-                    st.caption("Image preview unavailable because the source DOCX could not be found.")
-                elif not preview_images:
-                    st.info("No embedded images found in this DOCX.")
-                else:
-                    for index, image_payload in enumerate(preview_images, start=1):
-                        st.image(
-                            image_payload,
-                            caption=f"Embedded image {index}",
-                            use_container_width=True,
-                        )
-                    if len(preview_images) == DOCX_IMAGE_LIMIT:
-                        st.caption("Image preview limited for display.")
-
     with narratives_tab:
+        _render_section_intro(
+            "Narrative Register",
+            "Filter the narrative layer independently to review theses, status labels, and mention longevity.",
+            kicker="Narratives",
+        )
         status_options = [
             "emerging",
             "strengthening",
@@ -568,7 +1198,6 @@ def main() -> None:
             default=status_options,
         )
 
-        filtered_narratives = _filter_related_rows(narratives_df, filtered_article_ids)
         filtered_narratives = filtered_narratives[
             filtered_narratives["status"].isin(selected_statuses)
         ]
@@ -577,6 +1206,22 @@ def main() -> None:
                 filtered_narratives["name"].str.contains(search_term, case=False, na=False)
                 | filtered_narratives["thesis"].str.contains(search_term, case=False, na=False)
             ]
+
+        narrative_metric_cols = st.columns(3)
+        with narrative_metric_cols[0]:
+            _render_metric_card("Visible Narratives", str(len(filtered_narratives)), "Rows after filters")
+        with narrative_metric_cols[1]:
+            _render_metric_card(
+                "Average Importance",
+                f"{filtered_narratives['importance_score'].fillna(0).mean():.1f}" if not filtered_narratives.empty else "0.0",
+                "Mean importance across visible narratives",
+            )
+        with narrative_metric_cols[2]:
+            _render_metric_card(
+                "Average Mentions",
+                f"{filtered_narratives['mention_count'].fillna(0).mean():.1f}" if not filtered_narratives.empty else "0.0",
+                "Mean article mentions per narrative",
+            )
 
         st.dataframe(
             filtered_narratives[
@@ -596,12 +1241,30 @@ def main() -> None:
         )
 
     with entities_tab:
+        _render_section_intro(
+            "Entity Register",
+            "Review the monitored actors and the article/narrative contexts in which they appear.",
+            kicker="Entities",
+        )
         filtered_entities = _filter_related_rows(entities_df, filtered_article_ids)
         if search_term:
             filtered_entities = filtered_entities[
                 filtered_entities["name"].str.contains(search_term, case=False, na=False)
                 | filtered_entities["description"].str.contains(search_term, case=False, na=False)
             ]
+
+        entity_metric_cols = st.columns(3)
+        with entity_metric_cols[0]:
+            _render_metric_card("Visible Entities", str(len(filtered_entities)), "Rows after filters")
+        with entity_metric_cols[1]:
+            _render_metric_card(
+                "Entity Types",
+                str(filtered_entities["type"].replace("", pd.NA).dropna().nunique()),
+                "Distinct entity classes in view",
+            )
+        with entity_metric_cols[2]:
+            relationship_count = int(filtered_entities["graph_relationships"].fillna("").astype(str).str.len().gt(0).sum())
+            _render_metric_card("Linked Relationships", str(relationship_count), "Entities with graph evidence")
 
         st.dataframe(
             filtered_entities[["name", "type", "description", "linked_articles", "graph_relationships"]],
@@ -610,6 +1273,11 @@ def main() -> None:
         )
 
     with trends_tab:
+        _render_section_intro(
+            "Narrative Movement",
+            "Trend labels are computed from article-linked appearances inside the selected week window.",
+            kicker="Trends",
+        )
         if selected_week == "All":
             st.info("Select a specific week in the sidebar to view narrative trends.")
         else:
@@ -630,6 +1298,16 @@ def main() -> None:
             trend_df = trend_df[trend_df["trend_status"].isin(selected_trend_statuses)]
             trend_df = trend_df.sort_values(by=["mention_count", "name"], ascending=[False, True])
 
+            trend_metric_cols = st.columns(3)
+            with trend_metric_cols[0]:
+                _render_metric_card("Visible Trends", str(len(trend_df)), "Rows after filters")
+            with trend_metric_cols[1]:
+                strongest_count = int((trend_df["trend_status"] == "STRENGTHENING").sum())
+                _render_metric_card("Strengthening", str(strongest_count), "Narratives accelerating this week")
+            with trend_metric_cols[2]:
+                new_count = int((trend_df["trend_status"] == "NEW").sum())
+                _render_metric_card("New Signals", str(new_count), "Narratives first seen this week")
+
             st.dataframe(
                 trend_df[
                     [
@@ -645,6 +1323,11 @@ def main() -> None:
             )
 
     with graph_tab:
+        _render_section_intro(
+            "Relationship Graph",
+            "Use the filters to shrink the network to the current operating question, then inspect the retained node types and relationship labels.",
+            kicker="Graph",
+        )
         raw_graph = load_graph()
         if raw_graph is None:
             st.info("Graph export not found. Run python -m src.export_graph --format json first.")
@@ -655,19 +1338,24 @@ def main() -> None:
                 {str(edge.get("relationship", "")) for edge in graph_payload.get("edges", [])}
             )
 
-            selected_node_types = st.multiselect(
-                "Node types",
-                options=graph_node_types,
-                default=graph_node_types,
-                key="graph_node_types",
-            )
-            selected_relationship_types = st.multiselect(
-                "Relationship types",
-                options=graph_relationships,
-                default=graph_relationships,
-                key="graph_relationship_types",
-            )
-            graph_search = st.text_input("Search node", value="", key="graph_search")
+            _render_graph_legend()
+            control_cols = st.columns([1, 1, 0.8], gap="large")
+            with control_cols[0]:
+                selected_node_types = st.multiselect(
+                    "Node types",
+                    options=graph_node_types,
+                    default=graph_node_types,
+                    key="graph_node_types",
+                )
+            with control_cols[1]:
+                selected_relationship_types = st.multiselect(
+                    "Relationship types",
+                    options=graph_relationships,
+                    default=graph_relationships,
+                    key="graph_relationship_types",
+                )
+            with control_cols[2]:
+                graph_search = st.text_input("Search node", value="", key="graph_search")
 
             render_graph(
                 graph_payload,

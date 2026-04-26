@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 from datetime import date, datetime, timedelta
+import re
 
 
 ARTICLE_DATE_FORMATS = (
     "%Y-%m-%d",
     "%d %b %Y",
     "%d %B %Y",
+    "%b %d %Y",
+    "%B %d %Y",
 )
 
 
@@ -18,6 +21,8 @@ def parse_article_date(value: str) -> date | None:
     cleaned = " ".join(value.strip().split())
     if not cleaned:
         return None
+    cleaned = re.sub(r"(\d{1,2})(st|nd|rd|th)\b", r"\1", cleaned, flags=re.IGNORECASE)
+    cleaned = cleaned.replace(",", "")
 
     for fmt in ARTICLE_DATE_FORMATS:
         try:
@@ -64,4 +69,3 @@ def is_date_in_week(value: str, week_label: str) -> bool:
         return False
     start_date, end_date = week_bounds(week_label)
     return start_date <= parsed <= end_date
-

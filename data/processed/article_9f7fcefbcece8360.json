@@ -1,112 +1,148 @@
 {
   "article_id": "article_9f7fcefbcece8360",
-  "original_file_path": "/app/data/raw_articles/Business_Apple_new_boss_25_apr_2026.docx",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Business_Apple_new_boss_25_apr_2026.docx",
   "chart_references": [
     "Chart: The Economist",
     "Mr Ternus, Apple’s 50-year-old hardware chief, will take over in September, at which point the 65-year-old Mr Cook will become executive chairman after a remarkable tenure as Apple’s boss. Since he replaced Jobs in 2011, the company’s sales have quadrupled, to $416bn, and its shares have outperformed the S&P 500 by a wide margin (see chart). On his watch, Apple’s market value has soared from $350bn to $4trn (roughly $700m for every day of his tenure). Sales of iPhones are breaking records. Its services business, which includes app-store revenues, continues to grow by double digits annually. As chief executive, Mr Ternus’s first product launch later this year is likely to be a foldable phone, which Apple’s devotees have been eagerly awaiting. The transition is set to look picture-perfect."
   ],
-  "extractor": "llm",
+  "extractor": "mock",
   "extraction": {
     "source": "Unknown",
     "section": "Business",
     "title": "Too many Cooks, not enough Jobs?",
-    "subtitle": "Apple’s new boss needs to restore its magic for the AI era The elevation of John Ternus hints at the future direction of the company Share",
-    "published_date": "2026-04-23",
+    "subtitle": "Apple’s new boss needs to restore its magic for the AI era The elevation of John Ternus hints at the future direction of the company",
+    "published_date": "23 Apr 2026",
     "category": "Business",
-    "summary": "John Ternus has been appointed as Apple's new CEO, succeeding Tim Cook. As Apple faces challenges in the AI era, Ternus must innovate beyond hardware improvements to maintain the company's competitive edge. His leadership will be crucial as Apple navigates its reliance on Chinese manufacturing and seeks to integrate AI more effectively into its products.",
-    "importance_score": 8,
+    "summary": "Apple's iPhone-centered operating model is facing simultaneous pressure from AI disruption, geopolitical tension, and the need to diversify manufacturing.",
+    "importance_score": 9,
     "entities": [
       {
-        "name": "John Ternus",
-        "type": "Person",
-        "role": "CEO",
-        "description": "Newly appointed CEO of Apple, previously the hardware chief."
+        "name": "Apple",
+        "type": "company",
+        "role": "primary subject",
+        "description": "Global technology company whose iPhone franchise anchors the article."
       },
       {
         "name": "Tim Cook",
-        "type": "Person",
-        "role": "Former CEO",
-        "description": "Former CEO of Apple who led the company since 2011."
+        "type": "person",
+        "role": "leader",
+        "description": "Apple chief executive associated with the company's global supply-chain era."
       },
       {
-        "name": "Steve Jobs",
-        "type": "Person",
-        "role": "Former CEO",
-        "description": "Co-founder and former CEO of Apple, known for his innovative vision."
+        "name": "John Ternus",
+        "type": "person",
+        "role": "potential successor",
+        "description": "Apple executive discussed as a potential future leader."
       },
       {
-        "name": "Apple",
-        "type": "Company",
-        "role": "Technology Company",
-        "description": "Multinational technology company known for its consumer electronics and software."
+        "name": "China",
+        "type": "location",
+        "role": "manufacturing base",
+        "description": "Critical production hub in Apple's current supply chain."
       },
       {
-        "name": "Gemini",
-        "type": "Technology",
-        "role": "AI Model",
-        "description": "AI model from Google that Apple is relying on for its AI integration."
+        "name": "India",
+        "type": "location",
+        "role": "expansion base",
+        "description": "Growing alternative manufacturing base for Apple's production footprint."
+      },
+      {
+        "name": "iPhone",
+        "type": "product",
+        "role": "core revenue engine",
+        "description": "Apple's flagship hardware platform and operational dependency."
+      },
+      {
+        "name": "AI",
+        "type": "technology",
+        "role": "disruptive force",
+        "description": "Technological shift challenging the durability of the smartphone model."
       }
     ],
     "events": [
       {
-        "event_date": "2026-09-01",
-        "event_summary": "John Ternus officially takes over as CEO of Apple.",
-        "location": "Apple Headquarters, Cupertino, California",
-        "importance_score": 9
+        "event_date": "23 Apr 2026",
+        "event_summary": "Apple's global manufacturing strategy is reassessed amid geopolitical fragmentation.",
+        "location": "China and India",
+        "importance_score": 8
       },
       {
-        "event_date": "2026-06-01",
-        "event_summary": "Apple showcases Gemini-powered Siri at the developers' conference.",
-        "location": "Apple Developers Conference",
-        "importance_score": 7
+        "event_date": "23 Apr 2026",
+        "event_summary": "AI is framed as a strategic challenge to Apple's smartphone-led model.",
+        "location": "Global",
+        "importance_score": 9
       }
     ],
     "themes": [
       {
-        "name": "Leadership Transition",
-        "description": "The shift from Tim Cook to John Ternus and its implications for Apple's future."
+        "name": "globalisation",
+        "description": "Cross-border production and market integration that shaped Apple's scale model."
       },
       {
-        "name": "AI Integration",
-        "description": "Apple's efforts to incorporate AI into its products and the challenges it faces."
+        "name": "supply chains",
+        "description": "Operational dependence on complex international manufacturing networks."
       },
       {
-        "name": "Manufacturing Strategy",
-        "description": "Apple's transition away from reliance on Chinese manufacturing."
+        "name": "trade wars",
+        "description": "Geopolitical conflict that increases costs and fragility across production networks."
       }
     ],
     "narratives": [
       {
-        "name": "Innovation in the AI Era",
-        "thesis": "John Ternus must lead Apple to innovate beyond hardware improvements to thrive in the AI era.",
-        "status": "emerging",
-        "importance_score": 8
+        "name": "Apple's globalised iPhone model under pressure",
+        "thesis": "Apple's globalised iPhone model is under pressure from AI and geopolitical fragmentation.",
+        "status": "strengthening",
+        "importance_score": 9
       },
       {
-        "name": "Challenges of Leadership",
-        "thesis": "Ternus faces the challenge of succeeding two legendary CEOs while navigating current market dynamics.",
-        "status": "strengthening",
-        "importance_score": 7
+        "name": "Apple enters a post-Tim Cook succession era",
+        "thesis": "Apple's handover from Tim Cook to John Ternus creates a new leadership-era narrative around whether operational continuity is enough for the AI age.",
+        "status": "emerging",
+        "importance_score": 8
       }
     ],
     "graph_edges": [
       {
-        "source_node": "John Ternus",
-        "relationship": "SUCCESSOR",
+        "source_node": "Apple",
+        "relationship": "LED_BY",
         "target_node": "Tim Cook",
-        "confidence": 0.9
+        "confidence": 0.98
+      },
+      {
+        "source_node": "Apple",
+        "relationship": "SUCCESSOR",
+        "target_node": "John Ternus",
+        "confidence": 0.72
       },
       {
         "source_node": "Apple",
         "relationship": "DEPENDS_ON",
-        "target_node": "Gemini",
-        "confidence": 0.8
+        "target_node": "iPhone",
+        "confidence": 0.95
       },
       {
-        "source_node": "John Ternus",
-        "relationship": "LED_BY",
-        "target_node": "Steve Jobs",
-        "confidence": 0.7
+        "source_node": "Apple",
+        "relationship": "MANUFACTURES_IN",
+        "target_node": "China",
+        "confidence": 0.94
+      },
+      {
+        "source_node": "Apple",
+        "relationship": "EXPANDS_TO",
+        "target_node": "India",
+        "confidence": 0.91
+      },
+      {
+        "source_node": "AI",
+        "relationship": "CHALLENGES",
+        "target_node": "Apple smartphone model",
+        "confidence": 0.89
+      },
+      {
+        "source_node": "Trade wars",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Apple supply chain",
+        "confidence": 0.9
       }
     ]
   }

@@ -8,6 +8,13 @@ cd "$SCRIPT_DIR"
 week="$(date +%F)"
 extractor="llm"
 mode="docker"
+python_bin="python"
+
+if [[ -x "$SCRIPT_DIR/.venv/bin/python" ]]; then
+  python_bin="$SCRIPT_DIR/.venv/bin/python"
+elif command -v python3 >/dev/null 2>&1; then
+  python_bin="python3"
+fi
 
 usage() {
   cat <<'EOF'
@@ -59,7 +66,7 @@ if [[ "$extractor" != "mock" && "$extractor" != "llm" ]]; then
 fi
 
 if [[ "$mode" == "local" ]]; then
-  python -m src.process_new_docs --week "$week" --extractor "$extractor"
+  "$python_bin" -m src.process_new_docs --week "$week" --extractor "$extractor"
 elif [[ "$mode" == "docker" ]]; then
   docker compose run --rm narrative_agent python -m src.process_new_docs --week "$week" --extractor "$extractor"
 else
