@@ -22,6 +22,7 @@ try:
     from .db import NarrativeDatabase
     from .narrative_tracking import narrative_trends_as_dicts, get_narrative_trends
     from .date_utils import week_label_for_published_date
+    from .graph_rag import answer_question
     from .paths import DB_PATH, EXPORTS_DIR, PROJECT_ROOT
 except ImportError:
     PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -30,12 +31,13 @@ except ImportError:
     from src.db import NarrativeDatabase
     from src.narrative_tracking import narrative_trends_as_dicts, get_narrative_trends
     from src.date_utils import week_label_for_published_date
+    from src.graph_rag import answer_question
     from src.paths import DB_PATH, EXPORTS_DIR, PROJECT_ROOT
 
 
 GRAPH_EXPORT_PATH = EXPORTS_DIR / "graph.json"
 GRAPH_LATEST_PATH = EXPORTS_DIR / "graph_latest.json"
-DOCX_PREVIEW_LIMIT = 5000
+DOCX_PREVIEW_LIMIT = 12000
 DOCX_IMAGE_LIMIT = 4
 NODE_COLORS = {
     "article": "#1d4ed8",
@@ -48,6 +50,30 @@ NODE_SHAPES = {
     "entity": "dot",
     "theme": "triangle",
     "narrative": "diamond",
+}
+
+STATUS_BADGE_CLASSES: dict[str, str] = {
+    "emerging": "status-emerging",
+    "strengthening": "status-strengthening",
+    "weakening": "status-weakening",
+    "stable": "status-stable",
+    "reversed": "status-reversed",
+    "transitioning": "status-transitioning",
+}
+
+TREND_BADGE_CLASSES: dict[str, str] = {
+    "new": "trend-new",
+    "strengthening": "trend-strengthening",
+    "recurring": "trend-recurring",
+    "weakening": "trend-weakening",
+}
+
+ENTITY_TYPE_CLASSES: dict[str, str] = {
+    "person": "etype-person",
+    "company": "etype-company",
+    "organization": "etype-organization",
+    "country": "etype-country",
+    "technology": "etype-technology",
 }
 
 
@@ -69,18 +95,25 @@ def get_connection() -> sqlite3.Connection:
     return connection
 
 
-def ensure_database_schema() -> None:
-    """Run lightweight migrations before opening read-only dashboard connections."""
+def ensure_database_schema() -> bool:
+    """Check that the database file exists and is readable for the read-only dashboard."""
+    if not DB_PATH.exists():
+        st.error("Database not found. Run weekly extraction first.")
+        return False
 
-    database = NarrativeDatabase(DB_PATH)
+    # Try to open a read-only connection to verify accessibility
     try:
-        database.initialize()
-    finally:
-        database.close()
+        with get_connection() as connection:
+            connection.execute("SELECT 1")
+    except Exception as e:
+        st.error(f"Cannot read database: {e}")
+        return False
+
+    return True
 
 
 @st.cache_data(show_spinner=False)
-def load_metrics(_db_version: tuple[int, int]) -> dict[str, int]:
+def load_metrics(db_version: tuple[int, int]) -> dict[str, int]:
     """Load top-line database metrics."""
 
     with get_connection() as connection:
@@ -94,7 +127,7 @@ def load_metrics(_db_version: tuple[int, int]) -> dict[str, int]:
 
 
 @st.cache_data(show_spinner=False)
-def load_articles(_db_version: tuple[int, int]) -> pd.DataFrame:
+def load_articles(db_version: tuple[int, int]) -> pd.DataFrame:
     """Load article-level dashboard data."""
 
     query = """
@@ -151,7 +184,7 @@ def load_articles(_db_version: tuple[int, int]) -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
-def load_narratives(_db_version: tuple[int, int]) -> pd.DataFrame:
+def load_narratives(db_version: tuple[int, int]) -> pd.DataFrame:
     """Load narrative-level dashboard data."""
 
     query = """
@@ -177,7 +210,7 @@ def load_narratives(_db_version: tuple[int, int]) -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
-def load_narrative_trends(week_label: str, _db_version: tuple[int, int]) -> pd.DataFrame:
+def load_narrative_trends(week_label: str, db_version: tuple[int, int]) -> pd.DataFrame:
     """Load narrative trends for a selected week."""
 
     with get_connection() as connection:
@@ -200,7 +233,7 @@ def load_narrative_trends(week_label: str, _db_version: tuple[int, int]) -> pd.D
 
 
 @st.cache_data(show_spinner=False)
-def load_entities(_db_version: tuple[int, int]) -> pd.DataFrame:
+def load_entities(db_version: tuple[int, int]) -> pd.DataFrame:
     """Load entity-level dashboard data."""
 
     query = """
@@ -249,7 +282,7 @@ def list_available_graph_weeks() -> list[str]:
 
 
 @st.cache_data(show_spinner=False)
-def load_graph_snapshot(week_label: str | None, _graph_version: tuple[int, int]) -> dict[str, Any] | None:
+def load_graph_snapshot(week_label: str | None, graph_version: tuple[int, int]) -> dict[str, Any] | None:
     """Load one exported graph snapshot."""
 
     graph_path = _graph_snapshot_path(week_label)
@@ -418,11 +451,15 @@ def _is_docx_preview_truncated(file_path: str) -> bool:
     if resolved_path is None:
         return False
 
-    paragraphs = [
-        paragraph.text.strip()
-        for paragraph in Document(resolved_path).paragraphs
-        if paragraph.text.strip()
-    ]
+    try:
+        paragraphs = [
+            paragraph.text.strip()
+            for paragraph in Document(resolved_path).paragraphs
+            if paragraph.text.strip()
+        ]
+    except Exception:
+        return False
+
     preview_text = "\n\n".join(paragraphs)
     return len(preview_text) > DOCX_PREVIEW_LIMIT
 
@@ -435,9 +472,14 @@ def preview_docx(file_path: str) -> str:
     if resolved_path is None:
         return "Original DOCX not found"
 
+    try:
+        doc = Document(resolved_path)
+    except Exception as e:
+        return f"Error loading DOCX: {e}"
+
     paragraphs = [
         paragraph.text.strip()
-        for paragraph in Document(resolved_path).paragraphs
+        for paragraph in doc.paragraphs
         if paragraph.text.strip()
     ]
     preview_text = "\n\n".join(paragraphs)
@@ -455,15 +497,19 @@ def preview_docx_images(file_path: str) -> list[bytes]:
     image_suffixes = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp"}
     image_payloads: list[bytes] = []
 
-    with ZipFile(resolved_path) as archive:
-        media_names = sorted(
-            name
-            for name in archive.namelist()
-            if name.startswith("word/media/")
-            and Path(name).suffix.lower() in image_suffixes
-        )
-        for media_name in media_names[:DOCX_IMAGE_LIMIT]:
-            image_payloads.append(archive.read(media_name))
+    try:
+        with ZipFile(resolved_path) as archive:
+            media_names = sorted(
+                name
+                for name in archive.namelist()
+                if name.startswith("word/media/")
+                and Path(name).suffix.lower() in image_suffixes
+            )
+            for media_name in media_names[:DOCX_IMAGE_LIMIT]:
+                image_payloads.append(archive.read(media_name))
+    except Exception:
+        # If ZIP is corrupt or not a ZIP, return empty list
+        return []
 
     return image_payloads
 
@@ -681,7 +727,7 @@ def render_graph(
             else:
                 st.write("No visible edges")
 
-    network = Network(height="720px", width="100%", directed=True, bgcolor="#ffffff", font_color="#111111")
+    network = Network(height="940px", width="100%", directed=True, bgcolor="#ffffff", font_color="#111111")
     network.barnes_hut()
 
     for node_id, attributes in graph.nodes(data=True):
@@ -794,8 +840,8 @@ def render_graph(
           },
           "physics": {
             "barnesHut": {
-              "gravitationalConstant": -4200,
-              "springLength": 145
+              "gravitationalConstant": -5200,
+              "springLength": 175
             },
             "minVelocity": 0.75
           }
@@ -806,19 +852,20 @@ def render_graph(
     network_html = network.generate_html()
     fit_script = """
     <script type="text/javascript">
-    setTimeout(function() {
-      if (typeof network !== "undefined") {
-        network.once("stabilizationIterationsDone", function () {
-          network.fit({animation: false});
-          network.moveTo({scale: 0.82, animation: false});
-        });
-      }
-    }, 0);
+	    setTimeout(function() {
+	      if (typeof network !== "undefined") {
+	        const fitGraph = function () {
+	          network.fit({animation: false});
+	        };
+	        network.once("stabilizationIterationsDone", fitGraph);
+	        setTimeout(fitGraph, 1200);
+	      }
+	    }, 0);
     </script>
     """
     network_html = network_html.replace("</body>", fit_script + "\n</body>")
 
-    components.html(network_html, height=760, scrolling=True)
+    components.html(network_html, height=980, scrolling=True)
 
 
 def inject_dashboard_css() -> None:
@@ -851,6 +898,9 @@ def inject_dashboard_css() -> None:
         .stMarkdown, [data-testid="stMetricLabel"], [data-testid="stMetricValue"] {
             font-family: "Avenir Next", "Segoe UI", "Trebuchet MS", sans-serif;
         }
+        .stApp {
+            color: #172033;
+        }
         [data-testid="stSidebar"] {
             background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(244,239,229,0.95));
             border-right: 1px solid rgba(23, 32, 51, 0.08);
@@ -862,13 +912,81 @@ def inject_dashboard_css() -> None:
         [data-baseweb="select"] > div,
         .stTextInput > div > div,
         .stTextArea textarea {
-            background: rgba(255, 255, 255, 0.92);
-            border-radius: 14px;
+            background: #ffffff !important;
+            border: 1px solid rgba(23, 32, 51, 0.18) !important;
+            border-radius: 10px !important;
+            color: #172033 !important;
+            caret-color: #172033 !important;
+            box-shadow: none !important;
+        }
+        .stTextInput input,
+        .stTextArea textarea,
+        .stTextArea textarea::placeholder,
+        [data-baseweb="select"] span {
+            color: #172033 !important;
+            opacity: 1 !important;
+        }
+        .stTextArea label,
+        .stCheckbox label,
+        .stMarkdown p,
+        [data-testid="stCaptionContainer"],
+        [data-testid="stCaptionContainer"] p {
+            color: #334155 !important;
+        }
+        .stButton button,
+        [data-testid="stFormSubmitButton"] button {
+            border-radius: 10px !important;
+            border: 1px solid rgba(23, 32, 51, 0.16) !important;
+            background: #ffffff !important;
+            color: #172033 !important;
+            box-shadow: none !important;
+        }
+        .stButton button p,
+        [data-testid="stFormSubmitButton"] button p {
+            color: inherit !important;
+        }
+        .stButton button:hover,
+        [data-testid="stFormSubmitButton"] button:hover {
+            border-color: rgba(29, 78, 216, 0.45) !important;
+            color: #1d4ed8 !important;
+        }
+        [data-testid="stFormSubmitButton"] button[kind="primary"],
+        [data-testid="stFormSubmitButton"] button {
+            background: #1d4ed8 !important;
+            border-color: #1d4ed8 !important;
+            color: #ffffff !important;
+        }
+        [data-testid="stFormSubmitButton"] button p {
+            color: #ffffff !important;
+        }
+        [data-testid="stChatMessage"] {
+            background: #ffffff !important;
+            border: 1px solid rgba(23, 32, 51, 0.10) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 24px rgba(23, 32, 51, 0.06) !important;
+            margin: 0.75rem 0 !important;
+            padding: 0.85rem 1rem !important;
+        }
+        [data-testid="stChatMessage"] * {
+            color: #172033 !important;
+        }
+        [data-testid="stChatMessageAvatarUser"],
+        [data-testid="stChatMessageAvatarAssistant"] {
+            background: rgba(29, 78, 216, 0.10) !important;
+            border-radius: 10px !important;
+        }
+        [data-testid="stExpander"] {
+            background: #ffffff !important;
+            border: 1px solid rgba(23, 32, 51, 0.10) !important;
+            border-radius: 10px !important;
+        }
+        [data-testid="stDataFrame"] {
+            color: #172033 !important;
         }
         [data-testid="stTabs"] {
             background: rgba(255, 255, 255, 0.65);
             border: 1px solid rgba(23, 32, 51, 0.08);
-            border-radius: 24px;
+            border-radius: 12px;
             padding: 0.4rem 0.6rem 1rem 0.6rem;
             backdrop-filter: blur(8px);
         }
@@ -879,7 +997,11 @@ def inject_dashboard_css() -> None:
         }
         [data-testid="stTabs"] button[aria-selected="true"] {
             background: linear-gradient(135deg, #172033 0%, #1d4ed8 100%);
-            color: #ffffff;
+            color: #ffffff !important;
+        }
+        [data-testid="stTabs"] button[aria-selected="true"] p,
+        [data-testid="stTabs"] button[aria-selected="true"] span {
+            color: #ffffff !important;
         }
         .hero-panel {
             background:
@@ -1036,28 +1158,18 @@ def inject_dashboard_css() -> None:
             color: #172033;
             border: 1px solid rgba(23, 32, 51, 0.08);
         }
-        .doc-preview {
-            background: rgba(248, 250, 252, 0.9);
-            border: 1px solid rgba(23, 32, 51, 0.08);
-            border-radius: 22px;
-            padding: 1rem;
-            max-height: 40rem;
-            overflow: auto;
-        }
-        .doc-preview pre {
-            font-family: "SFMono-Regular", "Menlo", "Consolas", monospace;
-            white-space: pre-wrap;
-            line-height: 1.55;
-            color: #172033;
-            margin: 0;
+        .article-source-divider {
+            height: 1px;
+            background: rgba(23, 32, 51, 0.08);
+            margin: 1.25rem 0 0.85rem 0;
         }
         .media-shell {
             background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(244,239,229,0.84));
             border: 1px solid rgba(23, 32, 51, 0.08);
-            border-radius: 28px;
-            padding: 1rem 1rem 0.9rem 1rem;
-            box-shadow: 0 18px 42px rgba(23, 32, 51, 0.08);
-            margin-top: 0.2rem;
+            border-radius: 22px;
+            padding: 0.9rem 1rem 0.55rem 1rem;
+            box-shadow: 0 14px 34px rgba(23, 32, 51, 0.07);
+            margin: 0.05rem 0 0.85rem 0;
         }
         .media-intro {
             display: flex;
@@ -1065,11 +1177,11 @@ def inject_dashboard_css() -> None:
             align-items: center;
             justify-content: space-between;
             gap: 0.7rem;
-            margin-bottom: 0.9rem;
+            margin-bottom: 0.65rem;
         }
         .media-title {
             font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-            font-size: 1.32rem;
+            font-size: 1.24rem;
             color: #172033;
         }
         .media-note {
@@ -1081,7 +1193,7 @@ def inject_dashboard_css() -> None:
             display: flex;
             flex-wrap: wrap;
             gap: 0.45rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.35rem;
         }
         .media-chip {
             display: inline-flex;
@@ -1100,7 +1212,7 @@ def inject_dashboard_css() -> None:
             border: 1px solid rgba(23, 32, 51, 0.08);
             border-radius: 22px;
             padding: 0.85rem;
-            min-height: 100%;
+            margin-bottom: 0.95rem;
         }
         .image-rail-title {
             color: #7c3f00;
@@ -1143,6 +1255,7 @@ def inject_dashboard_css() -> None:
             border-radius: 26px;
             padding: 1.05rem 1.1rem 1.15rem 1.1rem;
             box-shadow: 0 18px 42px rgba(23, 32, 51, 0.08);
+            margin-top: 0.95rem;
         }
         .graph-stage-title {
             font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
@@ -1160,6 +1273,8 @@ def inject_dashboard_css() -> None:
             border-radius: 24px;
             padding: 1rem 1rem 0.55rem 1rem;
             box-shadow: 0 14px 32px rgba(23, 32, 51, 0.07);
+            margin-top: 0.6rem;
+            margin-bottom: 0.75rem;
         }
         .graph-control-title {
             font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
@@ -1177,6 +1292,124 @@ def inject_dashboard_css() -> None:
             border-radius: 999px;
             display: inline-block;
         }
+        /* ── Status badges ─────────────────────────────────────────── */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 0.28rem 0.68rem;
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+        .status-emerging   { background: rgba(15,118,110,0.12);  color: #0f766e; border: 1px solid rgba(15,118,110,0.22); }
+        .status-strengthening { background: rgba(29,78,216,0.12); color: #1d4ed8; border: 1px solid rgba(29,78,216,0.22); }
+        .status-weakening  { background: rgba(217,119,6,0.12);   color: #b45309; border: 1px solid rgba(217,119,6,0.22); }
+        .status-stable     { background: rgba(107,114,128,0.12); color: #4b5563; border: 1px solid rgba(107,114,128,0.22); }
+        .status-reversed   { background: rgba(220,38,38,0.12);   color: #dc2626; border: 1px solid rgba(220,38,38,0.22); }
+        .status-transitioning { background: rgba(124,63,0,0.12); color: #7c3f00; border: 1px solid rgba(124,63,0,0.22); }
+        /* Trend status */
+        .trend-new          { background: rgba(15,118,110,0.12);  color: #0f766e; border: 1px solid rgba(15,118,110,0.22); }
+        .trend-strengthening{ background: rgba(29,78,216,0.12);   color: #1d4ed8; border: 1px solid rgba(29,78,216,0.22); }
+        .trend-recurring    { background: rgba(107,114,128,0.12); color: #4b5563; border: 1px solid rgba(107,114,128,0.22); }
+        .trend-weakening    { background: rgba(217,119,6,0.12);   color: #b45309; border: 1px solid rgba(217,119,6,0.22); }
+        /* Entity type badges */
+        .etype-badge {
+            display: inline-block;
+            border-radius: 8px;
+            padding: 0.18rem 0.52rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        .etype-person       { background: rgba(29,78,216,0.10);  color: #1d4ed8; border: 1px solid rgba(29,78,216,0.18); }
+        .etype-company      { background: rgba(15,118,110,0.10); color: #0f766e; border: 1px solid rgba(15,118,110,0.18); }
+        .etype-organization { background: rgba(15,118,110,0.10); color: #0f766e; border: 1px solid rgba(15,118,110,0.18); }
+        .etype-country      { background: rgba(124,63,0,0.10);   color: #7c3f00; border: 1px solid rgba(124,63,0,0.18); }
+        .etype-technology   { background: rgba(109,40,217,0.10); color: #6d28d9; border: 1px solid rgba(109,40,217,0.18); }
+        .etype-default      { background: rgba(23,32,51,0.08);   color: #556277; border: 1px solid rgba(23,32,51,0.14); }
+        /* Narrative card */
+        .narrative-card {
+            background: rgba(255,255,255,0.88);
+            border: 1px solid rgba(23,32,51,0.08);
+            border-radius: 20px;
+            padding: 1rem 1.15rem;
+            margin-bottom: 0.65rem;
+            box-shadow: 0 8px 24px rgba(23,32,51,0.06);
+            transition: box-shadow 0.18s;
+        }
+        .narrative-card:hover {
+            box-shadow: 0 14px 36px rgba(23,32,51,0.11);
+        }
+        .narrative-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.7rem;
+            margin-bottom: 0.45rem;
+        }
+        .narrative-card-title {
+            font-family: "Iowan Old Style","Palatino Linotype",Georgia,serif;
+            font-size: 1.04rem;
+            font-weight: 700;
+            color: #172033;
+            flex: 1;
+            line-height: 1.35;
+        }
+        .narrative-thesis {
+            color: #5d6676;
+            font-size: 0.91rem;
+            line-height: 1.57;
+            margin-bottom: 0.55rem;
+        }
+        .narrative-footer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem 0.6rem;
+            align-items: center;
+            font-size: 0.79rem;
+            color: #6a7485;
+            margin-top: 0.4rem;
+        }
+        /* Importance score bar */
+        .score-bar-outer {
+            background: rgba(23,32,51,0.08);
+            border-radius: 999px;
+            height: 5px;
+            width: 100%;
+            margin: 0.4rem 0 0.35rem 0;
+        }
+        .score-bar-inner {
+            background: linear-gradient(90deg, #1d4ed8 0%, #0f766e 100%);
+            border-radius: 999px;
+            height: 5px;
+        }
+        /* Sidebar db stats card */
+        .sidebar-db-card {
+            background: rgba(255,255,255,0.72);
+            border: 1px solid rgba(23,32,51,0.08);
+            border-radius: 16px;
+            padding: 0.75rem 0.9rem;
+            margin-top: 0.3rem;
+        }
+        .sidebar-db-kicker {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: #7c3f00;
+            margin-bottom: 0.5rem;
+        }
+        .sidebar-stat-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.18rem 0;
+            font-size: 0.84rem;
+        }
+        .sidebar-stat-label { color: #5d6676; }
+        .sidebar-stat-value { font-weight: 700; color: #172033; }
         </style>
         """,
         unsafe_allow_html=True,
@@ -1222,6 +1455,58 @@ def _render_signal_group(label: str, items: list[str], empty_label: str) -> None
     )
 
 
+def _status_badge_html(status: str, badge_classes: dict[str, str]) -> str:
+    """Return an HTML badge span for a status value."""
+    css_class = badge_classes.get(str(status).lower(), "status-stable")
+    return f'<span class="status-badge {css_class}">{escape(str(status))}</span>'
+
+
+def _entity_type_badge_html(entity_type: str) -> str:
+    """Return an HTML badge span for an entity type."""
+    css_class = ENTITY_TYPE_CLASSES.get(str(entity_type).lower(), "etype-default")
+    return f'<span class="etype-badge {css_class}">{escape(str(entity_type))}</span>'
+
+
+def _render_narrative_card(row: pd.Series) -> None:
+    """Render a single narrative as a styled card."""
+    name = str(row.get("name", "") or "")
+    thesis = str(row.get("thesis", "") or "No thesis recorded.")
+    status = str(row.get("status", "") or "")
+    importance = float(row.get("importance_score", 0) or 0)
+    mentions = int(row.get("mention_count", 0) or 0)
+    first_seen = str(row.get("first_seen_date", "") or "")
+    last_seen = str(row.get("last_seen_date", "") or "")
+    badge_html = _status_badge_html(status, STATUS_BADGE_CLASSES)
+    score_pct = min(100, int(importance * 10))
+    date_parts = []
+    if first_seen:
+        date_parts.append(f"First: {escape(first_seen)}")
+    if last_seen:
+        date_parts.append(f"Last: {escape(last_seen)}")
+    date_html = " · ".join(date_parts)
+    st.markdown(
+        f"""
+        <div class="narrative-card">
+          <div class="narrative-card-header">
+            <div class="narrative-card-title">{escape(name)}</div>
+            {badge_html}
+          </div>
+          <div class="narrative-thesis">{escape(thesis)}</div>
+          <div class="score-bar-outer">
+            <div class="score-bar-inner" style="width:{score_pct}%;"></div>
+          </div>
+          <div class="narrative-footer">
+            <span>Importance: {importance:.1f}/10</span>
+            <span>·</span>
+            <span>Mentions: {mentions}</span>
+            {"<span>·</span><span>" + date_html + "</span>" if date_html else ""}
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def _render_article_metadata(selected_article: pd.Series) -> None:
     st.markdown(
         f"""
@@ -1260,15 +1545,556 @@ def _render_summary_card(summary: str) -> None:
     )
 
 
-def _render_doc_preview(preview_text: str) -> None:
-    st.markdown(
-        f"""
-        <div class="doc-preview">
-          <pre>{escape(preview_text)}</pre>
+def _js_literal(value: str) -> str:
+    """Serialize a string for safe embedding inside inline component JavaScript."""
+
+    return json.dumps(value).replace("</", "<\\/")
+
+
+def _render_doc_preview(article_id: str, preview_text: str) -> None:
+    storage_key = f"narrative_agent.article_notes.{article_id}"
+    component_html = f"""
+    <div class="annotator-shell">
+      <div class="reader-toolbar">
+        <div>
+          <div class="reader-kicker">Source Text</div>
+          <div class="reader-heading">Article Reader</div>
         </div>
-        """,
-        unsafe_allow_html=True,
-    )
+        <div class="reader-actions">
+          <button id="highlight-selection" type="button" title="Alt+H">Highlight</button>
+          <button id="copy-notes" type="button">Copy Notes</button>
+        </div>
+      </div>
+      <div class="reader-layout">
+        <article id="source-reader" class="source-reader" tabindex="0" aria-label="Source document text"></article>
+        <aside class="notes-panel" aria-label="Article notes">
+          <div class="notes-panel-title">Notes</div>
+          <div id="selected-text" class="selected-text">No selection</div>
+          <textarea id="note-input" rows="4" placeholder="Take a note"></textarea>
+          <div class="note-actions">
+            <button id="save-note" type="button">Save Note</button>
+            <button id="clear-draft" type="button">Clear</button>
+          </div>
+          <div id="note-status" class="note-status" role="status"></div>
+          <div id="notes-list" class="notes-list"></div>
+        </aside>
+      </div>
+    </div>
+    <style>
+      :root {{
+        color-scheme: light;
+      }}
+      body {{
+        margin: 0;
+        background: transparent;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #172033;
+      }}
+      .annotator-shell {{
+        background: rgba(248, 250, 252, 0.96);
+        border: 1px solid rgba(23, 32, 51, 0.08);
+        border-radius: 22px;
+        padding: 0.9rem;
+        box-sizing: border-box;
+        height: 940px;
+      }}
+      .reader-toolbar {{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.8rem;
+        margin-bottom: 0.75rem;
+      }}
+      .reader-kicker {{
+        color: #7c3f00;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }}
+      .reader-heading {{
+        color: #172033;
+        font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+      }}
+      .reader-actions,
+      .note-actions {{
+        display: flex;
+        gap: 0.45rem;
+        flex-wrap: wrap;
+      }}
+      button {{
+        border: 1px solid rgba(23, 32, 51, 0.12);
+        border-radius: 999px;
+        background: #ffffff;
+        color: #172033;
+        cursor: pointer;
+        font-weight: 700;
+        padding: 0.48rem 0.76rem;
+      }}
+      button:hover {{
+        border-color: rgba(29, 78, 216, 0.34);
+        color: #1d4ed8;
+      }}
+      #save-note {{
+        background: #172033;
+        color: #ffffff;
+        border-color: #172033;
+      }}
+      .reader-layout {{
+        display: grid;
+        grid-template-columns: minmax(0, 2.4fr) minmax(17rem, 0.58fr);
+        gap: 0.85rem;
+        height: calc(100% - 3.55rem);
+      }}
+      .source-reader {{
+        background: #ffffff;
+        border: 1px solid rgba(23, 32, 51, 0.08);
+        border-radius: 18px;
+        box-sizing: border-box;
+        color: #172033;
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 1.02rem;
+        line-height: 1.78;
+        overflow: auto;
+        padding: 1.25rem 1.35rem;
+        white-space: pre-wrap;
+        user-select: text;
+      }}
+      .source-reader:focus {{
+        outline: 2px solid rgba(29, 78, 216, 0.25);
+        outline-offset: 2px;
+      }}
+      mark.note-highlight {{
+        background: rgba(250, 204, 21, 0.42);
+        border-bottom: 2px solid rgba(202, 138, 4, 0.65);
+        color: inherit;
+        cursor: pointer;
+        padding: 0.06rem 0.02rem;
+      }}
+      mark.note-highlight.is-active {{
+        background: rgba(29, 78, 216, 0.18);
+        border-bottom-color: #1d4ed8;
+      }}
+      mark.note-highlight.is-draft {{
+        background: rgba(250, 204, 21, 0.58);
+        border-bottom-color: #ca8a04;
+      }}
+      .notes-panel {{
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(23, 32, 51, 0.08);
+        border-radius: 18px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        padding: 0.9rem;
+      }}
+      .notes-panel-title {{
+        color: #7c3f00;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        margin-bottom: 0.55rem;
+        text-transform: uppercase;
+      }}
+      .selected-text {{
+        background: rgba(23, 32, 51, 0.05);
+        border: 1px solid rgba(23, 32, 51, 0.08);
+        border-radius: 14px;
+        color: #5d6676;
+        font-size: 0.86rem;
+        line-height: 1.45;
+        margin-bottom: 0.55rem;
+        max-height: 5.6rem;
+        overflow: auto;
+        padding: 0.65rem;
+      }}
+      textarea {{
+        background: #ffffff;
+        border: 1px solid rgba(23, 32, 51, 0.12);
+        border-radius: 14px;
+        box-sizing: border-box;
+        color: #172033;
+        font: inherit;
+        margin-bottom: 0.55rem;
+        padding: 0.65rem;
+        resize: vertical;
+        width: 100%;
+      }}
+      textarea:focus {{
+        border-color: rgba(29, 78, 216, 0.38);
+        outline: 2px solid rgba(29, 78, 216, 0.14);
+      }}
+      .note-status {{
+        color: #5d6676;
+        font-size: 0.82rem;
+        min-height: 1.2rem;
+        padding: 0.35rem 0 0.15rem 0;
+      }}
+      .notes-list {{
+        border-top: 1px solid rgba(23, 32, 51, 0.08);
+        margin-top: 0.35rem;
+        min-height: 0;
+        overflow: auto;
+        padding-top: 0.55rem;
+      }}
+      .note-card {{
+        background: rgba(248, 250, 252, 0.96);
+        border: 1px solid rgba(23, 32, 51, 0.08);
+        border-radius: 14px;
+        margin-bottom: 0.55rem;
+        padding: 0.65rem;
+      }}
+      .note-card.active {{
+        border-color: rgba(29, 78, 216, 0.34);
+        box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.10);
+      }}
+      .note-quote {{
+        color: #172033;
+        font-size: 0.86rem;
+        font-weight: 700;
+        line-height: 1.4;
+        margin-bottom: 0.35rem;
+      }}
+      .note-body {{
+        color: #5d6676;
+        font-size: 0.86rem;
+        line-height: 1.45;
+        white-space: pre-wrap;
+      }}
+      .note-meta {{
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-top: 0.45rem;
+      }}
+      .note-date {{
+        color: #6a7485;
+        font-size: 0.72rem;
+      }}
+      .delete-note {{
+        color: #b91c1c;
+        font-size: 0.76rem;
+        padding: 0.3rem 0.5rem;
+      }}
+      .empty-note {{
+        border: 1px dashed rgba(23, 32, 51, 0.18);
+        border-radius: 14px;
+        color: #6a7485;
+        font-size: 0.86rem;
+        padding: 0.75rem;
+      }}
+      @media (max-width: 760px) {{
+        .annotator-shell {{
+          height: 980px;
+        }}
+        .reader-layout {{
+          grid-template-columns: 1fr;
+          grid-template-rows: 1fr minmax(20rem, 0.8fr);
+        }}
+      }}
+    </style>
+    <script>
+      const sourceText = {_js_literal(preview_text)};
+      const storageKey = {_js_literal(storage_key)};
+      const reader = document.getElementById("source-reader");
+      const noteInput = document.getElementById("note-input");
+      const selectedText = document.getElementById("selected-text");
+      const statusBox = document.getElementById("note-status");
+      const notesList = document.getElementById("notes-list");
+      const highlightButton = document.getElementById("highlight-selection");
+      const saveButton = document.getElementById("save-note");
+      const clearButton = document.getElementById("clear-draft");
+      const copyButton = document.getElementById("copy-notes");
+      let draft = null;
+      let activeNoteId = null;
+      let storageAvailable = true;
+      let notes = loadNotes();
+
+      function escapeHtml(value) {{
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }}
+
+      function makeId() {{
+        if (window.crypto && window.crypto.randomUUID) {{
+          return window.crypto.randomUUID();
+        }}
+        return String(Date.now()) + "-" + String(Math.random()).slice(2);
+      }}
+
+      function loadNotes() {{
+        try {{
+          const parsed = JSON.parse(window.localStorage.getItem(storageKey) || "[]");
+          storageAvailable = true;
+          if (!Array.isArray(parsed)) {{
+            return [];
+          }}
+          return parsed.filter(isValidNote);
+        }} catch (error) {{
+          storageAvailable = false;
+          return [];
+        }}
+      }}
+
+      function isValidNote(note) {{
+        return note
+          && Number.isInteger(note.start)
+          && Number.isInteger(note.end)
+          && note.start >= 0
+          && note.end > note.start
+          && note.end <= sourceText.length
+          && typeof note.text === "string";
+      }}
+
+      function persistNotes() {{
+        try {{
+          window.localStorage.setItem(storageKey, JSON.stringify(notes));
+          storageAvailable = true;
+          return true;
+        }} catch (error) {{
+          storageAvailable = false;
+          return false;
+        }}
+      }}
+
+      function setStatus(message) {{
+        statusBox.textContent = message || "";
+      }}
+
+      function renderReader() {{
+        const ranges = notes
+          .filter(isValidNote)
+          .map((note) => ({{ ...note, kind: "note" }}));
+        if (draft) {{
+          ranges.push({{ ...draft, id: "draft", kind: "draft" }});
+        }}
+        const sorted = ranges.sort((a, b) => a.start - b.start || a.end - b.end);
+        let cursor = 0;
+        let html = "";
+        for (const range of sorted) {{
+          if (range.start < cursor) {{
+            continue;
+          }}
+          html += escapeHtml(sourceText.slice(cursor, range.start));
+          const highlightedText = sourceText.slice(range.start, range.end);
+          const classNames = ["note-highlight"];
+          if (range.kind === "draft") {{
+            classNames.push("is-draft");
+          }} else if (range.id === activeNoteId) {{
+            classNames.push("is-active");
+          }}
+          const markerAttribute = range.kind === "note"
+            ? ` data-note-id="${{escapeHtml(range.id)}}"`
+            : ' data-draft-highlight="true"';
+          html += `<mark class="${{classNames.join(" ")}}"${{markerAttribute}}>${{escapeHtml(highlightedText)}}</mark>`;
+          cursor = range.end;
+        }}
+        html += escapeHtml(sourceText.slice(cursor));
+        reader.innerHTML = html || '<span class="empty-note">Preview unavailable.</span>';
+        renderNotes();
+      }}
+
+      function renderNotes() {{
+        if (!notes.length) {{
+          notesList.innerHTML = '<div class="empty-note">No notes yet</div>';
+          return;
+        }}
+        const sorted = [...notes].sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
+        notesList.innerHTML = sorted.map((note) => {{
+          const activeClass = note.id === activeNoteId ? " active" : "";
+          const dateLabel = note.createdAt ? new Date(note.createdAt).toLocaleString() : "";
+          return `
+            <div class="note-card${{activeClass}}" data-note-card-id="${{escapeHtml(note.id)}}">
+              <div class="note-quote">${{escapeHtml(note.text)}}</div>
+              <div class="note-body">${{escapeHtml(note.note || "No note text")}}</div>
+              <div class="note-meta">
+                <span class="note-date">${{escapeHtml(dateLabel)}}</span>
+                <button class="delete-note" type="button" data-delete-id="${{escapeHtml(note.id)}}">Delete</button>
+              </div>
+            </div>
+          `;
+        }}).join("");
+      }}
+
+      function selectionOffsets() {{
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) {{
+          return null;
+        }}
+        const selected = selection.toString();
+        if (!selected.trim()) {{
+          return null;
+        }}
+        const range = selection.getRangeAt(0);
+        if (!reader.contains(range.commonAncestorContainer)) {{
+          return null;
+        }}
+        const preRange = document.createRange();
+        preRange.selectNodeContents(reader);
+        preRange.setEnd(range.startContainer, range.startOffset);
+        const start = preRange.toString().length;
+        const end = start + selected.length;
+        if (start < 0 || end > sourceText.length || end <= start) {{
+          return null;
+        }}
+        return {{ start, end, text: sourceText.slice(start, end) }};
+      }}
+
+      function captureSelection(options = {{}}) {{
+        const focusNote = options.focusNote !== false;
+        const quiet = options.quiet === true;
+        const nextDraft = selectionOffsets();
+        if (!nextDraft) {{
+          if (!quiet) {{
+            setStatus(draft ? "Selection ready." : "Select source text first.");
+          }}
+          if (draft && focusNote) {{
+            noteInput.focus();
+          }}
+          return false;
+        }}
+        draft = nextDraft;
+        selectedText.textContent = draft.text;
+        noteInput.value = "";
+        renderReader();
+        if (!quiet) {{
+          setStatus("Selection ready.");
+        }}
+        if (focusNote) {{
+          noteInput.focus();
+        }}
+        return true;
+      }}
+
+      function clearDraft() {{
+        draft = null;
+        selectedText.textContent = "No selection";
+        noteInput.value = "";
+        setStatus("");
+        window.getSelection()?.removeAllRanges();
+        renderReader();
+      }}
+
+      function saveDraft() {{
+        if (!draft && !captureSelection({{ focusNote: false, quiet: true }})) {{
+          setStatus("No selection captured.");
+          return;
+        }}
+        const noteText = noteInput.value.trim();
+        const note = {{
+          id: makeId(),
+          start: draft.start,
+          end: draft.end,
+          text: draft.text,
+          note: noteText,
+          createdAt: new Date().toISOString(),
+        }};
+        notes.push(note);
+        activeNoteId = note.id;
+        draft = null;
+        selectedText.textContent = "No selection";
+        noteInput.value = "";
+        window.getSelection()?.removeAllRanges();
+        renderReader();
+        const persisted = persistNotes();
+        setStatus(persisted ? "Note saved." : "Note saved for this session. Browser storage unavailable.");
+      }}
+
+      function activateNote(noteId) {{
+        activeNoteId = noteId;
+        renderReader();
+        const mark = [...reader.querySelectorAll("[data-note-id]")]
+          .find((element) => element.dataset.noteId === noteId);
+        if (mark) {{
+          mark.scrollIntoView({{ behavior: "smooth", block: "center" }});
+        }}
+      }}
+
+      function deleteNote(noteId) {{
+        notes = notes.filter((note) => note.id !== noteId);
+        if (activeNoteId === noteId) {{
+          activeNoteId = null;
+        }}
+        renderReader();
+        const persisted = persistNotes();
+        setStatus(persisted ? "Note deleted." : "Note deleted for this session. Browser storage unavailable.");
+      }}
+
+      async function copyNotes() {{
+        const payload = notes.map((note) => ({{
+          selected_text: note.text,
+          note: note.note || "",
+          created_at: note.createdAt,
+        }}));
+        try {{
+          await navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+          setStatus("Notes copied.");
+        }} catch (error) {{
+          setStatus("Copy unavailable in this browser.");
+        }}
+      }}
+
+      function isHighlightShortcut(event) {{
+        return event.altKey && (event.code === "KeyH" || String(event.key || "").toLowerCase() === "h");
+      }}
+
+      function focusDraftNote() {{
+        if (draft) {{
+          setStatus("Selection ready.");
+          noteInput.focus();
+          return true;
+        }}
+        return captureSelection({{ focusNote: true, quiet: false }});
+      }}
+
+      document.addEventListener("keydown", (event) => {{
+        if (isHighlightShortcut(event)) {{
+          event.preventDefault();
+          focusDraftNote();
+        }}
+      }});
+      reader.addEventListener("mouseup", () => {{
+        window.setTimeout(() => captureSelection({{ focusNote: false, quiet: true }}), 0);
+      }});
+      reader.addEventListener("keyup", (event) => {{
+        if (event.shiftKey || event.metaKey) {{
+          window.setTimeout(() => captureSelection({{ focusNote: false, quiet: true }}), 0);
+        }}
+      }});
+      highlightButton.addEventListener("click", focusDraftNote);
+      saveButton.addEventListener("click", saveDraft);
+      clearButton.addEventListener("click", clearDraft);
+      copyButton.addEventListener("click", copyNotes);
+      reader.addEventListener("click", (event) => {{
+        const mark = event.target.closest("[data-note-id]");
+        if (mark) {{
+          activateNote(mark.dataset.noteId);
+        }}
+      }});
+      notesList.addEventListener("click", (event) => {{
+        const deleteButton = event.target.closest("[data-delete-id]");
+        if (deleteButton) {{
+          deleteNote(deleteButton.dataset.deleteId);
+          return;
+        }}
+        const card = event.target.closest("[data-note-card-id]");
+        if (card) {{
+          activateNote(card.dataset.noteCardId);
+        }}
+      }});
+
+      renderReader();
+    </script>
+    """
+    components.html(component_html, height=960, scrolling=False)
 
 
 def _render_media_shell_intro(image_count: int, preview_text: str, truncated: bool) -> None:
@@ -1320,35 +2146,37 @@ def _render_image_rail(preview_images: list[bytes], docx_missing: bool) -> None:
         )
         return
 
-    st.image(preview_images[0], caption="Lead embedded image", use_container_width=True)
-    if len(preview_images) > 1:
-        st.markdown("**Additional images**")
-        thumbnail_cols = st.columns(2, gap="small")
-        for index, image_payload in enumerate(preview_images[1:], start=2):
-            with thumbnail_cols[(index - 2) % 2]:
-                st.image(
-                    image_payload,
-                    caption=f"Embedded image {index}",
-                    use_container_width=True,
-                )
+    image_cols = st.columns(min(len(preview_images), DOCX_IMAGE_LIMIT), gap="small")
+    for index, image_payload in enumerate(preview_images[:DOCX_IMAGE_LIMIT], start=1):
+        with image_cols[index - 1]:
+            caption = "Lead embedded image" if index == 1 else f"Embedded image {index}"
+            st.image(image_payload, caption=caption, width="stretch")
+
     if len(preview_images) == DOCX_IMAGE_LIMIT:
         st.caption("Image preview limited for display.")
 
 
 def _render_graph_legend() -> None:
-    st.markdown("**Legend**")
-    legend_left, legend_right = st.columns(2, gap="small")
-    node_items = list(NODE_COLORS.items())
-
-    for index, (node_type, _) in enumerate(node_items):
-        target_column = legend_left if index % 2 == 0 else legend_right
-        shape_label = NODE_SHAPES.get(node_type, "dot").title()
-        with target_column:
-            st.markdown(f"`{node_type.title()}`  \nShape: {shape_label}")
-
-    st.caption("Edge labels show relationship types.")
-    st.caption("Larger nodes indicate higher importance or stronger article linkage.")
-    st.caption("Hover nodes for detail and hover edges for the one-sentence narrative and evidence article.")
+    legend_items = [
+        (NODE_COLORS["article"], "Article", NODE_SHAPES["article"]),
+        (NODE_COLORS["entity"], "Entity", NODE_SHAPES["entity"]),
+        (NODE_COLORS["theme"], "Theme", NODE_SHAPES["theme"]),
+        (NODE_COLORS["narrative"], "Narrative", NODE_SHAPES["narrative"]),
+        ("#16a34a", "New (compare)", "dot"),
+        ("#dc2626", "Removed (compare)", "dot"),
+    ]
+    chips = "".join(
+        f'<span class="legend-chip">'
+        f'<span class="legend-dot" style="background:{color};flex-shrink:0;"></span>'
+        f'{escape(label)}'
+        f'</span>'
+        for color, label, _ in legend_items
+    )
+    st.markdown(
+        f'<div class="legend-strip">{chips}</div>',
+        unsafe_allow_html=True,
+    )
+    st.caption("Larger nodes = higher importance or stronger article linkage. Hover nodes/edges for details.")
 
 
 def _render_chart_card(title: str, chart: alt.Chart) -> None:
@@ -1361,7 +2189,7 @@ def _render_chart_card(title: str, chart: alt.Chart) -> None:
         """,
         unsafe_allow_html=True,
     )
-    st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(chart, width="stretch")
 
 
 def _top_count_frame(dataframe: pd.DataFrame, column_name: str, label: str, limit: int = 8) -> pd.DataFrame:
@@ -1443,7 +2271,7 @@ def _render_overview_tab(
         recent_view = filtered_articles[
             ["title", "source", "published_date", "importance_score"]
         ].head(8).rename(columns={"published_date": "date", "importance_score": "importance"})
-        st.dataframe(recent_view, use_container_width=True, hide_index=True, height=318)
+        st.dataframe(recent_view, width="stretch", hide_index=True, height=318)
         st.markdown(
             f"""
             <div class="panel-card" style="margin-top:0.8rem;">
@@ -1456,9 +2284,193 @@ def _render_overview_tab(
         )
 
 
+def _render_graph_chat_result(result: dict[str, Any]) -> None:
+    facts = result.get("facts", [])
+    citations = result.get("citations", [])
+    evaluation = result.get("evaluation", {})
+    warnings = result.get("warnings", [])
+
+    if warnings:
+        for warning in warnings:
+            st.warning(str(warning))
+
+    evidence_rows = [
+        {
+            "type": fact.get("kind", ""),
+            "statement": fact.get("statement", ""),
+            "relationship": (
+                f"{fact.get('source_node')} --{fact.get('relationship')}--> {fact.get('target_node')}"
+                if fact.get("source_node") and fact.get("relationship") and fact.get("target_node")
+                else ""
+            ),
+            "confidence": fact.get("confidence", ""),
+            "article": fact.get("title", ""),
+            "date": fact.get("published_date", ""),
+        }
+        for fact in facts
+    ]
+    citation_rows = [
+        {
+            "article": citation.get("title", ""),
+            "date": citation.get("published_date", ""),
+            "source": citation.get("source", ""),
+            "evidence": citation.get("quote", ""),
+        }
+        for citation in citations
+    ]
+
+    if evidence_rows:
+        with st.expander("Retrieved graph facts", expanded=False):
+            st.dataframe(pd.DataFrame(evidence_rows), width="stretch", hide_index=True)
+
+    if citation_rows:
+        with st.expander("Citations", expanded=False):
+            st.dataframe(pd.DataFrame(citation_rows), width="stretch", hide_index=True)
+
+    if evaluation:
+        st.caption(
+            "Evaluation: "
+            f"{evaluation.get('fact_count', 0)} facts, "
+            f"{evaluation.get('edge_fact_count', 0)} edge facts, "
+            f"{evaluation.get('citation_count', 0)} citations, "
+            f"LLM used: {evaluation.get('llm_used', False)}"
+        )
+
+
+def _render_chat_text(content: str) -> None:
+    """Render chat text without treating currency values as Markdown math."""
+
+    st.markdown(str(content).replace("$", r"\$"))
+
+
+def _render_ask_graph_tab(selected_week: str) -> None:
+    _render_section_intro(
+        "Ask The Graph",
+        "Ask for event chains, relationship logic, narratives, and article evidence with graph-backed citations.",
+        kicker="GraphRAG",
+    )
+    chat_week = None if selected_week == "All" else selected_week
+    control_left, control_middle, control_right = st.columns([0.40, 0.30, 0.30], gap="large")
+    with control_left:
+        st.caption(f"Scope: {chat_week or 'All indexed weeks'}")
+    with control_middle:
+        graph_backend = st.selectbox(
+            "GraphRAG backend",
+            options=["SQLite", "Neo4j"],
+            index=0,
+            key="graph_rag_backend",
+        )
+    with control_right:
+        deep_immediately = st.toggle("Deep answer immediately", value=False, key="graph_rag_deep_now")
+
+    if "graph_chat_messages" not in st.session_state:
+        st.session_state.graph_chat_messages = []
+
+    if st.button("Clear chat", key="graph_chat_clear"):
+        st.session_state.graph_chat_messages = []
+
+    for message_index, message in enumerate(st.session_state.graph_chat_messages):
+        with st.chat_message(message["role"]):
+            _render_chat_text(message["content"])
+            if message.get("result"):
+                _render_graph_chat_result(message["result"])
+                evaluation = message["result"].get("evaluation", {})
+                can_deepen = (
+                    message.get("role") == "assistant"
+                    and message.get("backend") == "neo4j"
+                    and message.get("question")
+                    and not evaluation.get("deep_search", False)
+                )
+                if can_deepen and st.button(
+                    "Deep answer with embeddings",
+                    key=f"graph_chat_deep_{message_index}",
+                ):
+                    with st.spinner("Running embedding search and LLM synthesis..."):
+                        try:
+                            deep_result = answer_question(
+                                str(message["question"]),
+                                week=message.get("week"),
+                                use_llm=True,
+                                deep_search=True,
+                                backend="neo4j",
+                            )
+                        except Exception as exc:
+                            st.session_state.graph_chat_messages.append(
+                                {
+                                    "role": "assistant",
+                                    "content": f"Deep answer failed: {exc}",
+                                }
+                            )
+                            st.rerun()
+                            return
+                    st.session_state.graph_chat_messages.append(
+                        {
+                            "role": "assistant",
+                            "content": deep_result.answer,
+                            "result": deep_result.model_dump(),
+                            "question": message["question"],
+                            "week": message.get("week"),
+                            "backend": "neo4j",
+                        }
+                    )
+                    st.rerun()
+                    return
+
+    with st.form("graph_rag_query_form", clear_on_submit=True):
+        prompt = st.text_area(
+            "Question",
+            placeholder="Ask a follow-up about entities, relationships, valuation, or recent changes",
+            key="graph_rag_question",
+            height=96,
+        )
+        button_label = "Ask follow-up" if st.session_state.graph_chat_messages else "Ask graph"
+        submitted = st.form_submit_button(button_label, type="primary")
+
+    if not submitted:
+        return
+
+    prompt = prompt.strip()
+    if not prompt:
+        st.warning("Please enter a question.")
+        return
+
+    st.session_state.graph_chat_messages.append({"role": "user", "content": prompt})
+    with st.spinner("Querying graph facts..."):
+        try:
+            result = answer_question(
+                prompt,
+                week=chat_week,
+                use_llm=deep_immediately,
+                deep_search=deep_immediately,
+                backend="neo4j" if graph_backend == "Neo4j" else "sqlite",
+            )
+        except Exception as exc:
+            backend_name = graph_backend
+            st.session_state.graph_chat_messages.append(
+                {
+                    "role": "assistant",
+                    "content": f"{backend_name} backend is not available yet: {exc}",
+                }
+            )
+            st.rerun()
+            return
+    st.session_state.graph_chat_messages.append(
+        {
+            "role": "assistant",
+            "content": result.answer,
+            "result": result.model_dump(),
+            "question": prompt,
+            "week": chat_week,
+            "backend": "neo4j" if graph_backend == "Neo4j" else "sqlite",
+        }
+    )
+    st.rerun()
+
+
 def main() -> None:
     st.set_page_config(
         page_title="Narrative Agent Dashboard",
+        page_icon="🗺️",
         layout="wide",
         initial_sidebar_state="expanded",
     )
@@ -1468,7 +2480,8 @@ def main() -> None:
         st.error("Database not found. Run weekly extraction first.")
         return
 
-    ensure_database_schema()
+    if not ensure_database_schema():
+        return
     db_version = _path_version(DB_PATH)
 
     metrics = load_metrics(db_version)
@@ -1486,6 +2499,36 @@ def main() -> None:
     selected_source = st.sidebar.selectbox("Source", options=source_options)
     selected_category = st.sidebar.selectbox("Category", options=category_options)
     search_term = st.sidebar.text_input("Search", value="")
+
+    st.sidebar.markdown("---")
+    st.sidebar.markdown(
+        f"""
+        <div class="sidebar-db-card">
+          <div class="sidebar-db-kicker">Database Snapshot</div>
+          <div class="sidebar-stat-row">
+            <span class="sidebar-stat-label">Articles</span>
+            <span class="sidebar-stat-value">{metrics['articles']}</span>
+          </div>
+          <div class="sidebar-stat-row">
+            <span class="sidebar-stat-label">Entities</span>
+            <span class="sidebar-stat-value">{metrics['entities']}</span>
+          </div>
+          <div class="sidebar-stat-row">
+            <span class="sidebar-stat-label">Themes</span>
+            <span class="sidebar-stat-value">{metrics['themes']}</span>
+          </div>
+          <div class="sidebar-stat-row">
+            <span class="sidebar-stat-label">Narratives</span>
+            <span class="sidebar-stat-value">{metrics['narratives']}</span>
+          </div>
+          <div class="sidebar-stat-row">
+            <span class="sidebar-stat-label">Graph Edges</span>
+            <span class="sidebar-stat-value">{metrics['graph_edges']}</span>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     filtered_articles = _filter_articles(
         articles_df,
@@ -1533,9 +2576,12 @@ def main() -> None:
     with metric_columns[4]:
         _render_metric_card("Graph Edges", str(metrics["graph_edges"]), "Relationship statements")
 
-    overview_tab, articles_tab, narratives_tab, entities_tab, trends_tab, graph_tab = st.tabs(
-        ["Overview", "Articles", "Narratives", "Entities", "Narrative Trends", "Graph View"]
+    ask_tab, overview_tab, articles_tab, narratives_tab, entities_tab, trends_tab, graph_tab = st.tabs(
+        ["Ask Graph", "Overview", "Articles", "Narratives", "Entities", "Narrative Trends", "Graph View"]
     )
+
+    with ask_tab:
+        _render_ask_graph_tab(selected_week)
 
     with overview_tab:
         _render_overview_tab(filtered_articles, filtered_narratives, selected_week)
@@ -1546,23 +2592,24 @@ def main() -> None:
         else:
             _render_section_intro(
                 "Article Workbench",
-                "Use this pane to inspect structured extraction alongside the source document preview.",
+                "Use this pane to inspect the structured extraction before opening the full source reader below.",
                 kicker="Primary View",
             )
-            left_col, right_col = st.columns([0.95, 1.05], gap="large")
             article_options = filtered_articles["selection_label"].tolist()
 
-            with left_col:
-                st.caption(f"{len(filtered_articles)} article(s) match the current filter set.")
-                selected_label = st.selectbox("Select article", article_options, key="article_select")
-                selected_article = filtered_articles[
-                    filtered_articles["selection_label"] == selected_label
-                ].iloc[0]
+            st.caption(f"{len(filtered_articles)} article(s) match the current filter set.")
+            selected_label = st.selectbox("Select article", article_options, key="article_select")
+            selected_article = filtered_articles[
+                filtered_articles["selection_label"] == selected_label
+            ].iloc[0]
 
+            workbench_left, workbench_right = st.columns([1.15, 0.85], gap="large")
+            with workbench_left:
                 st.markdown(f"## {selected_article['title']}")
                 _render_article_metadata(selected_article)
                 _render_summary_card(str(selected_article["summary"] or ""))
 
+            with workbench_right:
                 entity_names = _split_names(selected_article["linked_entities"])
                 theme_names = _split_names(selected_article["linked_themes"])
                 narrative_names = _split_names(selected_article["linked_narratives"])
@@ -1570,27 +2617,27 @@ def main() -> None:
                 _render_signal_group("Themes", theme_names, "No linked themes")
                 _render_signal_group("Narratives", narrative_names, "No linked narratives")
 
-            with right_col:
+            st.markdown('<div class="article-source-divider"></div>', unsafe_allow_html=True)
+            original_file_path = str(selected_article["original_file_path"] or "")
+            preview_text = preview_docx(original_file_path)
+            docx_missing = preview_text == "Original DOCX not found"
+            preview_images = preview_docx_images(original_file_path)
+            preview_truncated = False if docx_missing else _is_docx_preview_truncated(original_file_path)
+            source_header_left, source_header_right = st.columns([1.08, 0.92], gap="large")
+            with source_header_left:
                 _render_section_intro(
                     "Source Document",
-                    "The reading panel now keeps the source text and embedded visuals visible together so the article can be inspected with less scrolling.",
+                    "Read the original document in a larger source panel with article-level notes.",
                     kicker="Document",
                 )
-                original_file_path = str(selected_article["original_file_path"] or "")
-                preview_text = preview_docx(original_file_path)
-                docx_missing = preview_text == "Original DOCX not found"
-                preview_images = preview_docx_images(original_file_path)
-                preview_truncated = False if docx_missing else _is_docx_preview_truncated(original_file_path)
+            with source_header_right:
                 _render_media_shell_intro(len(preview_images), preview_text, preview_truncated)
-                media_left, media_right = st.columns([1.35, 0.9], gap="large")
-                with media_left:
-                    _render_doc_preview(preview_text)
-                with media_right:
-                    _render_image_rail(preview_images, docx_missing)
-                if docx_missing:
-                    st.info("Original DOCX not found")
-                elif preview_truncated:
-                    st.caption("Preview truncated for display.")
+            _render_image_rail(preview_images, docx_missing)
+            _render_doc_preview(str(selected_article["id"]), preview_text)
+            if docx_missing:
+                st.info("Original DOCX not found")
+            elif preview_truncated:
+                st.caption("Preview truncated for display.")
 
     with narratives_tab:
         _render_section_intro(
@@ -1637,22 +2684,32 @@ def main() -> None:
                 "Mean article mentions per narrative",
             )
 
-        st.dataframe(
-            filtered_narratives[
-                [
-                    "name",
-                    "thesis",
-                    "status",
-                    "importance_score",
-                    "mention_count",
-                    "first_seen_date",
-                    "last_seen_date",
-                    "linked_articles",
-                ]
-            ],
-            use_container_width=True,
-            hide_index=True,
-        )
+        st.markdown("")
+        if filtered_narratives.empty:
+            st.info("No narratives match the current filters.")
+        else:
+            CARD_LIMIT = 12
+            display_rows = filtered_narratives.head(CARD_LIMIT)
+            for _, row in display_rows.iterrows():
+                _render_narrative_card(row)
+            if len(filtered_narratives) > CARD_LIMIT:
+                with st.expander(f"Show all {len(filtered_narratives)} narratives as table"):
+                    st.dataframe(
+                        filtered_narratives[
+                            [
+                                "name",
+                                "thesis",
+                                "status",
+                                "importance_score",
+                                "mention_count",
+                                "first_seen_date",
+                                "last_seen_date",
+                                "linked_articles",
+                            ]
+                        ],
+                        width="stretch",
+                        hide_index=True,
+                    )
 
     with entities_tab:
         _render_section_intro(
@@ -1682,7 +2739,7 @@ def main() -> None:
 
         st.dataframe(
             filtered_entities[["name", "type", "description", "linked_articles", "graph_relationships"]],
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
         )
 
@@ -1712,7 +2769,7 @@ def main() -> None:
             trend_df = trend_df[trend_df["trend_status"].isin(selected_trend_statuses)]
             trend_df = trend_df.sort_values(by=["mention_count", "name"], ascending=[False, True])
 
-            trend_metric_cols = st.columns(3)
+            trend_metric_cols = st.columns(4)
             with trend_metric_cols[0]:
                 _render_metric_card("Visible Trends", str(len(trend_df)), "Rows after filters")
             with trend_metric_cols[1]:
@@ -1721,9 +2778,53 @@ def main() -> None:
             with trend_metric_cols[2]:
                 new_count = int((trend_df["trend_status"] == "NEW").sum())
                 _render_metric_card("New Signals", str(new_count), "Narratives first seen this week")
+            with trend_metric_cols[3]:
+                weakening_count = int((trend_df["trend_status"] == "WEAKENING").sum())
+                _render_metric_card("Weakening", str(weakening_count), "Narratives losing momentum")
 
-            st.dataframe(
-                trend_df[
+            st.markdown("")
+            if not trend_df.empty:
+                # Status distribution bar chart
+                status_counts = (
+                    trend_df["trend_status"]
+                    .value_counts()
+                    .rename_axis("status")
+                    .reset_index(name="count")
+                )
+                status_color_map = {
+                    "NEW": "#0f766e",
+                    "STRENGTHENING": "#1d4ed8",
+                    "RECURRING": "#6b7280",
+                    "WEAKENING": "#b45309",
+                }
+                status_counts["color"] = status_counts["status"].map(
+                    lambda s: status_color_map.get(s, "#556277")
+                )
+                trend_chart = (
+                    alt.Chart(status_counts)
+                    .mark_bar(cornerRadiusTopRight=7, cornerRadiusBottomRight=7)
+                    .encode(
+                        x=alt.X("count:Q", title="Count"),
+                        y=alt.Y("status:N", sort="-x", title=None),
+                        color=alt.Color(
+                            "status:N",
+                            scale=alt.Scale(
+                                domain=list(status_color_map.keys()),
+                                range=list(status_color_map.values()),
+                            ),
+                            legend=None,
+                        ),
+                        tooltip=[
+                            alt.Tooltip("status:N", title="Status"),
+                            alt.Tooltip("count:Q", title="Count"),
+                        ],
+                    )
+                    .properties(height=160, title="Trends by Status")
+                )
+                st.altair_chart(trend_chart, width="stretch")
+
+                # Styled table with inline status badges rendered as text column
+                display_df = trend_df[
                     [
                         "name",
                         "trend_status",
@@ -1731,10 +2832,21 @@ def main() -> None:
                         "first_seen_date",
                         "last_seen_date",
                     ]
-                ].rename(columns={"trend_status": "status"}),
-                use_container_width=True,
-                hide_index=True,
-            )
+                ].rename(columns={"trend_status": "status"})
+                st.dataframe(
+                    display_df,
+                    width="stretch",
+                    hide_index=True,
+                    column_config={
+                        "name": st.column_config.TextColumn("Narrative", width="large"),
+                        "status": st.column_config.TextColumn("Status"),
+                        "mention_count": st.column_config.NumberColumn("Mentions", format="%d"),
+                        "first_seen_date": st.column_config.TextColumn("First Seen"),
+                        "last_seen_date": st.column_config.TextColumn("Last Seen"),
+                    },
+                )
+            else:
+                st.info("No trends match the selected filters.")
 
     with graph_tab:
         _render_section_intro(
@@ -1803,6 +2915,57 @@ def main() -> None:
                 }
                 emerging_entities = []
 
+            graph_node_types = sorted({str(node.get("type", "")) for node in graph_payload.get("nodes", [])})
+            graph_relationships = sorted(
+                {str(edge.get("relationship", "")) for edge in graph_payload.get("edges", [])}
+            )
+            with st.expander("Graph filters", expanded=False):
+                _render_graph_legend()
+                filter_cols = st.columns([0.24, 0.46, 0.30], gap="large")
+                with filter_cols[0]:
+                    selected_node_types = st.multiselect(
+                        "Node types",
+                        options=graph_node_types,
+                        default=graph_node_types,
+                        key="graph_node_types",
+                    )
+                with filter_cols[1]:
+                    selected_relationship_types = st.multiselect(
+                        "Relationship types",
+                        options=graph_relationships,
+                        default=graph_relationships,
+                        key="graph_relationship_types",
+                    )
+                with filter_cols[2]:
+                    graph_search = st.text_input("Search node", value="", key="graph_search")
+
+            st.markdown(
+                """
+                <div class="graph-shell">
+                  <div class="section-kicker">Canvas</div>
+                  <div class="graph-stage-title">Expanded Network View</div>
+                  <div class="graph-stage-copy">Hover nodes for importance and hover edges for a one-sentence narrative explanation.</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+            render_graph(
+                graph_payload,
+                selected_node_types,
+                selected_relationship_types,
+                graph_search,
+            )
+
+            st.markdown(
+                """
+                <div class="graph-control-card">
+                  <div class="section-kicker">Snapshot</div>
+                  <div class="graph-control-title">Graph Summary</div>
+                  <div class="graph-control-copy">Counts for the selected graph snapshot and optional comparison.</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
             summary_cols = st.columns(6)
             with summary_cols[0]:
                 _render_metric_card("Nodes This Week", str(comparison_summary["current_nodes"]), selected_graph_week)
@@ -1826,56 +2989,6 @@ def main() -> None:
                     )
                 else:
                     st.caption(f"Comparing {selected_graph_week} against {previous_graph_week}. No emerging entities yet.")
-
-            graph_node_types = sorted({str(node.get("type", "")) for node in graph_payload.get("nodes", [])})
-            graph_relationships = sorted(
-                {str(edge.get("relationship", "")) for edge in graph_payload.get("edges", [])}
-            )
-            left_col, right_col = st.columns([0.28, 0.72], gap="large")
-
-            with left_col:
-                st.markdown(
-                    """
-                    <div class="graph-control-card">
-                      <div class="section-kicker">Controls</div>
-                      <div class="graph-control-title">Graph Filters</div>
-                      <div class="graph-control-copy">The code-like values you were seeing under the title were interface clutter from the filter widgets, not broken graph data.</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
-                _render_graph_legend()
-                selected_node_types = st.multiselect(
-                    "Node types",
-                    options=graph_node_types,
-                    default=graph_node_types,
-                    key="graph_node_types",
-                )
-                selected_relationship_types = st.multiselect(
-                    "Relationship types",
-                    options=graph_relationships,
-                    default=graph_relationships,
-                    key="graph_relationship_types",
-                )
-                graph_search = st.text_input("Search node", value="", key="graph_search")
-
-            with right_col:
-                st.markdown(
-                    """
-                    <div class="graph-shell">
-                      <div class="section-kicker">Canvas</div>
-                      <div class="graph-stage-title">Centered Network View</div>
-                      <div class="graph-stage-copy">Hover nodes for importance and hover edges for a one-sentence narrative explanation.</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
-                render_graph(
-                    graph_payload,
-                    selected_node_types,
-                    selected_relationship_types,
-                    graph_search,
-                )
 
 
 if __name__ == "__main__":

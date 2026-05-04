@@ -1,0 +1,19 @@
+[
+  {
+    "id": "openai_recent_developments_valuation",
+    "question": "openAI có những bước tiến gì mới gần đây, định giá bao nhiêu",
+    "week": "2026-05-03",
+    "expected_entities": ["OpenAI"],
+    "expected_article_ids": [
+      "article_f825322057495d94",
+      "article_6fe4f553b6b7ccae",
+      "article_b487562bd859c586"
+    ],
+    "expected_relationships": [
+      ["OpenAI", "DEPENDS_ON", "Microsoft"],
+      ["OpenAI", "EXPANDS_TO", "Public Markets"]
+    ],
+    "expected_no_explicit_valuation": true,
+    "expected_answer_phrases": ["Sâu chuỗi sự kiện", "Luận điểm từ graph"]
+  }
+]

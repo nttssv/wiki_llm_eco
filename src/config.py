@@ -57,3 +57,47 @@ def get_openai_max_retries() -> int:
     load_env()
     raw_value = os.getenv("OPENAI_MAX_RETRIES", "3").strip() or "3"
     return max(1, int(raw_value))
+
+
+def get_openai_timeout_seconds() -> float:
+    load_env()
+    raw_value = os.getenv("OPENAI_TIMEOUT_SECONDS", "12").strip() or "12"
+    return max(1.0, float(raw_value))
+
+
+def get_openai_max_output_tokens() -> int:
+    load_env()
+    raw_value = os.getenv("OPENAI_MAX_OUTPUT_TOKENS", "900").strip() or "900"
+    return max(128, int(raw_value))
+
+
+def get_neo4j_uri() -> str:
+    load_env()
+    return os.getenv("NEO4J_URI", "bolt://localhost:7687").strip() or "bolt://localhost:7687"
+
+
+def get_neo4j_user() -> str:
+    load_env()
+    return os.getenv("NEO4J_USER", "neo4j").strip() or "neo4j"
+
+
+def get_neo4j_password() -> str | None:
+    load_env()
+    value = os.getenv("NEO4J_PASSWORD", "").strip()
+    return value or None
+
+
+def get_neo4j_database() -> str:
+    load_env()
+    return os.getenv("NEO4J_DATABASE", "neo4j").strip() or "neo4j"
+
+
+def get_embedding_model() -> str:
+    load_env()
+    return os.getenv("EMBEDDING_MODEL", "text-embedding-3-small").strip() or "text-embedding-3-small"
+
+
+def get_embedding_dimensions() -> int:
+    load_env()
+    raw_value = os.getenv("EMBEDDING_DIMENSIONS", "1536").strip() or "1536"
+    return max(1, int(raw_value))
