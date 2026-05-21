@@ -1,0 +1,160 @@
+{
+  "article_id": "article_1ac95b26ce07f113",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Science_Technology_The_human_genome_encodes_for_a_new_category_of_molecule_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Science & technology",
+    "title": "Meet the peptideins",
+    "subtitle": "The human genome encodes for a new category of molecule They may be useful targets for future drugs",
+    "published_date": "06 May 2026",
+    "category": "Science & technology",
+    "summary": "A new class of tiny protein‑like molecules called peptideins has been mapped in the human genome, expanding the ‘dark proteome’. Researchers led by Sebastiaan van Heesch suggest they could become drug targets, especially for cancer immunotherapy, but warn that many may be false positives pending better validation.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Sebastiaan van Heesch",
+        "type": "person",
+        "role": "lead researcher",
+        "description": "Researchers who coined the term and mapped the dark proteome."
+      },
+      {
+        "name": "Princess Máxima Centre",
+        "type": "organization",
+        "role": "employer",
+        "description": "Research institute where van Heesch works."
+      },
+      {
+        "name": "Nature",
+        "type": "organization",
+        "role": "publisher",
+        "description": "Peer‑reviewed journal that published the peptideins paper."
+      },
+      {
+        "name": "David Tollervey",
+        "type": "person",
+        "role": "expert commentator",
+        "description": "Cell biologist who cautioned about false positives in ribosome profiling."
+      },
+      {
+        "name": "University of Edinburgh",
+        "type": "organization",
+        "role": "affiliation",
+        "description": "University affiliated with David Tollervey."
+      },
+      {
+        "name": "ASNSD1-uORF",
+        "type": "molecule",
+        "role": "example peptidein",
+        "description": "Microprotein linked to medulloblastoma."
+      },
+      {
+        "name": "humanin",
+        "type": "molecule",
+        "role": "example peptidein",
+        "description": "Microprotein with cytoprotective and ageing‑related functions."
+      },
+      {
+        "name": "ribosome profiling",
+        "type": "technology",
+        "role": "discovery method",
+        "description": "Technique that maps ribosome positions on RNA."
+      },
+      {
+        "name": "mass spectrometry",
+        "type": "technology",
+        "role": "discovery method",
+        "description": "Analytical method that detects very small proteins."
+      },
+      {
+        "name": "peptideins",
+        "type": "concept",
+        "role": "research focus",
+        "description": "Newly named class of small, poorly characterised protein‑like molecules."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-05-06",
+        "event_summary": "Nature publishes the first comprehensive map of the human dark proteome, introducing the term “peptideins”.",
+        "location": "International (journal publication)",
+        "importance_score": 8
+      }
+    ],
+    "themes": [
+      {
+        "name": "Dark proteome discovery",
+        "description": "Expanding the known functional landscape of the human proteome."
+      },
+      {
+        "name": "Drug target innovation",
+        "description": "Translational potential of micro‑proteins for therapeutics."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Peptideins as a new drug target class",
+        "thesis": "The discovery and systematic naming of peptideins will open a previously hidden layer of the proteome, providing novel targets for immunotherapies and other drugs.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Methodological validation challenge",
+        "thesis": "Current ribosome‑profiling and mass‑spectrometry methods may over‑report peptideins, requiring improved validation to separate functional molecules from artefacts.",
+        "status": "transitioning",
+        "importance_score": 6
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Sebastiaan van Heesch",
+        "relationship": "LED_BY",
+        "target_node": "Princess Máxima Centre",
+        "confidence": 0.95
+      },
+      {
+        "source_node": "Nature",
+        "relationship": "PUBLISHED_IN",
+        "target_node": "peptideins",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "peptideins",
+        "relationship": "ENABLED_BY",
+        "target_node": "ribosome profiling",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "peptideins",
+        "relationship": "ENABLED_BY",
+        "target_node": "mass spectrometry",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "peptideins",
+        "relationship": "AFFECTS",
+        "target_node": "immunotherapy drug development",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "ribosome profiling",
+        "relationship": "CHALLENGES",
+        "target_node": "false positive identification",
+        "confidence": 0.75
+      },
+      {
+        "source_node": "ASNSD1-uORF",
+        "relationship": "RELATED_TO",
+        "target_node": "medulloblastoma",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "humanin",
+        "relationship": "RELATED_TO",
+        "target_node": "cellular stress resistance",
+        "confidence": 0.7
+      }
+    ]
+  }
+}

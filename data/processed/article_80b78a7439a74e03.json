@@ -1,0 +1,100 @@
+{
+  "article_id": "article_80b78a7439a74e03",
+  "original_file_path": "/app/data/raw_articles/Leaders_Oil_3May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Leaders",
+    "title": "Crunchtime in commodities",
+    "subtitle": "Oil markets are still in La La land Prices have risen sharply. Unfortunately, they still have further to go",
+    "published_date": "30 Apr 2026",
+    "category": "Leaders",
+    "summary": "The ongoing war in Iran has led to a significant oil supply shock, with Brent crude prices spiking above $125. Despite this, traders expect prices to fall, indicating a disconnect with the reality of supply shortages. The situation is complicated by geopolitical tensions and the potential for further disruptions in oil supply, particularly through the Strait of Hormuz.",
+    "importance_score": 9,
+    "entities": [
+      {
+        "name": "Iran",
+        "type": "Country",
+        "role": "Affected Party",
+        "description": "Country involved in the ongoing conflict affecting oil supply."
+      },
+      {
+        "name": "Donald Trump",
+        "type": "Person",
+        "role": "Political Leader",
+        "description": "Former U.S. President involved in negotiations and geopolitical strategies regarding oil."
+      },
+      {
+        "name": "Strait of Hormuz",
+        "type": "Geopolitical Location",
+        "role": "Critical Passage",
+        "description": "Strategic waterway for oil transport, currently affected by conflict."
+      },
+      {
+        "name": "Brent Crude",
+        "type": "Commodity",
+        "role": "Market Indicator",
+        "description": "Benchmark for global oil prices, currently experiencing significant fluctuations."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-30",
+        "event_summary": "Brent crude prices spike above $125 amid ongoing conflict.",
+        "location": "Global Oil Markets",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2026-04-17",
+        "event_summary": "Brent crude prices were below $90 before the recent spike.",
+        "location": "Global Oil Markets",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "Geopolitical Tensions",
+        "description": "The impact of international conflicts on global oil supply and prices."
+      },
+      {
+        "name": "Market Speculation",
+        "description": "The role of traders and speculators in predicting oil prices amidst uncertainty."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Oil Supply Shock",
+        "thesis": "The war in Iran has caused unprecedented disruptions in oil supply, leading to soaring prices.",
+        "status": "emerging",
+        "importance_score": 9
+      },
+      {
+        "name": "Geopolitical Risk Assessment",
+        "thesis": "Markets struggle to accurately price the geopolitical risks associated with oil supply.",
+        "status": "strengthening",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Iran",
+        "relationship": "CHALLENGES",
+        "target_node": "Strait of Hormuz",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Donald Trump",
+        "relationship": "SUPPORTS",
+        "target_node": "Oil Market Stability",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "Brent Crude",
+        "relationship": "AFFECTS",
+        "target_node": "Global Economy",
+        "confidence": 0.9
+      }
+    ]
+  }
+}

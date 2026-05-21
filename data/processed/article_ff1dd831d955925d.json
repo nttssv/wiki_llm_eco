@@ -1,0 +1,119 @@
+{
+  "article_id": "article_ff1dd831d955925d",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Business_Apple_new_boss_25_apr_2026.docx",
+  "chart_references": [
+    "Chart: The Economist",
+    "Mr Ternus, Apple’s 50-year-old hardware chief, will take over in September, at which point the 65-year-old Mr Cook will become executive chairman after a remarkable tenure as Apple’s boss. Since he replaced Jobs in 2011, the company’s sales have quadrupled, to $416bn, and its shares have outperformed the S&P 500 by a wide margin (see chart). On his watch, Apple’s market value has soared from $350bn to $4trn (roughly $700m for every day of his tenure). Sales of iPhones are breaking records. Its services business, which includes app-store revenues, continues to grow by double digits annually. As chief executive, Mr Ternus’s first product launch later this year is likely to be a foldable phone, which Apple’s devotees have been eagerly awaiting. The transition is set to look picture-perfect."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Business",
+    "title": "Too many Cooks, not enough Jobs?",
+    "subtitle": "Apple’s new boss needs to restore its magic for the AI era The elevation of John Ternus hints at the future direction of the company",
+    "published_date": "23 Apr 2026",
+    "category": "Business",
+    "summary": "John Ternus has been appointed as Apple's new CEO, succeeding Tim Cook. As Apple faces challenges in the AI era, Ternus must innovate beyond hardware improvements to maintain the company's competitive edge. His leadership will be crucial as Apple navigates its reliance on Chinese manufacturing and seeks to integrate AI into its products more effectively.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "John Ternus",
+        "type": "Person",
+        "role": "CEO",
+        "description": "Newly appointed CEO of Apple, previously the hardware chief."
+      },
+      {
+        "name": "Tim Cook",
+        "type": "Person",
+        "role": "Executive Chairman",
+        "description": "Former CEO of Apple, transitioning to executive chairman."
+      },
+      {
+        "name": "Steve Jobs",
+        "type": "Person",
+        "role": "Former CEO",
+        "description": "Co-founder and former CEO of Apple, known for his innovative vision."
+      },
+      {
+        "name": "Apple",
+        "type": "Organization",
+        "role": "Company",
+        "description": "Technology company known for its consumer electronics and software."
+      },
+      {
+        "name": "Gemini",
+        "type": "Technology",
+        "role": "AI Model",
+        "description": "AI model from Google that Apple is relying on for AI integration."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-09-01",
+        "event_summary": "John Ternus officially takes over as CEO of Apple.",
+        "location": "Apple Headquarters",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2026-06-01",
+        "event_summary": "Apple showcases Gemini-powered Siri at the developers' conference.",
+        "location": "Apple Developers' Conference",
+        "importance_score": 7
+      }
+    ],
+    "themes": [
+      {
+        "name": "Leadership Transition",
+        "description": "The shift from Tim Cook to John Ternus and its implications for Apple's future."
+      },
+      {
+        "name": "AI Integration",
+        "description": "Apple's efforts to incorporate AI into its products amidst competition."
+      },
+      {
+        "name": "Manufacturing Strategy",
+        "description": "Apple's move to reduce reliance on Chinese manufacturing."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Innovation in the AI Era",
+        "thesis": "John Ternus must lead Apple to innovate beyond hardware improvements to thrive in the AI landscape.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Challenges of Leadership",
+        "thesis": "Ternus faces the challenge of succeeding two legendary CEOs while navigating current market dynamics.",
+        "status": "strengthening",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "John Ternus",
+        "relationship": "SUCCESSOR",
+        "target_node": "Tim Cook",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Tim Cook",
+        "relationship": "SUCCESSOR",
+        "target_node": "Steve Jobs",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Apple",
+        "relationship": "DEPENDS_ON",
+        "target_node": "Gemini",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "John Ternus",
+        "relationship": "AFFECTS",
+        "target_node": "Apple",
+        "confidence": 0.95
+      }
+    ]
+  }
+}

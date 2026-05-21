@@ -1,0 +1,100 @@
+{
+  "article_id": "article_8514be692683cee6",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Finance_Chinamaxxing_26Apr2026.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Finance & economics",
+    "title": "Imported enthusiasm",
+    "subtitle": "Chinamaxxing is starting to catch on, in China It’s a boon for the tourist trade",
+    "published_date": "23 Apr 2026",
+    "category": "Finance & economics",
+    "summary": "The phenomenon of 'Chinamaxxing' is boosting China's tourism and economy, driven by foreign social media endorsements and a new visa-free entry program. While initial excitement has led to increased foreign visits and spending, the long-term sustainability of this trend remains uncertain.",
+    "importance_score": 7,
+    "entities": [
+      {
+        "name": "Chinamaxxing",
+        "type": "Cultural Trend",
+        "role": "Concept",
+        "description": "A trend where Westerners adopt Chinese habits and lifestyles, often popularized through social media."
+      },
+      {
+        "name": "Rongchang braised goose",
+        "type": "Food",
+        "role": "Cultural Product",
+        "description": "A traditional dish from China that gained popularity through social media endorsements."
+      },
+      {
+        "name": "Xu Ziyan",
+        "type": "Person",
+        "role": "Researcher",
+        "description": "A researcher at the Shanghai Academy of Social Sciences who studies the impact of social media on tourism."
+      },
+      {
+        "name": "Huangshan",
+        "type": "Location",
+        "role": "Tourist Destination",
+        "description": "A mountainous area in China popular with hikers, noted for increased foreign tourist spending."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2025-01-01",
+        "event_summary": "Foreign tourism to China begins to recover post-pandemic, with over 35 million visitors recorded.",
+        "location": "China",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2025-09-30",
+        "event_summary": "Huangshan reports doubling of foreign tourist spending in the first nine months of 2025 due to social media exposure.",
+        "location": "Huangshan, China",
+        "importance_score": 7
+      }
+    ],
+    "themes": [
+      {
+        "name": "Cultural Exchange",
+        "description": "The interaction and adoption of cultural practices between China and the West."
+      },
+      {
+        "name": "Tourism Recovery",
+        "description": "The resurgence of foreign tourism in China following the COVID-19 pandemic."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Impact of Social Media on Tourism",
+        "thesis": "Social media endorsements are significantly influencing foreign perceptions of China, leading to increased tourism.",
+        "status": "strengthening",
+        "importance_score": 8
+      },
+      {
+        "name": "Sustainability of Chinamaxxing",
+        "thesis": "While Chinamaxxing has led to short-term economic benefits, its long-term impact on tourism and local economies is uncertain.",
+        "status": "emerging",
+        "importance_score": 6
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Chinamaxxing",
+        "relationship": "AFFECTS",
+        "target_node": "Foreign Tourism",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Social Media",
+        "relationship": "SUPPORTS",
+        "target_node": "Chinamaxxing",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Huangshan",
+        "relationship": "DEPENDS_ON",
+        "target_node": "Social Media Exposure",
+        "confidence": 0.7
+      }
+    ]
+  }
+}

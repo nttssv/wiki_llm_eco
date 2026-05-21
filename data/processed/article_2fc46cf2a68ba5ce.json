@@ -1,0 +1,21 @@
+{
+  "article_id": "article_2fc46cf2a68ba5ce",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Leaders_The_world_must_stop_AI_from_empowering_bioterrorists_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Leaders",
+    "title": "From cyber-security to biosecurity",
+    "subtitle": "The world must stop AI from empowering bioterrorists The threat from new pathogens is an even graver danger than AI-backed hackers",
+    "published_date": "07 May 2026",
+    "category": "Leaders",
+    "summary": "The leader argues that AI-enabled biological threats may be more dangerous than AI-backed cyberattacks, and that governments need stronger biosecurity controls before dangerous capabilities spread.",
+    "importance_score": 5,
+    "entities": [],
+    "events": [],
+    "themes": [],
+    "narratives": [],
+    "graph_edges": []
+  }
+}

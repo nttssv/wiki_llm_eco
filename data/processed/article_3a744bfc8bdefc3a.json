@@ -1,0 +1,134 @@
+{
+  "article_id": "article_3a744bfc8bdefc3a",
+  "original_file_path": "/app/data/raw_articles/Business_Oilservices_insurance_3May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Business",
+    "title": "What’s in the pipeline",
+    "subtitle": "Swashbuckling oil-services firms are preparing for a boom Post-war reconstruction and efforts to diversify production will present big opportunities",
+    "published_date": "29 Apr 2026",
+    "category": "Business",
+    "summary": "Oil-services firms are poised for growth due to post-war reconstruction opportunities in the Middle East and a potential increase in investment from oil majors. Despite short-term challenges from geopolitical tensions, the long-term outlook suggests a significant boom in the sector.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Baker Hughes",
+        "type": "Company",
+        "role": "Oil-services firm",
+        "description": "One of the leading oil-services firms involved in drilling and infrastructure."
+      },
+      {
+        "name": "Halliburton",
+        "type": "Company",
+        "role": "Oil-services firm",
+        "description": "A major player in the oil-services industry, providing various energy solutions."
+      },
+      {
+        "name": "SLB",
+        "type": "Company",
+        "role": "Oil-services firm",
+        "description": "A leading oil-services company focusing on upstream markets."
+      },
+      {
+        "name": "Donald Trump",
+        "type": "Person",
+        "role": "Former President of the USA",
+        "description": "His administration's actions have influenced the geopolitical landscape affecting oil services."
+      },
+      {
+        "name": "Nicolás Maduro",
+        "type": "Person",
+        "role": "Former President of Venezuela",
+        "description": "His ousting has opened opportunities for oil-services firms in Venezuela."
+      },
+      {
+        "name": "Rystad Energy",
+        "type": "Company",
+        "role": "Consultancy",
+        "description": "Provides insights on energy markets, including infrastructure repair costs."
+      },
+      {
+        "name": "Wood Mackenzie",
+        "type": "Company",
+        "role": "Research firm",
+        "description": "Analyzes oil and gas markets, highlighting investment needs."
+      },
+      {
+        "name": "YPF",
+        "type": "Company",
+        "role": "State-run oil company in Argentina",
+        "description": "Contracted Halliburton for a significant fracking project."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-29",
+        "event_summary": "Oil-services firms report earnings reflecting a decline in revenues due to geopolitical tensions.",
+        "location": "Middle East",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2026-04-01",
+        "event_summary": "Halliburton secures a major fracking contract with Argentina's YPF.",
+        "location": "Argentina",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "Geopolitical Impact",
+        "description": "The influence of international politics on oil services and market dynamics."
+      },
+      {
+        "name": "Investment Trends",
+        "description": "Shifts in investment strategies among oil majors in response to market conditions."
+      },
+      {
+        "name": "Energy Security",
+        "description": "The focus on diversifying energy supply sources in the wake of geopolitical tensions."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Post-war Reconstruction Boom",
+        "thesis": "The reconstruction of oil and gas infrastructure in the Middle East will create significant opportunities for oil-services firms.",
+        "status": "emerging",
+        "importance_score": 9
+      },
+      {
+        "name": "Investment Recovery",
+        "thesis": "Oil majors are likely to increase upstream investments after years of capital discipline due to geopolitical pressures.",
+        "status": "strengthening",
+        "importance_score": 8
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Baker Hughes",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Venezuela",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Halliburton",
+        "relationship": "SUPPORTS",
+        "target_node": "YPF",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "SLB",
+        "relationship": "AFFECTS",
+        "target_node": "Middle East",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "Donald Trump",
+        "relationship": "CHALLENGES",
+        "target_node": "Nicolás Maduro",
+        "confidence": 0.85
+      }
+    ]
+  }
+}

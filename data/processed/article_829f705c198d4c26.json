@@ -1,0 +1,82 @@
+{
+  "article_id": "article_829f705c198d4c26",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Business_Chinawhisky_26Apr2026.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Business",
+    "title": "Against the grain",
+    "subtitle": "The curious rise of Chinese whisky Why one tipple is thriving in an otherwise dispirited market",
+    "published_date": "22 Apr 2026",
+    "category": "Business",
+    "summary": "Chinese whisky is experiencing a surge in popularity despite a general decline in alcohol sales in China. Major distilleries are being built, and imports of whisky have reached record levels. The rise is attributed to successful overseas marketing and whisky's status as a luxury product.",
+    "importance_score": 7,
+    "entities": [
+      {
+        "name": "Diageo",
+        "type": "Company",
+        "role": "Investor",
+        "description": "A British spirits-maker investing in Chinese whisky production."
+      },
+      {
+        "name": "Pernod Ricard",
+        "type": "Company",
+        "role": "Investor",
+        "description": "A French rival involved in the Chinese whisky market."
+      },
+      {
+        "name": "Edison Chiao",
+        "type": "Person",
+        "role": "Representative",
+        "description": "A representative from Diageo discussing the luxury market for whisky in China."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-02-01",
+        "event_summary": "China introduced its first national standards for single malt whisky.",
+        "location": "China",
+        "importance_score": 8
+      }
+    ],
+    "themes": [
+      {
+        "name": "Luxury Consumption",
+        "description": "The growing trend of premium spirits consumption among wealthy Chinese consumers."
+      },
+      {
+        "name": "Market Dynamics",
+        "description": "The contrast between the rise of whisky and the decline of other alcoholic beverages in China."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Emergence of Chinese Whisky",
+        "thesis": "Chinese whisky is becoming a significant player in the global spirits market despite local challenges.",
+        "status": "strengthening",
+        "importance_score": 9
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Diageo",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Chinese Whisky Market",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Pernod Ricard",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Chinese Whisky Market",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Chinese Whisky Market",
+        "relationship": "AFFECTS",
+        "target_node": "Luxury Consumption",
+        "confidence": 0.85
+      }
+    ]
+  }
+}

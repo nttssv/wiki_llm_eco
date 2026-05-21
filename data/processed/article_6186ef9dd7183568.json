@@ -1,0 +1,200 @@
+{
+  "article_id": "article_6186ef9dd7183568",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Business_Airlines_are_grappling_with_dwindling_supplies_of_jet_fuel_9May2026_Economist.docx",
+  "chart_references": [
+    "Since the conflict with Iran began, the cost of filling up a plane has thus soared (see chart). That has already claimed one corporate victim. Spirit Airlines, an American low-cost carrier in bankruptcy protection, ceased operating on May 2nd. Its finances, strained by stiffening competition from big network carriers, buckled under the weight of rising fuel costs.",
+    "Chart: The Economist",
+    "Stock buffers also differ widely, as Europe’s case shows. The continent in total holds 38 days of commercial stock, climbing to 57 days once government reserves are added. But Britain, which has no strategic reserve, now has a stock of just 29 days of jet fuel, according to Goldman Sachs. For Portugal the figure has fallen to 23 days. That is the level at which the International Energy Agency, an inter-governmental body, reckons that rationing starts to be required."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Business",
+    "title": "Fuming",
+    "subtitle": "Airlines are grappling with dwindling supplies of jet fuel Yet it is unclear where shortages will hit first and hardest",
+    "published_date": "07 May 2026",
+    "category": "Business",
+    "summary": "The closure of the Strait of Hormuz has choked Gulf crude and jet‑fuel exports, sending prices soaring. U.S. low‑cost carrier Spirit Airlines folded on May 2, and major airlines in Europe and Asia have cut flights, added surcharges, or face stock shortages. While the U.S. can increase exports to Europe, Asian markets remain vulnerable. Forecasts show a modest summer schedule rise despite the supply crunch, creating a disconnect between demand and fuel availability.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Spirit Airlines",
+        "type": "company",
+        "role": "victim",
+        "description": "U.S. low‑cost carrier in Chapter 11 that stopped flights on May 2, 2026 due to soaring fuel costs."
+      },
+      {
+        "name": "Lufthansa",
+        "type": "company",
+        "role": "affected_carrier",
+        "description": "German flag carrier that has cut flights because of higher jet‑fuel prices."
+      },
+      {
+        "name": "Air France‑KLM",
+        "type": "company",
+        "role": "affected_carrier",
+        "description": "French‑Dutch airline group that reduced schedules amid fuel shortages."
+      },
+      {
+        "name": "United Airlines",
+        "type": "company",
+        "role": "affected_carrier",
+        "description": "U.S. major airline that added surcharges and cancelled routes."
+      },
+      {
+        "name": "Delta Air Lines",
+        "type": "company",
+        "role": "affected_carrier",
+        "description": "U.S. major airline that added surcharges and cancelled routes."
+      },
+      {
+        "name": "Vietjet",
+        "type": "company",
+        "role": "affected_carrier",
+        "description": "Vietnamese low‑cost carrier that trimmed flights due to fuel price spikes."
+      },
+      {
+        "name": "AirAsia",
+        "type": "company",
+        "role": "affected_carrier",
+        "description": "Singapore‑based low‑cost carrier{—}cut flights as jet‑fuel costs rise."
+      },
+      {
+        "name": "Andrew Charlton",
+        "type": "person",
+        "role": "expert",
+        "description": "Consultant and aviation‑industry commentator quoted in the article."
+      },
+      {
+        "name": "Aviation Advocacy",
+        "type": "organization",
+        "role": "expert_source",
+        "description": "Aviation consultancy cited for industry insight."
+      },
+      {
+        "name": "Goldman Sachs",
+        "type": "organization",
+        "role": "data_provider",
+        "description": "Investment bank providing data on flight schedules and fuel demand."
+      },
+      {
+        "name": "Société Générale",
+        "type": "organization",
+        "role": "data_provider",
+        "description": "French bank offering demand forecasts for jet fuel."
+      },
+      {
+        "name": "Cirium",
+        "type": "organization",
+        "role": "data_provider",
+        "description": "Aviation data firm tracking scheduled flights."
+      },
+      {
+        "name": "International Energy Agency",
+        "type": "organization",
+        "role": "standard_setter",
+        "description": "Inter‑governmental agency that defines fuel‑stock thresholds for rationing."
+      },
+      {
+        "name": "Strait of Hormuz",
+        "type": "geographic_feature",
+        "role": "bottleneck",
+        "description": "Strategic waterway whose near‑total closure has halted Gulf crude and jet‑fuel exports."
+      },
+      {
+        "name": "United States",
+        "type": "country",
+        "role": "exporter",
+        "description": "Country producing and refining oil, now increasing jet‑fuel exports to Europe."
+      },
+      {
+        "name": "India",
+        "type": "country",
+        "role": "potential_supplier",
+        "description": "Country whose refiners could supply Asia but face export limits."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-05-02",
+        "event_summary": "Spirit Airlines ceased operations after filing for bankruptcy protection, citing unsustainable jet‑fuel costs.",
+        "location": "United States",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2026-04-30",
+        "event_summary": "Global scheduled flights for May fell by 13,000, according to Cirium data.",
+        "location": "Global",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2026-05-07",
+        "event_summary": "The Economist published analysis of jet‑fuel shortages linked to the closure of the Strait of Hormuz.",
+        "location": "United Kingdom",
+        "importance_score": 5
+      }
+    ],
+    "themes": [
+      {
+        "name": "Energy‑geopolitics and aviation",
+        "description": "Geopolitical disruptions to energy supply chains and their impact on aviation costs."
+      },
+      {
+        "name": "Fuel inventory resilience",
+        "description": "Regional disparities in jet‑fuel stockpiles and strategic reserves."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Jet‑fuel shortage risk from Hormuz closure threatens global airline economics",
+        "thesis": "The near‑total shutdown of the Strait of Hormuz is curtailing Gulf crude and jet‑fuel flows, driving up prices and forcing airlines worldwide to cut routes, raise fares, or cease operations.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "U.S. refiners offset European shortfalls through increased jet‑fuel exports",
+        "thesis": "Higher global fuel prices have prompted U.S. refineries to boost jet‑fuel output and ship more to Europe, partially mitigating the regional supply gap.",
+        "status": "emerging",
+        "importance_score": 6
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Strait of Hormuz",
+        "relationship": "LED_BY",
+        "target_node": "Conflict with Iran",
+        "confidence": 0.95
+      },
+      {
+        "source_node": "Strait of Hormuz",
+        "relationship": "AFFECTS",
+        "target_node": "Jet fuel supply",
+        "confidence": 0.92
+      },
+      {
+        "source_node": "United States",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Europe (jet fuel exports)",
+        "confidence": 0.88
+      },
+      {
+        "source_node": "India",
+        "relationship": "CHALLENGES",
+        "target_node": "European jet fuel market",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Jet fuel price increase",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Airline ticket pricing",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Goldman Sachs",
+        "relationship": "SUPPORTS",
+        "target_node": "Forecast of summer flight growth",
+        "confidence": 0.8
+      }
+    ]
+  }
+}

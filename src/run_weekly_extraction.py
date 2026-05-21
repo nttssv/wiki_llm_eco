@@ -10,13 +10,12 @@ from pathlib import Path
 from typing import Iterable
 
 from .config import get_openai_api_key, load_env
-from .db import NarrativeDatabase, PersistenceStats, normalize_article_file_key
 from .extract_article import generate_article_id, processed_json_path_name, mock_extract_article
 from .generate_markdown import write_article_markdown, write_wiki_indexes
 from .ingest_docx import read_docx_article
 from .llm_extract_article import extract_article_with_llm
+from .neo4j_store import fetch_wiki_index_rows_from_neo4j, upsert_extraction_to_neo4j
 from .paths import (
-    DB_PATH,
     LOG_PATH,
     PROCESSED_DIR,
     WIKI_ARTICLES_DIR,
@@ -25,22 +24,17 @@ from .paths import (
     WIKI_NARRATIVES_DIR,
     resolve_project_path,
 )
+from .processed_registry import (
+    article_ids_by_file_key,
+    normalize_article_file_key,
+    rebuild_processed_manifest,
+)
 
 
 @dataclass(slots=True)
 class RunSummary:
     articles_processed: int = 0
     articles_skipped: int = 0
-    entities_created: int = 0
-    events_created: int = 0
-    narratives_created: int = 0
-    graph_edges_created: int = 0
-
-    def update(self, stats: PersistenceStats) -> None:
-        self.entities_created += stats.entities_created
-        self.events_created += stats.events_created
-        self.narratives_created += stats.narratives_created
-        self.graph_edges_created += stats.graph_edges_created
 
 
 def configure_logging(log_path: Path) -> None:
@@ -84,6 +78,16 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Only process DOCX files not already recorded in the database.",
     )
+    parser.add_argument(
+        "--neo4j-write",
+        action="store_true",
+        help="Also write each extraction directly into Neo4j canonical graph.",
+    )
+    parser.add_argument(
+        "--neo4j-embed-assets",
+        action="store_true",
+        help="When using --neo4j-write, also embed extracted chunks and image caption hints.",
+    )
     return parser.parse_args()
 
 
@@ -94,10 +98,11 @@ def main() -> None:
 
     configure_logging(LOG_PATH)
     logging.info(
-        "Starting weekly extraction for week=%s input=%s extractor=%s",
+        "Starting weekly extraction for week=%s input=%s extractor=%s neo4j_write=%s",
         args.week,
         input_dir,
         args.extractor,
+        args.neo4j_write,
     )
 
     if not input_dir.exists():
@@ -110,89 +115,105 @@ def main() -> None:
         print(warning_message)
         logging.warning("No API key found. Falling back to mock extractor.")
 
-    database = NarrativeDatabase(DB_PATH)
-    database.initialize()
     summary = RunSummary()
-    existing_article_ids_by_file_key = database.fetch_article_ids_by_file_key()
+    existing_article_ids_by_file_key = article_ids_by_file_key()
     existing_file_keys = set(existing_article_ids_by_file_key) if args.new_only else set()
 
-    try:
-        for docx_path in iter_docx_files(input_dir):
-            file_key = normalize_article_file_key(docx_path)
-            if args.new_only and file_key in existing_file_keys:
-                summary.articles_skipped += 1
-                logging.info("Skipping already processed file=%s", docx_path.name)
-                continue
+    for docx_path in iter_docx_files(input_dir):
+        file_key = normalize_article_file_key(docx_path)
+        if args.new_only and file_key in existing_file_keys:
+            summary.articles_skipped += 1
+            logging.info("Skipping already processed file=%s", docx_path.name)
+            continue
 
-            raw_article = read_docx_article(docx_path)
-            raw_article.metadata["original_file_path"] = str(docx_path)
+        resolved_docx_path = docx_path.resolve()
+        raw_article = read_docx_article(resolved_docx_path)
+        raw_article.metadata["original_file_path"] = str(resolved_docx_path)
 
-            article_id = existing_article_ids_by_file_key.get(file_key) or generate_article_id(
-                raw_article.metadata.get("source", ""),
-                raw_article.metadata.get("title", ""),
-                raw_article.metadata.get("published_date", ""),
-            )
+        article_id = existing_article_ids_by_file_key.get(file_key) or generate_article_id(
+            raw_article.metadata.get("source", ""),
+            raw_article.metadata.get("title", ""),
+            raw_article.metadata.get("published_date", ""),
+        )
 
-            extraction = mock_extract_article(raw_article.body_text, raw_article.metadata)
-            extractor_used = "mock"
-            if use_llm and has_api_key:
-                try:
-                    extraction = extract_article_with_llm(raw_article.body_text, raw_article.metadata)
-                    extractor_used = "llm"
-                except Exception:
-                    logging.exception(
-                        "LLM extraction failed for file=%s article_id=%s. Falling back to mock extractor.",
-                        docx_path.name,
-                        article_id,
-                    )
+        extraction = mock_extract_article(raw_article.body_text, raw_article.metadata)
+        extractor_used = "mock"
+        if use_llm and has_api_key:
+            try:
+                extraction = extract_article_with_llm(raw_article.body_text, raw_article.metadata)
+                extractor_used = "llm"
+            except Exception:
+                logging.exception(
+                    "LLM extraction failed for file=%s article_id=%s. Falling back to mock extractor.",
+                    docx_path.name,
+                    article_id,
+                )
 
-            json_payload = {
-                "article_id": article_id,
-                "original_file_path": str(docx_path),
-                "chart_references": raw_article.chart_references,
-                "extractor": extractor_used,
-                "extraction": extraction.model_dump(),
-            }
+        json_payload = {
+            "article_id": article_id,
+            "original_file_path": str(resolved_docx_path),
+            "chart_references": raw_article.chart_references,
+            "extractor": extractor_used,
+            "extraction": extraction.model_dump(),
+        }
 
-            json_path = save_extraction_json(PROCESSED_DIR, article_id, json_payload)
-            stats = database.upsert_extraction(article_id, extraction, docx_path, args.week)
-            markdown_path = write_article_markdown(WIKI_ARTICLES_DIR, article_id, extraction)
-
-            summary.articles_processed += 1
-            summary.update(stats)
-
-            logging.info(
-                "Processed article_id=%s file=%s extractor=%s json=%s markdown=%s",
+        json_path = save_extraction_json(PROCESSED_DIR, article_id, json_payload)
+        if args.neo4j_write:
+            neo4j_stats = upsert_extraction_to_neo4j(
                 article_id,
-                docx_path.name,
-                extractor_used,
-                json_path.name,
-                markdown_path.name,
+                extraction,
+                resolved_docx_path,
+                args.week,
+                embed_assets=args.neo4j_embed_assets,
             )
+            logging.info(
+                "Neo4j direct write article_id=%s claims=%s chunks=%s images=%s embeddings=%s",
+                article_id,
+                neo4j_stats.claims,
+                neo4j_stats.chunks,
+                neo4j_stats.images,
+                neo4j_stats.embeddings,
+            )
+        markdown_path = write_article_markdown(WIKI_ARTICLES_DIR, article_id, extraction)
 
-        wiki_index_path, entities_index_path, narratives_index_path = write_wiki_indexes(
-            WIKI_DIR,
-            WIKI_ENTITIES_DIR,
-            WIKI_NARRATIVES_DIR,
-            database.fetch_articles(),
-            database.fetch_entities(),
-            database.fetch_narratives(),
-        )
+        summary.articles_processed += 1
+
         logging.info(
-            "Updated wiki indexes root=%s entities=%s narratives=%s",
-            wiki_index_path.name,
-            entities_index_path.name,
-            narratives_index_path.name,
+            "Processed article_id=%s file=%s extractor=%s json=%s markdown=%s",
+            article_id,
+            docx_path.name,
+            extractor_used,
+            json_path.name,
+            markdown_path.name,
         )
-    finally:
-        database.close()
+
+    manifest_path, article_rows = rebuild_processed_manifest()
+    if args.neo4j_write:
+        entity_rows, narrative_rows = fetch_wiki_index_rows_from_neo4j()
+        wiki_index_source = "Neo4j"
+    else:
+        entity_rows, narrative_rows = [], []
+        wiki_index_source = "processed registry"
+
+    wiki_index_path, entities_index_path, narratives_index_path = write_wiki_indexes(
+        WIKI_DIR,
+        WIKI_ENTITIES_DIR,
+        WIKI_NARRATIVES_DIR,
+        article_rows,
+        entity_rows,
+        narrative_rows,
+    )
+    logging.info(
+        "Updated manifest=%s and wiki indexes from %s root=%s entities=%s narratives=%s",
+        manifest_path.name,
+        wiki_index_source,
+        wiki_index_path.name,
+        entities_index_path.name,
+        narratives_index_path.name,
+    )
 
     print(f"articles processed: {summary.articles_processed}")
     print(f"articles skipped: {summary.articles_skipped}")
-    print(f"entities created: {summary.entities_created}")
-    print(f"events created: {summary.events_created}")
-    print(f"narratives created: {summary.narratives_created}")
-    print(f"graph edges created: {summary.graph_edges_created}")
 
 
 if __name__ == "__main__":

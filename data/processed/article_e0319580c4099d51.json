@@ -1,0 +1,21 @@
+{
+  "article_id": "article_e0319580c4099d51",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Leaders_The_Trump_Xi_summit_will_expose_a_dysfunctional_duo_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Leaders",
+    "title": "Our cover",
+    "subtitle": "The Trump-Xi summit will expose a dysfunctional{...}",
+    "published_date": "07 May 2026",
+    "category": "Leaders",
+    "summary": "The leader argues that a Trump-Xi summit would expose dysfunction on both sides of the US-China relationship, making clear how hard durable cooperation has become.",
+    "importance_score": 1,
+    "entities": [],
+    "events": [],
+    "themes": [],
+    "narratives": [],
+    "graph_edges": []
+  }
+}

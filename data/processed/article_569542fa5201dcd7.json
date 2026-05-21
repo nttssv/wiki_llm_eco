@@ -1,0 +1,21 @@
+{
+  "article_id": "article_569542fa5201dcd7",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Leaders_Narendra_Modis_party_is_on_a_roll_in_India_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Leaders",
+    "title": "Indian democracy",
+    "subtitle": "Narendra Modi's party is on a roll in India The BJP has beaten a bad ruler in West Bengal. But India must not become a de facto one-party state",
+    "published_date": "07 May 2026",
+    "category": "Leaders",
+    "summary": "The leader frames the BJP's victory in West Bengal as a rebuke of poor state-level governance while warning that India must avoid drifting into de facto one-party dominance.",
+    "importance_score": 5,
+    "entities": [],
+    "events": [],
+    "themes": [],
+    "narratives": [],
+    "graph_edges": []
+  }
+}

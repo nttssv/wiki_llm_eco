@@ -1,0 +1,24 @@
+{
+  "article_id": "article_57dc26d7a016eb1b",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Business_Not_all_oil_giants_are_prospering_from_the_Iran_war_9May2026_Economist.docx",
+  "chart_references": [
+    "Chart: The Economist",
+    "Exxon appears to be lagging behind. To make matters worse, its operations are being hit particularly hard by the Hormuz closure. Around a fifth of its oil-and-gas production is located in the Middle East, one of the highest exposures among the majors (see chart). Exxon pumped the equivalent of 4.6m barrels per day (b/d) over the first quarter, down from 5m in the previous one. If the strait remains shut until the end of June, the company says its output would fall to 4.1m–4.3m b/d. Both Exxon and Chevron say they have no plans to boost investment in America’s shale basins to take advantage of higher prices."
+  ],
+  "extractor": "mock",
+  "extraction": {
+    "source": "Economist",
+    "section": "Business",
+    "title": "Bunged up",
+    "subtitle": "Not all oil giants are prospering from the Iran war Exxon and Chevron have benefited less than their European rivals",
+    "published_date": "06 May 2026",
+    "category": "Business",
+    "summary": "No mock extraction pattern matched this article. Replace mock extraction with an LLM-backed extractor.",
+    "importance_score": 3,
+    "entities": [],
+    "events": [],
+    "themes": [],
+    "narratives": [],
+    "graph_edges": []
+  }
+}

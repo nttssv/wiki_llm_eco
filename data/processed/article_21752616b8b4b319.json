@@ -1,0 +1,129 @@
+{
+  "article_id": "article_21752616b8b4b319",
+  "original_file_path": "/app/data/raw_articles/Finance_India_weak_currency_3May2026_Economist.docx",
+  "chart_references": [
+    "Chart: The Economist",
+    "The head of the Reserve Bank of India (RBI), Sanjay Malhotra, previously suggested that a modest depreciation against the dollar is “normal” for a currency like the rupee—an arithmetic consequence of India’s inflation being higher than America’s. It keeps the real value of Indian and American goods equal. In the 12 months to March, however, inflation in both countries was virtually identical, at a smidge above 3%. The rupee’s 11% drop against the greenback thus resulted in a collapsing real effective exchange rate (see chart 1). Nearly two-thirds of that decline predates the Gulf energy crisis.",
+    "Chart: The Economist",
+    "Net foreign direct investment has followed a similar pattern. After years in the black there were net outflows in late 2024 and early 2025, then again in the first three month of this year (see chart 2). Foreign multinationals, venture capitalists and buy-out barons have been taking advantage of high valuations to cash out. Despite recent pro-business reforms by Narendra Modi’s government, India’s shabby infrastructure and a bureaucracy that puts Byzantium to shame puts off new arrivals.",
+    "Chart: The Economist",
+    "On April 20th the RBI reversed course on the currency bets, perhaps concluding that making it harder to hedge currency risk is not the best way to keep investors in India. Ironically, a combination of a historically cheap rupee (see chart 3) and a softer stockmarket may do a better job of encouraging them to stay put. Selling shares now would crystallise losses in dollar terms. Refraining from such sales could, Mr Mishra notes, reduce the flow of capital out of India, helping finance a larger current-account deficit. For oil, high prices are often the cure for high prices. For rupees, with luck, low prices will be. ■"
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Finance & economics",
+    "title": "No respite for the rupee",
+    "subtitle": "India’s weak currency reflects deeper problems than the Iran war It highlights a persistent inability to draw in foreign investors",
+    "published_date": "30 Apr 2026",
+    "category": "Finance & economics",
+    "summary": "India's rupee has depreciated significantly, reflecting deeper economic issues and a struggle to attract foreign investment. The Reserve Bank of India has intervened to stabilize the currency amidst rising oil prices due to the Iran war, but challenges remain.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Reserve Bank of India",
+        "type": "Institution",
+        "role": "Central Bank",
+        "description": "The central banking institution of India responsible for regulating the currency and monetary policy."
+      },
+      {
+        "name": "Sanjay Malhotra",
+        "type": "Person",
+        "role": "Governor",
+        "description": "The head of the Reserve Bank of India."
+      },
+      {
+        "name": "Neelkanth Mishra",
+        "type": "Person",
+        "role": "Analyst",
+        "description": "An analyst at Axis Bank providing insights on India's economic situation."
+      },
+      {
+        "name": "India",
+        "type": "Country",
+        "role": "Economy",
+        "description": "A major emerging market facing economic challenges including currency depreciation."
+      },
+      {
+        "name": "Iran",
+        "type": "Country",
+        "role": "Geopolitical Factor",
+        "description": "The country involved in a conflict affecting global oil prices."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2025-03-31",
+        "event_summary": "Rupee lost around 10% of its value against the dollar in the fiscal year.",
+        "location": "India",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2024-12-31",
+        "event_summary": "Net foreign direct investment showed outflows for the first time in years.",
+        "location": "India",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2026-04-20",
+        "event_summary": "RBI reversed restrictions on currency speculation to stabilize the rupee.",
+        "location": "India",
+        "importance_score": 5
+      }
+    ],
+    "themes": [
+      {
+        "name": "Currency Depreciation",
+        "description": "The decline in the value of the rupee against the dollar and its implications for the economy."
+      },
+      {
+        "name": "Foreign Investment",
+        "description": "The challenges India faces in attracting foreign capital amidst economic instability."
+      },
+      {
+        "name": "Geopolitical Impact",
+        "description": "The influence of the Iran war on India's energy costs and economic health."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Economic Resilience",
+        "thesis": "Despite the rupee's depreciation, India's economic growth potential remains strong.",
+        "status": "emerging",
+        "importance_score": 6
+      },
+      {
+        "name": "Investor Confidence",
+        "thesis": "India's ability to attract foreign investment is hindered by economic and bureaucratic challenges.",
+        "status": "strengthening",
+        "importance_score": 8
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "India",
+        "relationship": "AFFECTS",
+        "target_node": "Rupee",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Iran",
+        "relationship": "CHALLENGES",
+        "target_node": "India",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Reserve Bank of India",
+        "relationship": "SUPPORTS",
+        "target_node": "Rupee",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Sanjay Malhotra",
+        "relationship": "LED_BY",
+        "target_node": "Reserve Bank of India",
+        "confidence": 0.95
+      }
+    ]
+  }
+}

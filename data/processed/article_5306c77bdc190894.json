@@ -1,0 +1,125 @@
+{
+  "article_id": "article_5306c77bdc190894",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Finance_global_energy_markets_25Apr2026.docx",
+  "chart_references": [
+    "Take trade first. One reason the largest supply shock in petroleum history has not triggered global panic is that a near-record amount of oil was already at sea when the war started. As American warships set sail for the Gulf in February, countries there cranked up exports. After the latest deliveries, those excess seaborne stocks are now exhausted. So are most cargoes of Iranian and Russian oil, which were loitering at sea but found buyers after America eased sanctions on the two countries. Total volumes on water have fallen at record speed. For jet fuel and petrol they are well below historical norms, and possibly close to the minimum required for seaborne trade to function (see chart 1, top panel).",
+    "Chart: The Economist",
+    "A better gauge is Dated Brent, the price for real cargoes delivered in the next few weeks. The spread between the two—usually $1-2—widened greatly in April, reflecting fears of near-term shortages, according to Platts, which produces the benchmark (see chart 1, bottom panel). It has narrowed since but remains bigger than usual (and does not include eye-watering freight rates and other costs).",
+    "Raw material at $130-150 a barrel has pushed European refiners’ margins into the red, reckons Benedict George of Argus Media, a price-reporting agency (see chart 2, top panel). Extreme backwardation—when commodity spot prices are much higher than those for futures—crush their profits: they must pay up for crude now but sell their products at lower futures prices. Before long they will need to cut output.",
+    "Chart: The Economist",
+    "Fast-depleting stocks make matters worse. Europe’s reserves of jet fuel cover some 50 days of consumption, their typical level. But modelling by Michelle Brouhard of Kpler, a data firm, for The Economist shows that European stocks will fall precipitously if Hormuz flows do not normalise by June. Those in other importing regions may disappear even faster (see chart 2, bottom panel). The outlook could worsen if America, seeking to tame domestic prices, emulates China and bans exports of refined products, which have risen by nearly half since the start of the war."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Finance & economics",
+    "title": "Time’s up",
+    "subtitle": "Global energy markets are on the verge of a disaster Scenarios now range from bad to awful",
+    "published_date": "21 Apr 2026",
+    "category": "Finance & economics",
+    "summary": "The ongoing Iran war has severely disrupted global energy markets, leading to significant oil supply shortages and rising prices. With the Strait of Hormuz closed, the world faces a potential energy catastrophe as demand remains high and inventories dwindle. The situation is exacerbated by government interventions in Europe and Asia, which may lead to further market imbalances.",
+    "importance_score": 9,
+    "entities": [
+      {
+        "name": "Iran",
+        "type": "Country",
+        "role": "Actor",
+        "description": "Involved in the ongoing conflict affecting global oil supply."
+      },
+      {
+        "name": "Strait of Hormuz",
+        "type": "Geopolitical Location",
+        "role": "Critical Passage",
+        "description": "Key maritime route for oil shipments, currently closed due to conflict."
+      },
+      {
+        "name": "Brent Crude",
+        "type": "Commodity",
+        "role": "Market Indicator",
+        "description": "Global benchmark for oil prices, currently fluctuating due to supply issues."
+      },
+      {
+        "name": "Asia",
+        "type": "Region",
+        "role": "Market",
+        "description": "Significantly affected by oil supply shortages and high prices."
+      },
+      {
+        "name": "Europe",
+        "type": "Region",
+        "role": "Market",
+        "description": "Attempting to shield consumers from rising fuel prices through subsidies."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-17",
+        "event_summary": "Iran's foreign minister declared the Strait of Hormuz 'completely open', leading to a temporary drop in Brent crude prices.",
+        "location": "Strait of Hormuz",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2026-04-20",
+        "event_summary": "Last oil tankers reached their destinations before the war, indicating a supply shock is imminent.",
+        "location": "Malaysia and California",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2026-04-19",
+        "event_summary": "Asian crude stocks fell by 67 million barrels, indicating severe supply shortages.",
+        "location": "Asia",
+        "importance_score": 9
+      }
+    ],
+    "themes": [
+      {
+        "name": "Energy Crisis",
+        "description": "The ongoing conflict and its impact on global energy supply and prices."
+      },
+      {
+        "name": "Market Dynamics",
+        "description": "The interplay between supply shortages, government interventions, and consumer demand."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Impending Energy Catastrophe",
+        "thesis": "The closure of the Strait of Hormuz and ongoing supply disruptions are leading the world towards an energy crisis.",
+        "status": "emerging",
+        "importance_score": 10
+      },
+      {
+        "name": "Government Intervention Effects",
+        "thesis": "European and Asian governments' attempts to shield consumers from high prices may exacerbate market imbalances.",
+        "status": "strengthening",
+        "importance_score": 8
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Iran",
+        "relationship": "CHALLENGES",
+        "target_node": "Global Oil Supply",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Strait of Hormuz",
+        "relationship": "DEPENDS_ON",
+        "target_node": "Global Oil Trade",
+        "confidence": 0.95
+      },
+      {
+        "source_node": "Europe",
+        "relationship": "SUPPORTS",
+        "target_node": "Consumer Purchasing Power",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Asia",
+        "relationship": "AFFECTS",
+        "target_node": "Global Oil Prices",
+        "confidence": 0.9
+      }
+    ]
+  }
+}

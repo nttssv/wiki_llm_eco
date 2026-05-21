@@ -42,6 +42,16 @@
       "week": "2026-04-26"
     },
     {
+      "id": "article_63da066e93125c5e",
+      "label": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "type": "article",
+      "detail": "Google Cloud is leveraging its proprietary AI chips and models to enhance its competitiveness against Amazon and Microsoft in the cloud computing market.",
+      "importance_score": 8,
+      "linked_articles": 1,
+      "mention_count": 0,
+      "week": "2026-04-26"
+    },
+    {
       "id": "article_8514be692683cee6",
       "label": "Imported enthusiasm",
       "type": "article",
@@ -202,6 +212,16 @@
       "week": "2026-04-26"
     },
     {
+      "id": "entity_711a38ebb39f6ef7",
+      "label": "Amazon Web Services",
+      "type": "entity",
+      "detail": "Leading cloud service provider, competing with Google Cloud.",
+      "importance_score": 0,
+      "linked_articles": 1,
+      "mention_count": 0,
+      "week": "2026-04-26"
+    },
+    {
       "id": "entity_afb957e31d64e0cf",
       "label": "American Bankers Association",
       "type": "entity",
@@ -235,9 +255,9 @@
       "id": "entity_ab0378d5217a1454",
       "label": "Anthropic",
       "type": "entity",
-      "detail": "An AI lab that faced government pressure regarding access to its models.",
+      "detail": "AI safety and research company, collaborating with Google on AI chips.",
       "importance_score": 0,
-      "linked_articles": 1,
+      "linked_articles": 2,
       "mention_count": 0,
       "week": "2026-04-26"
     },
@@ -426,6 +446,16 @@
       "label": "Daniel Corsten",
       "type": "entity",
       "detail": "An analyst from IE Business School who commented on the challenges faced by millennial brands.",
+      "importance_score": 0,
+      "linked_articles": 1,
+      "mention_count": 0,
+      "week": "2026-04-26"
+    },
+    {
+      "id": "entity_480a8a87afc25ce9",
+      "label": "DeepMind",
+      "type": "entity",
+      "detail": "AI research lab owned by Alphabet, contributing to Google's AI advancements.",
       "importance_score": 0,
       "linked_articles": 1,
       "mention_count": 0,
@@ -682,6 +712,16 @@
       "week": "2026-04-26"
     },
     {
+      "id": "entity_d3e9de12d0f05bb5",
+      "label": "Google Cloud",
+      "type": "entity",
+      "detail": "Cloud computing division of Google, focusing on AI technology.",
+      "importance_score": 0,
+      "linked_articles": 1,
+      "mention_count": 0,
+      "week": "2026-04-26"
+    },
+    {
       "id": "entity_1d2997eca7dc0a95",
       "label": "Huangshan",
       "type": "entity",
@@ -832,6 +872,16 @@
       "week": "2026-04-26"
     },
     {
+      "id": "entity_83378d127c488270",
+      "label": "Microsoft Azure",
+      "type": "entity",
+      "detail": "Cloud computing service created by Microsoft, a key rival to Google Cloud.",
+      "importance_score": 0,
+      "linked_articles": 1,
+      "mention_count": 0,
+      "week": "2026-04-26"
+    },
+    {
       "id": "entity_008b26279496de07",
       "label": "Morocco",
       "type": "entity",
@@ -845,9 +895,19 @@
       "id": "entity_e56a4d802a4a33fb",
       "label": "Nvidia",
       "type": "entity",
-      "detail": "A leading technology company known for its graphics processing units and contributions to AI.",
+      "detail": "Technology company known for its GPUs, a competitor in AI hardware.",
       "importance_score": 0,
-      "linked_articles": 2,
+      "linked_articles": 3,
+      "mention_count": 0,
+      "week": "2026-04-26"
+    },
+    {
+      "id": "entity_b350f24a990f8067",
+      "label": "OpenAI",
+      "type": "entity",
+      "detail": "AI research organization, known for its language models and tools.",
+      "importance_score": 0,
+      "linked_articles": 1,
       "mention_count": 0,
       "week": "2026-04-26"
     },
@@ -1182,6 +1242,16 @@
       "week": "2026-04-26"
     },
     {
+      "id": "narrative_ec26e44cd9cd43ff",
+      "label": "Cloud Market Dynamics",
+      "type": "narrative",
+      "detail": "The cloud computing market is experiencing significant shifts due to AI advancements and financial pressures on startups.",
+      "importance_score": 7,
+      "linked_articles": 1,
+      "mention_count": 1,
+      "week": "2026-04-26"
+    },
+    {
       "id": "narrative_9f265536ee3fe6bf",
       "label": "Competition in Space",
       "type": "narrative",
@@ -1237,6 +1307,16 @@
       "type": "narrative",
       "detail": "Ongoing geopolitical tensions could pose risks to future economic growth and corporate profits.",
       "importance_score": 6,
+      "linked_articles": 1,
+      "mention_count": 1,
+      "week": "2026-04-26"
+    },
+    {
+      "id": "narrative_84bf71ef8830123e",
+      "label": "Google's AI Strategy",
+      "type": "narrative",
+      "detail": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "importance_score": 8,
       "linked_articles": 1,
       "mention_count": 1,
       "week": "2026-04-26"
@@ -1418,6 +1498,16 @@
       "detail": "The integration of AI technology into advertising strategies.",
       "importance_score": 0,
       "linked_articles": 0,
+      "mention_count": 0,
+      "week": "2026-04-26"
+    },
+    {
+      "id": "theme_414ea99445a45c4b",
+      "label": "AI in Cloud Computing",
+      "type": "theme",
+      "detail": "The integration of artificial intelligence technologies in cloud services.",
+      "importance_score": 0,
+      "linked_articles": 1,
       "mention_count": 0,
       "week": "2026-04-26"
     },
@@ -1605,9 +1695,9 @@
       "id": "theme_59b6250bfc2204a3",
       "label": "Market Competition",
       "type": "theme",
-      "detail": "The increasing competition from both established brands and new entrants.",
+      "detail": "The competitive landscape among major cloud service providers.",
       "importance_score": 0,
-      "linked_articles": 1,
+      "linked_articles": 2,
       "mention_count": 0,
       "week": "2026-04-26"
     },
@@ -2141,6 +2231,76 @@
       "confidence": 1.0,
       "evidence_title": "War? What war?",
       "narrative_sentence": "American corporations are thriving despite external pressures, showcasing resilience and innovation.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "article_63da066e93125c5e",
+      "target": "entity_711a38ebb39f6ef7",
+      "relationship": "MENTIONS_ENTITY",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 1.0,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "article_63da066e93125c5e",
+      "target": "entity_ab0378d5217a1454",
+      "relationship": "MENTIONS_ENTITY",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 1.0,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "article_63da066e93125c5e",
+      "target": "entity_480a8a87afc25ce9",
+      "relationship": "MENTIONS_ENTITY",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 1.0,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "article_63da066e93125c5e",
+      "target": "entity_d3e9de12d0f05bb5",
+      "relationship": "MENTIONS_ENTITY",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 1.0,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "article_63da066e93125c5e",
+      "target": "entity_83378d127c488270",
+      "relationship": "MENTIONS_ENTITY",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 1.0,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "article_63da066e93125c5e",
+      "target": "entity_e56a4d802a4a33fb",
+      "relationship": "MENTIONS_ENTITY",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 1.0,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "article_63da066e93125c5e",
+      "target": "entity_b350f24a990f8067",
+      "relationship": "MENTIONS_ENTITY",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 1.0,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
       "week": "2026-04-26"
     },
     {
@@ -2734,6 +2894,26 @@
       "week": "2026-04-26"
     },
     {
+      "source": "article_63da066e93125c5e",
+      "target": "theme_414ea99445a45c4b",
+      "relationship": "HAS_THEME",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 1.0,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "article_63da066e93125c5e",
+      "target": "theme_59b6250bfc2204a3",
+      "relationship": "HAS_THEME",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 1.0,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
       "source": "article_829f705c198d4c26",
       "target": "theme_8ceaf56e455e81b0",
       "relationship": "HAS_THEME",
@@ -3034,6 +3214,26 @@
       "week": "2026-04-26"
     },
     {
+      "source": "article_63da066e93125c5e",
+      "target": "narrative_ec26e44cd9cd43ff",
+      "relationship": "HAS_NARRATIVE",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 1.0,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "article_63da066e93125c5e",
+      "target": "narrative_84bf71ef8830123e",
+      "relationship": "HAS_NARRATIVE",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 1.0,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
       "source": "article_829f705c198d4c26",
       "target": "narrative_f0059f55258493e1",
       "relationship": "HAS_NARRATIVE",
@@ -3244,6 +3444,16 @@
       "week": "2026-04-26"
     },
     {
+      "source": "entity_480a8a87afc25ce9",
+      "target": "entity_d3e9de12d0f05bb5",
+      "relationship": "AFFECTS",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 0.9,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
       "source": "article_5ee8d233516b7fd4",
       "target": "entity_f14b1c073028dc67",
       "relationship": "MENTIONS_ENTITY",
@@ -3404,6 +3614,26 @@
       "week": "2026-04-26"
     },
     {
+      "source": "entity_d3e9de12d0f05bb5",
+      "target": "entity_711a38ebb39f6ef7",
+      "relationship": "CHALLENGES",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 0.8,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "entity_d3e9de12d0f05bb5",
+      "target": "entity_83378d127c488270",
+      "relationship": "CHALLENGES",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 0.8,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
+      "week": "2026-04-26"
+    },
+    {
       "source": "article_f74151ec3aa2760d",
       "target": "entity_7ca00cca7978c9d4",
       "relationship": "MENTIONS_ENTITY",
@@ -3441,6 +3671,16 @@
       "confidence": 0.9,
       "evidence_title": "Time’s up",
       "narrative_sentence": "The closure of the Strait of Hormuz and ongoing supply disruptions are leading the world towards an energy crisis.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "entity_e56a4d802a4a33fb",
+      "target": "entity_d3e9de12d0f05bb5",
+      "relationship": "CHALLENGES",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 0.6,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
       "week": "2026-04-26"
     },
     {
@@ -3861,6 +4101,16 @@
       "confidence": 0.85,
       "evidence_title": "Time’s up",
       "narrative_sentence": "The closure of the Strait of Hormuz and ongoing supply disruptions are leading the world towards an energy crisis.",
+      "week": "2026-04-26"
+    },
+    {
+      "source": "entity_d3e9de12d0f05bb5",
+      "target": "entity_ab0378d5217a1454",
+      "relationship": "SUPPORTS",
+      "evidence_article_id": "article_63da066e93125c5e",
+      "confidence": 0.7,
+      "evidence_title": "Google banks on AI edge to catch up to cloud rivals Amazon and Microsoft",
+      "narrative_sentence": "Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.",
       "week": "2026-04-26"
     },
     {

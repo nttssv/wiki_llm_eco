@@ -1,0 +1,121 @@
+{
+  "article_id": "article_b4069febdfda1bd7",
+  "original_file_path": "/app/data/raw_articles/Britain_Specialty_insurance_3May2026_Economist.docx",
+  "chart_references": [
+    "Chart: The Economist",
+    "Investors have done well recently. Property insurance became especially lucrative. A run of disasters, beginning with a ruinous hurricane season in 2017, prompted insurers to raise prices. After 2022 catastrophes lightened. This helped make the past three years the most profitable in more than a decade (see chart). In 2025 pre-tax profits across the Lloyd’s syndicates were £10.6bn; the ten-year average is £2.5bn. The return on capital exceeded 20%."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Britain",
+    "title": "Caffeine fix",
+    "subtitle": "Why business at London’s specialty-insurance hub has surged Its high profits will not last forever, but it will remain a global leader for specialist cover",
+    "published_date": "30 Apr 2026",
+    "category": "Britain",
+    "summary": "London's specialty insurance market, particularly Lloyd's of London, has seen significant growth, driven by a concentration of specialists and innovation in various insurance sectors. However, the market is beginning to cool as competition increases and prices fall.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Lloyd's of London",
+        "type": "Organization",
+        "role": "Insurance Marketplace",
+        "description": "A leading global insurance and reinsurance marketplace based in London."
+      },
+      {
+        "name": "Zurich",
+        "type": "Organization",
+        "role": "Insurance Company",
+        "description": "A Swiss insurance giant that recently acquired Beazley."
+      },
+      {
+        "name": "Beazley",
+        "type": "Organization",
+        "role": "Underwriter",
+        "description": "A large underwriter acquired by Zurich."
+      },
+      {
+        "name": "London Market Group (LMG)",
+        "type": "Organization",
+        "role": "Trade Body",
+        "description": "A trade body representing the London insurance market."
+      },
+      {
+        "name": "Emily Apple",
+        "type": "Person",
+        "role": "Director",
+        "description": "A director at Alpha Insurance Analysts."
+      },
+      {
+        "name": "Alpha Insurance Analysts",
+        "type": "Organization",
+        "role": "Investment Firm",
+        "description": "A firm that invests in insurance syndicates."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2025",
+        "event_summary": "Lloyd's of London reported pre-tax profits of £10.6bn, marking the most profitable year in over a decade.",
+        "location": "London",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2025",
+        "event_summary": "Lloyd's insurance prices fell for the first time in years, indicating a cooling market.",
+        "location": "London",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2024",
+        "event_summary": "London's specialty insurance market supported 61,000 jobs.",
+        "location": "London",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "Insurance Market Dynamics",
+        "description": "The evolving landscape of the insurance market, including competition and profitability."
+      },
+      {
+        "name": "Economic Impact of Disasters",
+        "description": "How natural disasters and geopolitical events influence insurance pricing and profitability."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Growth of Specialty Insurance",
+        "thesis": "London's specialty insurance market has experienced significant growth due to innovation and specialization.",
+        "status": "strengthening",
+        "importance_score": 8
+      },
+      {
+        "name": "Market Cooling",
+        "thesis": "The insurance market is beginning to cool as competition increases and prices decline.",
+        "status": "emerging",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Lloyd's of London",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Global Insurance Market",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Zurich",
+        "relationship": "SUPPORTS",
+        "target_node": "Beazley",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "London Market Group (LMG)",
+        "relationship": "AFFECTS",
+        "target_node": "Employment in Insurance Sector",
+        "confidence": 0.7
+      }
+    ]
+  }
+}

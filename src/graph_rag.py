@@ -1,4 +1,4 @@
-"""Graph-first RAG over the narrative SQLite store.
+"""Graph-first RAG orchestration shared by Neo4j retrieval backends.
 
 The LLM is used for intent parsing and answer synthesis. Relationship lookup
 stays deterministic and evidence-backed so the model cannot invent graph facts.
@@ -9,9 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
-from pathlib import Path
 import re
-import sqlite3
 from typing import Any, Literal, TypedDict
 import unicodedata
 
@@ -32,10 +30,6 @@ from .config import (
     get_openai_timeout_seconds,
     load_env,
 )
-from .date_utils import week_label_for_published_date
-from .ingest_docx import read_docx_article
-from .paths import DB_PATH, PROJECT_ROOT, RAW_ARTICLES_DIR
-
 try:  # LangGraph is the preferred orchestration layer.
     from langgraph.graph import END, StateGraph
 except Exception:  # pragma: no cover - fallback keeps local scripts usable before install.
@@ -93,6 +87,10 @@ STOPWORDS = {
     "bao",
     "nhieu",
     "nhiêu",
+    "thu",
+    "thử",
+    "dung",
+    "dụng",
     "what",
     "new",
     "recent",
@@ -366,35 +364,47 @@ def _unique(values: list[str]) -> list[str]:
     return output
 
 
-def _week_for_row(row: sqlite3.Row) -> str | None:
-    return week_label_for_published_date(str(row["published_date"] or ""))
+def _intent_content_terms(intent: QueryIntent) -> list[str]:
+    valuation_keys = {_fold(term) for term in VALUATION_TERMS}
+    terms: list[str] = []
+    for term in [*intent.entities, *intent.search_terms, *intent.relationship_types]:
+        folded = _fold(term).strip()
+        if not folded or len(folded) < 3:
+            continue
+        if folded in STOPWORDS or folded in valuation_keys:
+            continue
+        terms.append(term)
+    return _unique(terms)
 
 
-def _resolve_article_path(path_value: str) -> Path | None:
-    path = Path(str(path_value or ""))
-    candidates: list[Path] = []
-    if path.is_absolute():
-        candidates.append(path)
+def _fact_relevance_score(fact: GraphFact, intent: QueryIntent) -> int:
+    terms = _intent_content_terms(intent)
+    if not terms:
+        return 0
 
-    parts = path.parts
-    if "data" in parts:
-        data_index = parts.index("data")
-        candidates.append(PROJECT_ROOT / Path(*parts[data_index:]))
+    haystack = " ".join(
+        [
+            fact.title,
+            fact.statement,
+            fact.quote,
+            fact.source_node,
+            fact.relationship,
+            fact.target_node,
+        ]
+    )
+    folded_haystack = _fold(haystack)
+    return sum(1 for term in terms if _fold(term) in folded_haystack)
 
-    if path.name:
-        candidates.append(RAW_ARTICLES_DIR / path.name)
 
-    for candidate in candidates:
-        if candidate.exists():
-            return candidate
-    return None
+def _looks_like_yes_no_question(question: str) -> bool:
+    folded = f" {_fold(question)} "
+    return "?" in question or any(marker in folded for marker in (" co ", " does ", " did ", " is ", " are "))
 
 
 class GraphRAGService:
-    """Run GraphRAG queries against a narrative SQLite database."""
+    """Run GraphRAG orchestration around a concrete graph retrieval backend."""
 
-    def __init__(self, database_path: Path = DB_PATH) -> None:
-        self.database_path = database_path
+    def __init__(self) -> None:
         self._workflow = self._build_workflow()
 
     def answer_question(
@@ -453,11 +463,6 @@ class GraphRAGService:
         ):
             state.update(step(state))
         return state
-
-    def _connect(self) -> sqlite3.Connection:
-        connection = sqlite3.connect(f"file:{self.database_path}?mode=ro", uri=True)
-        connection.row_factory = sqlite3.Row
-        return connection
 
     def _parse_intent_node(self, state: GraphRAGState) -> GraphRAGState:
         question = state["question"]
@@ -536,66 +541,7 @@ class GraphRAGService:
         return QueryIntent.model_validate_json(response.output_text)
 
     def _retrieve_graph_node(self, state: GraphRAGState) -> GraphRAGState:
-        intent = state["intent"]
-        with self._connect() as connection:
-            selected_week = state.get("week") or self._default_week(connection, intent)
-            article_rows = connection.execute(
-                """
-                SELECT id, source, title, published_date, category, summary, original_file_path
-                FROM articles
-                ORDER BY published_date DESC, title ASC
-                """
-            ).fetchall()
-            article_haystacks = self._build_article_haystacks(connection, article_rows)
-            labels = self._known_graph_labels(connection)
-            terms = self._resolve_terms(intent, labels)
-            anchors = _anchor_terms(intent, terms)
-            related_article_ids = self._match_article_ids(
-                article_rows,
-                article_haystacks,
-                anchors or terms,
-                selected_week,
-            )
-            facts = self._collect_facts(
-                connection,
-                article_rows,
-                related_article_ids,
-                terms,
-                anchors,
-                intent,
-                selected_week,
-            )
-            citations = self._build_citations(facts)
-
-        return {"facts": facts, "citations": citations}
-
-    def _default_week(self, connection: sqlite3.Connection, intent: QueryIntent) -> str | None:
-        if intent.time_scope != "latest":
-            return None
-        weeks = sorted(
-            {
-                week
-                for row in connection.execute("SELECT published_date FROM articles").fetchall()
-                for week in [week_label_for_published_date(str(row["published_date"] or ""))]
-                if week is not None
-            }
-        )
-        return weeks[-1] if weeks else None
-
-    def _known_graph_labels(self, connection: sqlite3.Connection) -> list[str]:
-        labels = [
-            str(row["name"])
-            for row in connection.execute("SELECT name FROM entities").fetchall()
-        ]
-        for row in connection.execute(
-            """
-            SELECT source_node AS label FROM graph_edges
-            UNION
-            SELECT target_node AS label FROM graph_edges
-            """
-        ).fetchall():
-            labels.append(str(row["label"]))
-        return _unique(labels)
+        raise NotImplementedError("Graph retrieval backend must implement _retrieve_graph_node().")
 
     def _resolve_terms(self, intent: QueryIntent, labels: list[str]) -> list[str]:
         requested = _unique([*intent.entities, *intent.search_terms])
@@ -612,238 +558,8 @@ class GraphRAGService:
             resolved.extend(requested)
         return _unique(resolved)
 
-    def _build_article_haystacks(
-        self,
-        connection: sqlite3.Connection,
-        article_rows: list[sqlite3.Row],
-    ) -> dict[str, str]:
-        haystacks = {
-            str(row["id"]): " ".join(
-                str(row[key] or "")
-                for key in ("title", "source", "category", "summary")
-            )
-            for row in article_rows
-        }
-        link_queries = (
-            """
-            SELECT ae.article_id, e.name, e.type, e.description, ae.role
-            FROM article_entities AS ae
-            JOIN entities AS e ON e.id = ae.entity_id
-            """,
-            """
-            SELECT an.article_id, n.name, n.thesis, n.status
-            FROM article_narratives AS an
-            JOIN narratives AS n ON n.id = an.narrative_id
-            """,
-            """
-            SELECT at.article_id, t.name, t.description
-            FROM article_themes AS at
-            JOIN themes AS t ON t.id = at.theme_id
-            """,
-            """
-            SELECT article_id, event_date, event_summary, location
-            FROM events
-            """,
-            """
-            SELECT evidence_article_id AS article_id, source_node, relationship, target_node
-            FROM graph_edges
-            """,
-        )
-        for query in link_queries:
-            for row in connection.execute(query).fetchall():
-                article_id = str(row["article_id"] or "")
-                if article_id not in haystacks:
-                    continue
-                haystacks[article_id] += " " + " ".join(str(value or "") for value in row)
-        return haystacks
-
-    def _match_article_ids(
-        self,
-        article_rows: list[sqlite3.Row],
-        article_haystacks: dict[str, str],
-        terms: list[str],
-        week: str | None,
-    ) -> set[str]:
-        matched: set[str] = set()
-        for row in article_rows:
-            article_id = str(row["id"])
-            if week is not None and _week_for_row(row) != week:
-                continue
-            if not terms or _contains_any(article_haystacks.get(article_id, ""), terms):
-                matched.add(article_id)
-        return matched
-
-    def _collect_facts(
-        self,
-        connection: sqlite3.Connection,
-        article_rows: list[sqlite3.Row],
-        related_article_ids: set[str],
-        terms: list[str],
-        anchors: list[str],
-        intent: QueryIntent,
-        week: str | None,
-    ) -> list[GraphFact]:
-        article_by_id = {str(row["id"]): row for row in article_rows}
-        facts: list[GraphFact] = []
-        match_terms = anchors or terms
-
-        for row in connection.execute(
-            """
-            SELECT ge.id, ge.source_node, ge.relationship, ge.target_node, ge.confidence,
-                   a.id AS article_id, a.title, a.source, a.published_date, a.summary
-            FROM graph_edges AS ge
-            JOIN articles AS a ON a.id = ge.evidence_article_id
-            ORDER BY a.published_date DESC, ge.confidence DESC
-            """
-        ).fetchall():
-            article_id = str(row["article_id"])
-            edge_text = f"{row['source_node']} {row['target_node']}"
-            direct_match = _contains_any(edge_text, match_terms)
-            if match_terms and not direct_match:
-                continue
-            if intent.relationship_types and str(row["relationship"] or "") not in intent.relationship_types:
-                continue
-            if not match_terms and article_id not in related_article_ids:
-                continue
-            if week is not None and week_label_for_published_date(str(row["published_date"] or "")) != week:
-                continue
-            facts.append(
-                GraphFact(
-                    kind="edge",
-                    article_id=article_id,
-                    title=str(row["title"] or ""),
-                    source=str(row["source"] or ""),
-                    published_date=str(row["published_date"] or ""),
-                    source_node=str(row["source_node"] or ""),
-                    relationship=str(row["relationship"] or ""),
-                    target_node=str(row["target_node"] or ""),
-                    confidence=float(row["confidence"] or 0),
-                    statement=(
-                        f"{row['source_node']} --{row['relationship']}--> {row['target_node']}"
-                    ),
-                    quote=_compact(str(row["summary"] or "")),
-                )
-            )
-
-        for row in connection.execute(
-            """
-            SELECT ev.article_id, ev.event_date, ev.event_summary, ev.location, ev.importance_score,
-                   a.title, a.source, a.published_date
-            FROM events AS ev
-            JOIN articles AS a ON a.id = ev.article_id
-            ORDER BY a.published_date DESC, ev.importance_score DESC
-            """
-        ).fetchall():
-            article_id = str(row["article_id"])
-            event_match = _contains_any(f"{row['event_summary']} {row['title']}", match_terms)
-            if match_terms and not event_match:
-                continue
-            if not match_terms and article_id not in related_article_ids:
-                continue
-            if week is not None and week_label_for_published_date(str(row["published_date"] or "")) != week:
-                continue
-            facts.append(
-                GraphFact(
-                    kind="event",
-                    article_id=article_id,
-                    title=str(row["title"] or ""),
-                    source=str(row["source"] or ""),
-                    published_date=str(row["published_date"] or ""),
-                    statement=f"{row['event_date']}: {row['event_summary']}",
-                    quote=_compact(str(row["event_summary"] or "")),
-                )
-            )
-
-        for row in connection.execute(
-            """
-            SELECT an.article_id, n.name, n.thesis, n.status, n.importance_score,
-                   a.title, a.source, a.published_date
-            FROM article_narratives AS an
-            JOIN narratives AS n ON n.id = an.narrative_id
-            JOIN articles AS a ON a.id = an.article_id
-            ORDER BY a.published_date DESC, n.importance_score DESC
-            """
-        ).fetchall():
-            article_id = str(row["article_id"])
-            if article_id not in related_article_ids and not _contains_any(
-                f"{row['name']} {row['thesis']} {row['title']}",
-                match_terms,
-            ):
-                continue
-            if week is not None and week_label_for_published_date(str(row["published_date"] or "")) != week:
-                continue
-            facts.append(
-                GraphFact(
-                    kind="narrative",
-                    article_id=article_id,
-                    title=str(row["title"] or ""),
-                    source=str(row["source"] or ""),
-                    published_date=str(row["published_date"] or ""),
-                    statement=f"{row['name']} ({row['status']}): {row['thesis']}",
-                    quote=_compact(str(row["thesis"] or "")),
-                )
-            )
-
-        for article_id in sorted(related_article_ids):
-            row = article_by_id.get(article_id)
-            if row is None:
-                continue
-            facts.append(
-                GraphFact(
-                    kind="article",
-                    article_id=article_id,
-                    title=str(row["title"] or ""),
-                    source=str(row["source"] or ""),
-                    published_date=str(row["published_date"] or ""),
-                    statement=_compact(str(row["summary"] or "")),
-                    quote=_compact(str(row["summary"] or "")),
-                )
-            )
-            for snippet in self._source_snippets(row, match_terms, intent):
-                facts.append(
-                    GraphFact(
-                        kind="snippet",
-                        article_id=article_id,
-                        title=str(row["title"] or ""),
-                        source=str(row["source"] or ""),
-                        published_date=str(row["published_date"] or ""),
-                        statement=snippet,
-                        quote=snippet,
-                    )
-                )
-
-        return self._rank_facts(facts, intent)[:24]
-
-    def _source_snippets(self, article_row: sqlite3.Row, terms: list[str], intent: QueryIntent) -> list[str]:
-        path = _resolve_article_path(str(article_row["original_file_path"] or ""))
-        if path is None:
-            return []
-
-        try:
-            article = read_docx_article(path)
-        except Exception:
-            return []
-
-        if "valuation" in intent.ask_for:
-            base_terms = terms or intent.search_terms or intent.entities
-            snippet_terms = list(VALUATION_TERMS)
-        else:
-            base_terms = []
-            snippet_terms = list(terms)
-
-        snippets: list[str] = []
-        for paragraph in article.paragraphs:
-            if base_terms and not _contains_any(paragraph, base_terms):
-                continue
-            if not _contains_any(paragraph, snippet_terms):
-                continue
-            snippets.append(_compact(paragraph, limit=900))
-            if len(snippets) >= 5:
-                break
-        return snippets
-
     def _rank_facts(self, facts: list[GraphFact], intent: QueryIntent) -> list[GraphFact]:
-        def score(fact: GraphFact) -> tuple[int, float, str]:
+        def score(fact: GraphFact) -> tuple[int, int, float, str]:
             kind_weight = {
                 "edge": 6,
                 "event": 5,
@@ -860,7 +576,8 @@ class GraphRAGService:
                 "developments" in intent.ask_for or "summary" in intent.ask_for
             ) else 0
             confidence = fact.confidence if fact.confidence is not None else 0
-            return (kind_weight + valuation_boost + article_boost, confidence, fact.published_date)
+            relevance = _fact_relevance_score(fact, intent)
+            return (relevance, kind_weight + valuation_boost + article_boost, confidence, fact.published_date)
 
         deduped: list[GraphFact] = []
         seen: set[tuple[str, str, str, str]] = set()
@@ -993,10 +710,23 @@ class GraphRAGService:
         narrative_facts = [fact for fact in facts if fact.kind == "narrative"]
         lines = ["Dựa trên graph/text đã retrieve, câu trả lời trực tiếp là:"]
 
-        if article_facts:
+        direct_facts = [
+            fact
+            for fact in facts
+            if fact.kind in {"edge", "event", "chunk", "snippet", "article"}
+        ]
+        if direct_facts:
             lines.append("\nTrả lời trực tiếp:")
-            for fact in article_facts[:3]:
-                lines.append(f"- {fact.title} ({fact.published_date}): {fact.statement}")
+            if _looks_like_yes_no_question(question):
+                lines.append("- Có evidence trực tiếp trong graph/text như sau:")
+            for fact in direct_facts[:6]:
+                if fact.kind == "edge":
+                    lines.append(
+                        f"- Relationship: {fact.statement} "
+                        f"(confidence {fact.confidence:.2f}, {fact.title}, {fact.published_date})."
+                    )
+                else:
+                    lines.append(f"- {fact.title} ({fact.published_date}): {fact.statement}")
 
         if event_facts:
             lines.append("\nSâu chuỗi sự kiện:")
@@ -1098,23 +828,14 @@ def answer_question(
     week: str | None = None,
     use_llm: bool = True,
     deep_search: bool = False,
-    backend: Literal["sqlite", "neo4j", "auto"] = "sqlite",
+    backend: Literal["neo4j", "auto"] = "neo4j",
 ) -> GraphRAGResult:
-    if backend in {"neo4j", "auto"}:
-        try:
-            from .neo4j_rag import Neo4jGraphRAGService
+    if backend not in {"neo4j", "auto"}:
+        raise ValueError("Only Neo4j GraphRAG is supported.")
 
-            return Neo4jGraphRAGService().answer_question(
-                question=question,
-                week=week,
-                use_llm=use_llm,
-                deep_search=deep_search,
-            )
-        except Exception as exc:
-            if backend == "neo4j":
-                raise
-            logging.warning("Neo4j GraphRAG unavailable; falling back to SQLite: %s", exc)
-    return GraphRAGService().answer_question(
+    from .neo4j_rag import Neo4jGraphRAGService
+
+    return Neo4jGraphRAGService().answer_question(
         question=question,
         week=week,
         use_llm=use_llm,
@@ -1128,7 +849,7 @@ def main() -> None:
     parser.add_argument("--week", help="Optional week label, for example 2026-05-03.")
     parser.add_argument("--no-llm", action="store_true", help="Disable LLM synthesis for deterministic evaluation.")
     parser.add_argument("--deep", action="store_true", help="Use embedding-expanded retrieval for a deeper answer.")
-    parser.add_argument("--backend", choices=["sqlite", "neo4j", "auto"], default="sqlite")
+    parser.add_argument("--backend", choices=["neo4j", "auto"], default="neo4j")
     args = parser.parse_args()
 
     result = answer_question(

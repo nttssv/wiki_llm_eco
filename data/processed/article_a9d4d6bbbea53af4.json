@@ -1,0 +1,21 @@
+{
+  "article_id": "article_a9d4d6bbbea53af4",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Leaders_To_fight_antisemitism_first_grasp_where_it_comes_from_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Leaders",
+    "title": "Antisemitism",
+    "subtitle": "To fight antisemitism, first grasp where it comes from What looks like a 21st-century problem has deep, dark roots",
+    "published_date": "05 May 2026",
+    "category": "Leaders",
+    "summary": "The leader argues that fighting antisemitism requires understanding its historical roots as well as its modern forms, rather than treating it as a purely 21st-century phenomenon.",
+    "importance_score": 1,
+    "entities": [],
+    "events": [],
+    "themes": [],
+    "narratives": [],
+    "graph_edges": []
+  }
+}

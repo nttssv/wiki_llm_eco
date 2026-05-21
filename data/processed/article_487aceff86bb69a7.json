@@ -1,0 +1,117 @@
+{
+  "article_id": "article_487aceff86bb69a7",
+  "original_file_path": "/app/data/raw_articles/Brìeing_Crisisinoilmarket_3May2026_Economist.docx",
+  "chart_references": [
+    "The relative composure in markets belies some daunting arithmetic. Over March and April last year 18.3m b/d of crude and refined products exited the strait. Allow for a trickle still getting through, plus the extra oil that can be squeezed through two pipelines bypassing the strait—one in the United Arab Emirates and one in Saudi Arabia—and the net deficit narrows to around 13m b/d. Add in also 2m b/d of supply growth outside the Gulf but subtract 1.3m b/d of additional output that markets had been expecting from Gulf countries this year, and the net shortfall over the past two months works out at 12.3m b/d—over 10% of global consumption (see chart 1).",
+    "Chart: The Economist",
+    "Nonetheless, it is clear that rising prices and outright shortages have curbed consumption to a large extent. Not only is crude more expensive; scarcity in finished fuels, exacerbated by an export ban in China—usually a big regional supplier—has sent the spread between crude and both diesel and jet fuel soaring to $50-80 a barrel, from $15-20 before the war (see chart 2). Both fuels now cost twice as much in Singapore, Asia’s trading hub, as they did two months ago—and more still in Europe. Since the war began, the price of petrol at the pump has doubled in Myanmar, risen by 52% in Pakistan, by 50% in the Philippines and by 40% in Nepal.",
+    "Chart: The Economist"
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Briefing",
+    "title": "Nothing in the tank",
+    "subtitle": "The crisis in oil markets will get bigger before it goes away As stocks dwindle, further price rises are inevitable",
+    "published_date": "30 Apr 2026",
+    "category": "Briefing",
+    "summary": "The ongoing crisis in oil markets, exacerbated by the closure of the Strait of Hormuz due to conflict, is leading to significant supply shortages and rising prices. Despite initial market resilience, the situation is expected to worsen, with potential severe consequences for global economies as demand destruction and stock depletion continue.",
+    "importance_score": 9,
+    "entities": [
+      {
+        "name": "Iran",
+        "type": "Country",
+        "role": "Actor",
+        "description": "Involved in the closure of the Strait of Hormuz and retaliatory actions against commercial vessels."
+      },
+      {
+        "name": "United States",
+        "type": "Country",
+        "role": "Actor",
+        "description": "Engaged in military actions against Iran and affected by rising oil prices."
+      },
+      {
+        "name": "Saudi Arabia",
+        "type": "Country",
+        "role": "Producer",
+        "description": "Holds surplus oil capacity that is currently inaccessible due to the Strait's closure."
+      },
+      {
+        "name": "OPEC",
+        "type": "Organization",
+        "role": "Regulator",
+        "description": "Influences global oil production and pricing."
+      },
+      {
+        "name": "International Energy Agency (IEA)",
+        "type": "Organization",
+        "role": "Regulator",
+        "description": "Coordinated a historic drawdown of strategic oil reserves among member countries."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-30",
+        "event_summary": "Ongoing closure of the Strait of Hormuz leads to significant oil supply shortages.",
+        "location": "Strait of Hormuz",
+        "importance_score": 10
+      },
+      {
+        "event_date": "2026-03-11",
+        "event_summary": "IEA members agree to sell 400 million barrels from emergency stores.",
+        "location": "International Energy Agency",
+        "importance_score": 8
+      }
+    ],
+    "themes": [
+      {
+        "name": "Oil Market Crisis",
+        "description": "The ongoing challenges in the oil market due to geopolitical tensions and supply chain disruptions."
+      },
+      {
+        "name": "Global Economic Impact",
+        "description": "The effects of rising oil prices and supply shortages on global economies and consumer behavior."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Oil Supply Shortage",
+        "thesis": "The closure of the Strait of Hormuz is leading to unprecedented oil supply shortages that will have severe global repercussions.",
+        "status": "emerging",
+        "importance_score": 9
+      },
+      {
+        "name": "Economic Resilience",
+        "thesis": "Despite rising oil prices, the global economy has shown resilience, but this may not last as shortages deepen.",
+        "status": "weakening",
+        "importance_score": 6
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Iran",
+        "relationship": "CHALLENGES",
+        "target_node": "United States",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Strait of Hormuz",
+        "relationship": "DEPENDS_ON",
+        "target_node": "Iran",
+        "confidence": 0.95
+      },
+      {
+        "source_node": "Saudi Arabia",
+        "relationship": "SUPPORTS",
+        "target_node": "OPEC",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "IEA",
+        "relationship": "SUPPORTS",
+        "target_node": "Global Oil Supply",
+        "confidence": 0.8
+      }
+    ]
+  }
+}

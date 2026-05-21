@@ -1,0 +1,21 @@
+{
+  "article_id": "article_fdc64ab41006eccd",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Business_The_remarkable_revival_of_eBay_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "mock",
+  "extraction": {
+    "source": "Economist",
+    "section": "Business",
+    "title": "Unjumbled",
+    "subtitle": "The remarkable revival of eBay The internet's flea market is back-and GameStop wants to buy it",
+    "published_date": "03 May 2026",
+    "category": "Business",
+    "summary": "No mock extraction pattern matched this article. Replace mock extraction with an LLM-backed extractor.",
+    "importance_score": 3,
+    "entities": [],
+    "events": [],
+    "themes": [],
+    "narratives": [],
+    "graph_edges": []
+  }
+}

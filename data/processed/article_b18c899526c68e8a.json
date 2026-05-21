@@ -1,0 +1,21 @@
+{
+  "article_id": "article_b18c899526c68e8a",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Leaders_Europe_is_unshackling_business_But_not_enough_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Leaders",
+    "title": "Simplify and deregulate",
+    "subtitle": "Europe is unshackling business. But not enough Why market liberals must win the battle for Brussels-and national capitals, too",
+    "published_date": "07 May 2026",
+    "category": "Leaders",
+    "summary": "The leader welcomes Europe's attempt to simplify rules and deregulate, but argues that reforms must go further in Brussels and national capitals to revive business dynamism.",
+    "importance_score": 1,
+    "entities": [],
+    "events": [],
+    "themes": [],
+    "narratives": [],
+    "graph_edges": []
+  }
+}

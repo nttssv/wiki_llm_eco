@@ -1,0 +1,124 @@
+{
+  "article_id": "article_5d827ce03db9ef14",
+  "original_file_path": "/app/data/raw_articles/Finance_Exportingpeople_3May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Finance & economics",
+    "title": "Free Exchange",
+    "subtitle": "Can countries grow richer by exporting people, not goods? That depends where those people end up",
+    "published_date": "30 Apr 2026",
+    "category": "Finance & economics",
+    "summary": "The article explores how Kerala's economy has benefited from remittances due to emigration to the Gulf, contrasting this with the challenges of relying on such a model for broader economic growth amidst global uncertainties.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Kerala",
+        "type": "Location",
+        "role": "Economic case study",
+        "description": "A southern Indian state that has prospered through remittances from emigrants working in the Gulf."
+      },
+      {
+        "name": "Gulf States",
+        "type": "Location",
+        "role": "Destination for emigrants",
+        "description": "Region where many Keralites work and send remittances back home."
+      },
+      {
+        "name": "World Bank",
+        "type": "Organization",
+        "role": "Research entity",
+        "description": "Provides estimates on remittances and their impact on national income."
+      },
+      {
+        "name": "Charles Kenny",
+        "type": "Person",
+        "role": "Economist",
+        "description": "Researcher at the Centre for Global Development who studies the relationship between emigration and economic growth."
+      },
+      {
+        "name": "Gaurav Khanna",
+        "type": "Person",
+        "role": "Economist",
+        "description": "Researcher who examines the effects of Asian migration on economic growth."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-30",
+        "event_summary": "Analysis of Kerala's economic reliance on remittances from the Gulf.",
+        "location": "Kerala, India",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2022",
+        "event_summary": "Research indicating modest effects of remittances on GDP growth.",
+        "location": "",
+        "importance_score": 5
+      },
+      {
+        "event_date": "2013",
+        "event_summary": "Study showing a slight increase in GDP per person linked to remittances.",
+        "location": "",
+        "importance_score": 5
+      }
+    ],
+    "themes": [
+      {
+        "name": "Emigration and Economic Growth",
+        "description": "The impact of emigration on the economic development of sending countries."
+      },
+      {
+        "name": "Remittances",
+        "description": "Financial transfers made by emigrants to their home countries and their economic implications."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Emigration as an Economic Strategy",
+        "thesis": "Exporting people can be a viable economic strategy for growth, but its success is contingent on external factors.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Challenges of Dependency on Remittances",
+        "thesis": "Relying on remittances for economic growth poses risks due to external economic conditions.",
+        "status": "strengthening",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Kerala",
+        "relationship": "AFFECTS",
+        "target_node": "Gulf States",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Gulf States",
+        "relationship": "SUPPORTS",
+        "target_node": "Kerala",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "World Bank",
+        "relationship": "RELATED_TO",
+        "target_node": "Remittances",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Charles Kenny",
+        "relationship": "SUPPORTS",
+        "target_node": "Emigration as an Economic Strategy",
+        "confidence": 0.75
+      },
+      {
+        "source_node": "Gaurav Khanna",
+        "relationship": "SUPPORTS",
+        "target_node": "Challenges of Dependency on Remittances",
+        "confidence": 0.7
+      }
+    ]
+  }
+}

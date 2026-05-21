@@ -1,0 +1,129 @@
+{
+  "article_id": "article_703db2070982d31b",
+  "original_file_path": "/app/data/raw_articles/Britain_CityofLondon_3May2026_Economist.docx",
+  "chart_references": [
+    "Chart: The Economist",
+    "Since 2007 Z/Yen, a City think-tank, has maintained widely watched indices of the competitiveness of global financial centres. Whereas London and New York once vied for the top spot (see chart 1), London fell to a distant second place in 2020. It now rivals the Big Apple once more. The recovery, says Z/Yen’s Mike Wardle, has been driven less by quantitative factors than by improving sentiment among those responding to its survey. As the boss of a big asset manager, headquartered in America, puts it, “Half of my staff want to move to London.”",
+    "But that has not been enough to move the centre of gravity from London. Goldman Sachs and Morgan Stanley have kept their European headquarters there, and JPMorgan Chase is designing a new, bigger one. London is still the capital of cross-border finance in key areas. New Financial, another think-tank, has collected data on Britain’s share of global activity in 12 areas of international finance, comparing the average over the three years to 2025 with that over the three years to 2020 (see chart 2). In seven of these the City has remained the world’s premier financial centre.",
+    "Chart: The Economist",
+    "Chart: The Economist",
+    "And in driving domestic growth, the Square Mile has always underperformed. William Wright, New Financial’s founder, says it is now worse at this than it used to be. His team has examined Britain’s share of global activity in 14 areas of finance linked to the domestic economy, from homegrown equity listings and debt-issuance volumes to assets held by banks, insurers and pension schemes (see chart 3). The City comes top in none of these areas—and over the past five years has seen its share of global activity shrink in all but three. Only in venture-capital investment and issuance of leveraged loans and ESG corporate bonds has it raised its share."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Britain",
+    "title": "The Square Mile",
+    "subtitle": "Has the City of London finally got its mojo back? After a dismal few years, things are looking up for Britain’s financial-services sector",
+    "published_date": "30 Apr 2026",
+    "category": "Britain",
+    "summary": "The City of London has shown resilience post-Brexit, maintaining employment levels and economic output in the financial services sector. Despite challenges from other global financial hubs, London is regaining its competitive edge, driven by improved sentiment and regulatory support.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "London Stock Exchange",
+        "type": "Financial Institution",
+        "role": "Trading Venue",
+        "description": "A major stock exchange in London, historically a preferred venue for international listings."
+      },
+      {
+        "name": "Goldman Sachs",
+        "type": "Financial Institution",
+        "role": "Investment Bank",
+        "description": "A leading global investment banking, securities and investment management firm."
+      },
+      {
+        "name": "Morgan Stanley",
+        "type": "Financial Institution",
+        "role": "Investment Bank",
+        "description": "A multinational financial services corporation providing investment banking and financial services."
+      },
+      {
+        "name": "JPMorgan Chase",
+        "type": "Financial Institution",
+        "role": "Investment Bank",
+        "description": "An American multinational investment bank and financial services holding company."
+      },
+      {
+        "name": "Schroders",
+        "type": "Financial Institution",
+        "role": "Asset Manager",
+        "description": "A British asset management company with a focus on investment management."
+      },
+      {
+        "name": "New Financial",
+        "type": "Think Tank",
+        "role": "Research Organization",
+        "description": "A think tank that analyzes the financial services sector and its global competitiveness."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2024",
+        "event_summary": "Employment in London's financial sector reached 225,000, an increase from 2019.",
+        "location": "London",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2023",
+        "event_summary": "The Financial Services and Markets Act was enacted to promote growth and international competitiveness.",
+        "location": "London",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2025",
+        "event_summary": "JPMorgan announced the transfer of some roles from Paris to London, indicating a shift in business strategy.",
+        "location": "London",
+        "importance_score": 5
+      }
+    ],
+    "themes": [
+      {
+        "name": "Financial Resilience",
+        "description": "The ability of London's financial sector to maintain stability and growth despite external challenges."
+      },
+      {
+        "name": "Regulatory Environment",
+        "description": "Changes in regulations aimed at enhancing London's attractiveness as a financial hub."
+      },
+      {
+        "name": "Global Competitiveness",
+        "description": "London's position in the global financial landscape compared to other major cities."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Recovery of the City of London",
+        "thesis": "Despite fears post-Brexit, London's financial sector is recovering and regaining its competitive edge.",
+        "status": "strengthening",
+        "importance_score": 8
+      },
+      {
+        "name": "Impact of Brexit",
+        "thesis": "Brexit has posed challenges but has not led to the catastrophic outcomes predicted for London's financial services.",
+        "status": "stable",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "London Stock Exchange",
+        "relationship": "AFFECTS",
+        "target_node": "Global Financial Markets",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "JPMorgan Chase",
+        "relationship": "EXPANDS_TO",
+        "target_node": "London",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "New Financial",
+        "relationship": "SUPPORTS",
+        "target_node": "City of London",
+        "confidence": 0.9
+      }
+    ]
+  }
+}

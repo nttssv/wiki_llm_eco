@@ -1,0 +1,183 @@
+{
+  "article_id": "article_b79005fe030673e1",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Finance_Economics_Bad_government_statistics_can_cost_the_economy_billions_9May2026_Economist.docx",
+  "chart_references": [
+    "THE LIFE of American government beancounters is tough, and not just at cocktail parties. They have a hard time persuading people to talk to them at work, too. A decade ago nearly nine in ten Americans, when approached, agreed to fill out the Current Population Survey, which is administered to about 60,000 households each month and asks about, among other things, employment. Fewer than seven in ten do so now (see chart 1). For the Consumer Expenditure Survey, which tries to capture 3,700 households monthly, the response rate is down from 68% to 40%.",
+    "Chart: The Economist",
+    "Chart: The Economist",
+    "In fact, it was the wanton dismissal that looked bad in the eyes of many observers. In the following seven days there was a 50% leap, relative to the week before, in the average value of the index of Economic Policy Uncertainty (EPU), which tracks the number of articles mentioning such uncertainty that are published daily in American newspapers. This was a discernible jump even when compared to the chaos caused by Mr Trump’s trade war in April 2025 and his real one in Iran in the past two months (see chart 2). Based on Mr Bloom’s earlier study with other colleagues of the EPU’s impact on business investment, industrial production and employment, the authors estimate that the jump reduced American GDP by over $100bn (0.3%) and non-farm payrolls by 168,000 (0.1%)."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Finance & economics",
+    "title": "Disfigured",
+    "subtitle": "Bad government statistics can cost the economy billions A new study tries to put a number on the value of reliable numbers",
+    "published_date": "04 May 2026",
+    "category": "Finance & economics",
+    "summary": "A working paper by Nicholas Bloom and co‑authors quantifies the economic damage from undermining U.S. statistical agencies, estimating that the August 2025 firing of BLS commissioner Erika McEntarfer raised policy uncertainty and cut GDP by $20‑$100 billion. The study highlights that each dollar spent on the BLS yields about $25 in economic benefit, underscoring the tangible value of reliable data for investors and policymakers.",
+    "importance_score": 9,
+    "entities": [
+      {
+        "name": "Nicholas Bloom",
+        "type": "person",
+        "role": "author",
+        "description": "Economist at Stanford University, co-author of the study on statistical reliability."
+      },
+      {
+        "name": "Erica Groshen",
+        "type": "person",
+        "role": "author",
+        "description": "Former head of the U.S. Bureau of Labor Statistics, now professor at Cornell University."
+      },
+      {
+        "name": "Duncan Hobbs",
+        "type": "person",
+        "role": "author",
+        "description": "Research fellow at the American Enterprise Institute, co-author of the study."
+      },
+      {
+        "name": "Michael Strain",
+        "type": "person",
+        "role": "author",
+        "description": "Research fellow at the American Enterprise Institute, co-author of the study."
+      },
+      {
+        "name": "Bureau of Labor Statistics (BLS)",
+        "type": "organization",
+        "role": "institution",
+        "description": "U.S. government agency that produces official economic statistics."
+      },
+      {
+        "name": "American Enterprise Institute",
+        "type": "organization",
+        "role": "institution",
+        "description": "Think‑tank that hosted two of the study’s authors."
+      },
+      {
+        "name": "Donald Trump",
+        "type": "person",
+        "role": "politician",
+        "description": "Former U.S. President who dismissed the BLS commissioner in August 2025."
+      },
+      {
+        "name": "Erika McEntarfer",
+        "type": "person",
+        "role": "official",
+        "description": "Commissioner of the BLS appointed by President Biden, fired by Trump."
+      },
+      {
+        "name": "Joe Biden",
+        "type": "person",
+        "role": "politician",
+        "description": "U.S. President who appointed the BLS commissioner in 2024."
+      },
+      {
+        "name": "Economic Policy Uncertainty (EPU) index",
+        "type": "concept",
+        "role": "metric",
+        "description": "Index measuring newspaper mentions of economic policy uncertainty."
+      },
+      {
+        "name": "Federal Reserve governor (unnamed)",
+        "type": "person",
+        "role": "official",
+        "description": "U.S. central bank official who resigned on the same day as the BLS firing."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2025-08-01",
+        "event_summary": "President Donald Trump dismissed BLS commissioner Erika McEntarfer, alleging data manipulation.",
+        "location": "Washington, D.C., USA",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2025-08-02 to 2025-08-08",
+        "event_summary": "Economic Policy Uncertainty index rose 50% week‑over‑week following the dismissal.",
+        "location": "United States",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2025-08-02 to 2025-08-08",
+        "event_summary": "Study estimates the EPU spike cut U.S. GDP by over $100 billion and reduced non‑farm payrolls by 168,000 jobs.",
+        "location": "United States",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2025-08-02 to 2025-08-08",
+        "event_summary": "Controlling for other factors, the firing alone is estimated to have trimmed GDP by at least $20 billion and eliminated 31,000 jobs.",
+        "location": "United States",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2024-01-01 to 2026-05-04",
+        "event_summary": "Response rates to the Current Population Survey fell from ~90% to <70%; Consumer Expenditure Survey fell from 68% to 40%.",
+        "location": "United States",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "Statistical integrity and economic performance",
+        "description": "Impact of political interference on statistical agencies and macroeconomic outcomes."
+      },
+      {
+        "name": "Survey response erosion",
+        "description": "Declining survey participation threatens data quality for policy and markets."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Economic value of reliable government statistics",
+        "thesis": "Investments in statistical agencies yield high economic returns; attacks on data integrity can measurably depress GDP and employment.",
+        "status": "emerging",
+        "importance_score": 9
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Nicholas Bloom",
+        "relationship": "LED_BY",
+        "target_node": "Stanford University",
+        "confidence": 0.95
+      },
+      {
+        "source_node": "Erica Groshen",
+        "relationship": "SUCCESSOR",
+        "target_node": "Cornell University",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Donald Trump",
+        "relationship": "CHALLENGES",
+        "target_node": "Bureau of Labor Statistics ({BLS})",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Economic Policy Uncertainty (EPU) index",
+        "relationship": "AFFECTS",
+        "target_node": "U.S. GDP",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Economic Policy Uncertainty (EPU) index",
+        "relationship": "AFFECTS",
+        "target_node": "Non‑farm payrolls",
+        "confidence": 0.88
+      },
+      {
+        "source_node": "Reliable government statistics",
+        "relationship": "SUPPORTS",
+        "target_node": "Economic decision‑making",
+        "confidence": 0.92
+      },
+      {
+        "source_node": "Low survey response rates",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Data reliability",
+        "confidence": 0.8
+      }
+    ]
+  }
+}

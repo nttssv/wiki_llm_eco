@@ -1,0 +1,124 @@
+{
+  "article_id": "article_296a1fcdf28b894f",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Business_mushroom_drugs_26Apr2026.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Business",
+    "title": "Altered state",
+    "subtitle": "Donald Trump is giving psychedelic medicines a welcome boost But his methods could prove damaging",
+    "published_date": "23 Apr 2026",
+    "category": "Business",
+    "summary": "Donald Trump's executive order to expedite FDA approval for psychedelic drugs marks a significant shift in drug policy, prioritizing relationships over scientific merit. This move has raised share prices of psychedelic companies and promises new funding for research, but also highlights potential risks and political implications in drug development.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Donald Trump",
+        "type": "Person",
+        "role": "President",
+        "description": "Former President of the United States who signed an executive order to expedite psychedelic drug approvals."
+      },
+      {
+        "name": "Joe Rogan",
+        "type": "Person",
+        "role": "Podcaster",
+        "description": "Influential podcaster who advocated for the use of ibogaine in treating opioid addiction."
+      },
+      {
+        "name": "FDA",
+        "type": "Organization",
+        "role": "Regulatory Body",
+        "description": "U.S. Food and Drug Administration responsible for approving drugs."
+      },
+      {
+        "name": "Compass Pathways",
+        "type": "Company",
+        "role": "Psychedelic Drug Manufacturer",
+        "description": "Company developing a synthetic version of psilocybin for treatment-resistant depression."
+      },
+      {
+        "name": "Definium",
+        "type": "Company",
+        "role": "Psychedelic Drug Manufacturer",
+        "description": "Company testing a proprietary version of LSD for anxiety and depression."
+      },
+      {
+        "name": "Eli Lilly",
+        "type": "Company",
+        "role": "Pharmaceutical Company",
+        "description": "Pharmaceutical company that received expedited approval for a weight-loss pill."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-18",
+        "event_summary": "Donald Trump signed an executive order to expedite FDA approval for psychedelic drugs.",
+        "location": "Oval Office, Washington D.C.",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2026-04-01",
+        "event_summary": "Eli Lilly's weight-loss pill received FDA approval just 50 days after filing.",
+        "location": "United States",
+        "importance_score": 7
+      }
+    ],
+    "themes": [
+      {
+        "name": "Psychedelic Medicine",
+        "description": "The use of psychedelic substances for therapeutic purposes, particularly in treating mental health conditions."
+      },
+      {
+        "name": "Drug Policy",
+        "description": "The framework and regulations governing the approval and use of pharmaceuticals."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Political Influence in Drug Approval",
+        "thesis": "The Trump administration's approach to drug approval is increasingly influenced by political relationships rather than scientific evidence.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Risks of Psychedelic Drugs",
+        "thesis": "While psychedelic drugs show promise, their approval must be approached with caution due to potential health risks and political implications.",
+        "status": "strengthening",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Donald Trump",
+        "relationship": "LED_BY",
+        "target_node": "FDA",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Joe Rogan",
+        "relationship": "SUPPORTS",
+        "target_node": "ibogaine",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "FDA",
+        "relationship": "AFFECTS",
+        "target_node": "Compass Pathways",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "FDA",
+        "relationship": "AFFECTS",
+        "target_node": "Definium",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Eli Lilly",
+        "relationship": "EXPANDS_TO",
+        "target_node": "weight-loss pill",
+        "confidence": 0.8
+      }
+    ]
+  }
+}

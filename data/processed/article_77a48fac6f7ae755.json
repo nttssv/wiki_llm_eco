@@ -1,0 +1,268 @@
+{
+  "article_id": "article_77a48fac6f7ae755",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Business_Can_a_beauty_mega_deal_save_Estee_Lauder_9May2026_Economist.docx",
+  "chart_references": [
+    "Lately, however, Lauder has been looking dishevelled. The American company’s market value, having shot from $16bn in 2010 to $133bn in 2021, has since slid back to $31bn—a seventh of L’Oréal’s figure. Its sales in 2025, at $14.7bn, were down by 17% from their peak four years earlier, even as the beauty business as a whole has boomed. In pursuit of a glow-up, Lauder is spending big: it is said to be planning a takeover bid for Puig, a Catalan beauty firm, that will cost it around $6bn. A deal may add some gloss to the business, but will not do much to fix its deeper flaws."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Business",
+    "title": "Vanity project",
+    "subtitle": "Can a beauty mega-deal save Estee Lauder? America's cosmetics champion wants to buy its way back to better days",
+    "published_date": "07 May 2026",
+    "category": "Business",
+    "summary": "Estée Lauder, once valued at $133 bn, has fallen to $31 bn as Chinese daigou restrictions and underperforming acquisitions eroded growth. New CEO Stéphane de La Faverie is cutting jobs, expanding online, and pursuing a $6 bn takeover of Spain’s Puig to boost geography and perfume sales, while rival L’Oréal continues to outpace it with its own Kering beauty acquisition.",
+    "importance_score": 9,
+    "entities": [
+      {
+        "name": "Estée Lauder",
+        "type": "Company",
+        "role": "subject",
+        "description": "American cosmetics conglomerate, owner of high‑end brands."
+      },
+      {
+        "name": "L’Oréal",
+        "type": "Company",
+        "role": "competitor",
+        "description": "French cosmetics giant, Estée Lauder's main competitor."
+      },
+      {
+        "name": "Puig",
+        "type": "Company",
+        "role": "target_acquisition",
+        "description": "Catalan beauty group targeted by a $6 bn takeover bid."
+      },
+      {
+        "name": "Chinese government",
+        "type": "Government",
+        "role": "regulator",
+        "description": "Chinese authorities that cracked down on daigou trade in 2019."
+      },
+      {
+        "name": "Hainan",
+        "type": "Location",
+        "role": "sales_channel",
+        "description": "Duty‑free port in Hainan, a key sales channel for Estée Lauder."
+      },
+      {
+        "name": "Too Faced",
+        "type": "Company",
+        "role": "acquired_brand",
+        "description": "Makeup brand acquired by Estée Lauder in 2016."
+      },
+      {
+        "name": "Becca Cosmetics",
+        "type": "Company",
+        "role": "acquired_brand",
+        "description": "Cosmetics brand acquired by Estée Lauder in 2016 and later shut down."
+      },
+      {
+        "name": "Dr Jart",
+        "type": "Company",
+        "role": "acquired_brand",
+        "description": "Korean skincare label bought by Estée Lauder in 2019."
+      },
+      {
+        "name": "AlixPartners",
+        "type": "Company",
+        "role": "analyst",
+        "description": "Consultancy providing analysis of Estée Lauder's challenges."
+      },
+      {
+        "name": "Lindy Firstenberg",
+        "type": "Person",
+        "role": "analyst_commentator",
+        "description": "Partner at AlixPartners quoted in the article."
+      },
+      {
+        "name": "Jane Lauder",
+        "type": "Person",
+        "role": "family_executive",
+        "description": "Member of the founding Lauder family, former executive."
+      },
+      {
+        "name": "William Lauder",
+        "type": "Person",
+        "role": "chairman",
+        "description": "Chairman of Estée Lauder, member of the founding family."
+      },
+      {
+        "name": "Fabrizio Freda",
+        "type": "Person",
+        "role": "former_ceo",
+        "description": "Long‑serving CEO of Estée Lauder who stepped down in 2024."
+      },
+      {
+        "name": "Stéphane de La Faverie",
+        "type": "Person",
+        "role": "ceo",
+        "description": "New CEO appointed in 2024 to lead the turnaround."
+      },
+      {
+        "name": "Amazon",
+        "type": "Company",
+        "role": "e_commerce_partner",
+        "description": "Online marketplace where Estée Lauder is expanding."
+      },
+      {
+        "name": "TikTok Shop",
+        "type": "Platform",
+        "role": "e_commerce_partner",
+        "description": "Social‑commerce platform used for beauty sales."
+      },
+      {
+        "name": "Sephora",
+        "type": "Company",
+        "role": "retail_partner",
+        "description": "Beauty retailer where Estée Lauder seeks greater presence."
+      },
+      {
+        "name": "Kering",
+        "type": "Company",
+        "role": "seller",
+        "description": "Luxury conglomerate whose beauty division was bought by L’Oréal."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2019-01-01",
+        "event_summary": "Chinese authorities began a crackdown on daigou trade, limiting Estée Lauder's duty‑free sales in Hainan.",
+        "location": "China",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2024-06-01",
+        "event_summary": "CEO Fabrizio Freda stepped down; Stéphane de La Faverie appointed as new CEO.",
+        "location": "United States",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2025-12-31",
+        "event_summary": "Estée Lauder's 2025 sales fell 17% to $14.7 bn, reflecting a slump despite overall industry growth.",
+        "location": "Global",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2026-05-01",
+        "event_summary": "First‑quarter 2026 revenue rose 2% year‑on‑year, the first sign of recovery under the new strategy.",
+        "location": "United States",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2026-05-07",
+        "event_summary": "Report announced Estée Lauder's planned $6 bn takeover bid for Puig{}; deal still under negotiation:                                                                                             .",
+        "location": "United States",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2026-04-15",
+        "event_summary": "L’Oréal completed acquisition of Kering's beauty division for €4 bn.",
+        "location": "France",
+        "importance_score": 7
+      }
+    ],
+    "themes": [
+      {
+        "name": "Industry consolidation",
+        "description": "Consolidation in the global beauty industry as firms seek scale to offset market headwinds."
+      },
+      {
+        "name": "China regulatory risk",
+        "description": "Regulatory risk in China affecting luxury consumer goods."
+      },
+      {
+        "name": "Digital transformation",
+        "description": "Shift from department‑store reliance{} to digital commerce channels."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Mega‑deal as a rescue strategy",
+        "thesis": "Estée Lauder hopes a $6 bn acquisition of Puig will restore growth and diversify geography, but the deal may distract from deeper operational issues.",
+        "status": "emerging",
+        "importance_score": 9
+      },
+      {
+        "name": "China daigou crackdown undermines luxury cosmetics",
+        "thesis": "Regulatory action against cross‑border resale in China sharply cut Estée Lauder's duty‑free sales, exposing reliance on a single market.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Fragmented brand portfolio hampers agility",
+        "thesis": "Operating each brand as an independent 'jewel' limits Estée Lauder's ability to respond quickly to shifting consumer trends.",
+        "status": "emerging",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Stéphane de La Faverie",
+        "relationship": "LED_BY",
+        "target_node": "Estée Lauder",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Fabrizio Freda",
+        "relationship": "SUCCESSOR",
+        "target_node": "Stéphane de La Faverie",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Estée Lauder",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Amazon",
+        "confidence": 0.88
+      },
+      {
+        "source_node": "Estée Lauder",
+        "relationship": "EXPANDS_TO",
+        "target_node": "TikTok Shop",
+        "confidence": 0.84
+      },
+      {
+        "source_node": "Estée Lauder",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Sephora",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Chinese government",
+        "relationship": "AFFECTS",
+        "target_node": "Estée Lauder",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Daigou crackdown",
+        "relationship": "CHALLENGES",
+        "target_node": "Estée Lauder",
+        "confidence": 0.75
+      },
+      {
+        "source_node": "Estée Lauder",
+        "relationship": "SUCCESSOR",
+        "target_node": "Puig",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Puig",
+        "relationship": "RELATED_TO",
+        "target_node": "Perfume category",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "L’Oréal",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Estée Lauder",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "L’Oréal",
+        "relationship": "ACQUIRES",
+        "target_node": "Kering beauty division",
+        "confidence": 0.88
+      }
+    ]
+  }
+}

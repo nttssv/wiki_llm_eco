@@ -1,0 +1,154 @@
+{
+  "article_id": "article_ef6cc59a9b8c74f4",
+  "original_file_path": "/app/data/raw_articles/Business_LiftIndustry_3May2026_Economist.docx",
+  "chart_references": [
+    "Roland Berger reckons that the share of revenue the industry generates from sales of new lifts will fall over the remainder of the decade, hold steady for servicing and continue to rise for modernisation. Kone thinks that worldwide there were 10m lifts over 15 years old in 2024, and that the figure will rise to around 16m by 2030, with 300,000 a year in line for anything from a minor upgrade to full refurbishment."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Business",
+    "title": "The elevator pitch",
+    "subtitle": "How a mega-deal will transform the lift industry Together Kone and TKE will tower over their rivals",
+    "published_date": "30 Apr 2026",
+    "category": "Business",
+    "summary": "Kone and TKE have merged to create the world's largest lift manufacturer, aiming for significant cost savings and expanded service capabilities. This merger positions them to dominate the market, despite challenges from competitors and potential regulatory scrutiny.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Kone",
+        "type": "Company",
+        "role": "Acquirer",
+        "description": "Finnish company merging with TKE to form the largest lift manufacturer."
+      },
+      {
+        "name": "TKE",
+        "type": "Company",
+        "role": "Target",
+        "description": "German lift manufacturer being acquired by Kone."
+      },
+      {
+        "name": "Advent",
+        "type": "Private Equity Firm",
+        "role": "Seller",
+        "description": "Private equity firm involved in the sale of TKE."
+      },
+      {
+        "name": "Cinven",
+        "type": "Private Equity Firm",
+        "role": "Seller",
+        "description": "Private equity firm involved in the sale of TKE."
+      },
+      {
+        "name": "CVC",
+        "type": "Private Equity Firm",
+        "role": "Bidder",
+        "description": "Private equity firm that previously bid for TKE."
+      },
+      {
+        "name": "Otis",
+        "type": "Company",
+        "role": "Competitor",
+        "description": "Current leader in the lift market with 18% share."
+      },
+      {
+        "name": "Schindler",
+        "type": "Company",
+        "role": "Competitor",
+        "description": "Swiss lift manufacturer competing with Kone and TKE."
+      },
+      {
+        "name": "Roland Berger",
+        "type": "Consultancy",
+        "role": "Market Analyst",
+        "description": "Consultancy providing market estimates for the lift industry."
+      },
+      {
+        "name": "Bernstein",
+        "type": "Broker",
+        "role": "Market Analyst",
+        "description": "Broker analyzing revenue sources in the lift industry."
+      },
+      {
+        "name": "European Commission",
+        "type": "Government Body",
+        "role": "Regulator",
+        "description": "EU body that may review the merger for antitrust implications."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-29",
+        "event_summary": "Kone and TKE announced their merger to form the largest lift manufacturer.",
+        "location": "Global",
+        "importance_score": 9
+      }
+    ],
+    "themes": [
+      {
+        "name": "Mergers and Acquisitions",
+        "description": "The impact of corporate mergers on market dynamics and competition."
+      },
+      {
+        "name": "Market Competition",
+        "description": "The competitive landscape of the lift industry and the implications of market share."
+      },
+      {
+        "name": "Regulatory Environment",
+        "description": "The role of regulatory bodies in overseeing mergers and maintaining competition."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Market Dominance",
+        "thesis": "The merger between Kone and TKE will create a dominant player in the lift industry, reshaping market dynamics.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Regulatory Challenges",
+        "thesis": "The merger may face scrutiny from antitrust authorities, impacting its approval and execution.",
+        "status": "emerging",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Kone",
+        "relationship": "LED_BY",
+        "target_node": "TKE",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Kone",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Global Market",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "TKE",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Global Market",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Kone",
+        "relationship": "CHALLENGES",
+        "target_node": "Otis",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Kone",
+        "relationship": "CHALLENGES",
+        "target_node": "Schindler",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "European Commission",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Kone and TKE Merger",
+        "confidence": 0.75
+      }
+    ]
+  }
+}

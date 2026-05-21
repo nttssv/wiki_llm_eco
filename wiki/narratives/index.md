@@ -2,5 +2,108 @@
 
 ## Narratives
 
-- **Apple's globalised iPhone model under pressure** (strengthening): Apple's globalised iPhone model is under pressure from AI and geopolitical fragmentation.
-- **Apple enters a post-Tim Cook succession era** (emerging): Apple's handover from Tim Cook to John Ternus creates a new leadership-era narrative around whether operational continuity is enough for the AI age.
+- **Economic Resilience** (emerging): Despite the rupee's depreciation, India's economic growth potential remains strong.
+- **Impending Energy Catastrophe** (emerging): The closure of the Strait of Hormuz and ongoing supply disruptions are leading the world towards an energy crisis.
+- **AI Demand vs. Supply** (emerging): The rapid growth in AI demand is outpacing the supply chain's ability to provide necessary hardware.
+- **AI Wealth vs. Economic Stability** (emerging): While AI companies are generating immense wealth, San Francisco's economy is not benefiting equally, leading to a potential crisis.
+- **American Resilience** (strengthening): American corporations are thriving despite external pressures, showcasing resilience and innovation.
+- **Berkshire vs SoftBank: divergent capital allocation models** (emerging): Only one of the two conglomerates can sustain its current strategy—Berkshire’s cash hoarding versus SoftBank’s high‑leverage AI bets.
+- **Capital Wars** (emerging): The divergence in banking regulations between the U.S. and Europe could lead to a competitive disadvantage for European banks and increased financial instability.
+- **EU deregulation drive** (emerging): The European Commission is launching a coordinated effort to cut red tape and harmonise rules, aiming to boost GDP and restore competitiveness.
+- **Economic value of reliable government statistics** (emerging): Investments in statistical agencies yield high economic returns; attacks on data integrity can measurably depress GDP and employment.
+- **Emergence of Chinese Whisky** (strengthening): Chinese whisky is becoming a significant player in the global spirits market despite local challenges.
+- **Inflation Management** (emerging): The Fed's response to rising inflation will be critical under Warsh's leadership.
+- **Mega‑deal as a rescue strategy** (emerging): Estée Lauder hopes a $6 bn acquisition of Puig will restore growth and diversify geography, but the deal may distract from deeper operational issues.
+- **Oil Supply Shock** (emerging): The war in Iran has caused unprecedented disruptions in oil supply, leading to soaring prices.
+- **Oil Supply Shortage** (emerging): The closure of the Strait of Hormuz is leading to unprecedented oil supply shortages that will have severe global repercussions.
+- **Port Control Competition** (emerging): The global scramble for ports is a reflection of geopolitical anxieties, particularly regarding China's influence.
+- **Post-war Reconstruction Boom** (emerging): The reconstruction of oil and gas infrastructure in the Middle East will create significant opportunities for oil-services firms.
+- **Reviving the closed‑end fund model** (emerging): Bill Ackman's Pershing Square USA aims to eliminate persistent NAV discounts by leveraging a domestic listing, large manager stake, and strong branding, potentially restoring investor confidence in closed‑end funds.
+- **AI as a Growth Driver** (emerging): The AI boom is a key factor in the robust earnings growth of American companies.
+- **Ackman's Berkshire‑style closed‑end fund transformation** (emerging): Bill Ackman seeks to revive the closed‑end fund market by consolidating assets into a diversified holding company modeled on Berkshire Hathaway, aiming to generate stable, long‑term returns.
+- **Acupuncture as evidence‑based pain therapy** (emerging): Randomized trials demonstrate modest but lasting pain relief from acupuncture, making it a viable alternative to drugs for chronic pain.
+- **Apple's Future Strategy** (emerging): John Ternus must adapt Apple's strategy to the challenges posed by AI and geopolitical tensions.
+- **Carmakers chase Chinese market via risky partnerships** (emerging): Multinational automakers are intensifying efforts to secure Chinese market share through joint ventures, despite heightened political and operational risks.
+- **Caution Against Interventionism** (stable): Despite acknowledging the need for intervention, the report warns of the risks associated with industrial policy.
+- **China daigou crackdown undermines luxury cosmetics** (emerging): Regulatory action against cross‑border resale in China sharply cut Estée Lauder's duty‑free sales, exposing reliance on a single market.
+- **Cognitive Surrender** (emerging): The reliance on AI can lead to a decline in critical thinking and problem-solving skills among employees.
+- **Competition in Space** (weakening): Blue Origin is struggling to catch up with SpaceX in the space industry despite significant investments.
+- **Concentration of Value** (strengthening): The value of American firms is becoming more concentrated among a few major players.
+- **Decline of Millennial Brands** (strengthening): Millennial brands are struggling to maintain their market positions due to rising competition and changing consumer acquisition costs.
+- **Emigration as an Economic Strategy** (emerging): Exporting people can be a viable economic strategy for growth, but its success is contingent on external factors.
+- **Google's AI Strategy** (strengthening): Google's investment in proprietary AI technology is positioning it to compete effectively in the cloud market.
+- **Government Intervention Effects** (strengthening): European and Asian governments' attempts to shield consumers from high prices may exacerbate market imbalances.
+- **Growth of Specialty Insurance** (strengthening): London's specialty insurance market has experienced significant growth due to innovation and specialization.
+- **Hantavirus outbreak on cruise ships poses low but non‑negligible global health risk** (emerging): Confined environments like cruise ships can facilitate rare human‑to‑human hantavirus spread, prompting coordinated international containment efforts.
+- **Health Consciousness Impact** (strengthening): Growing health concerns are negatively impacting soda sales, particularly for Pepsi.
+- **Impact of Deregulation** (strengthening): Relaxation of capital requirements may lead to greater leverage in the banking sector, increasing the risk of systemic failures.
+- **Impact of Social Media on Tourism** (strengthening): Social media endorsements are significantly influencing foreign perceptions of China, leading to increased tourism.
+- **Ineffectiveness of State Control** (emerging): Despite claims of state capitalism, Trump's administration has struggled to exert real control over the economy.
+- **Innovation in the AI Era** (emerging): John Ternus must lead Apple to innovate beyond hardware improvements to thrive in the AI landscape.
+- **Investment Disparity** (strengthening): Hyperscalers are significantly outpacing hardware manufacturers in capital investment.
+- **Investment Recovery** (strengthening): Oil majors are likely to increase upstream investments after years of capital discipline due to geopolitical pressures.
+- **Investor Confidence** (strengthening): India's ability to attract foreign investment is hindered by economic and bureaucratic challenges.
+- **Jet‑fuel shortage risk from Hormuz closure threatens global airline economics** (emerging): The near‑total shutdown of the Strait of Hormuz is curtailing Gulf crude and jet‑fuel flows, driving up prices and forcing airlines worldwide to cut routes, raise fares, or cease operations.
+- **London's Financial Recovery** (strengthening): London's financial sector is recovering and expanding despite Brexit and economic challenges.
+- **Market Dominance** (emerging): The merger between Kone and TKE will create a dominant player in the lift industry, reshaping market dynamics.
+- **Mega‑deal as a rescue strategy for Estée Lauder** (emerging): A large acquisition could reverse Estée Lauder’s performance slump and restore its market position.
+- **Musk vs. Altman** (emerging): The trial exemplifies the personal and professional rivalry between Musk and Altman, with potential consequences for the AI industry.
+- **Peptideins as a new drug target class** (emerging): The discovery and systematic naming of peptideins will open a previously hidden layer of the proteome, providing novel targets for immunotherapies and other drugs.
+- **Petrodollar as pillar of US dollar dominance** (emerging): The concentration of oil revenues in dollars since the 1970s has underpinned the United States' financial and geopolitical power.
+- **Political Influence in Drug Approval** (emerging): The Trump administration's approach to drug approval is increasingly influenced by political relationships rather than scientific evidence.
+- **Recovery of the City of London** (strengthening): Despite fears post-Brexit, London's financial sector is recovering and regaining its competitive edge.
+- **Reliable statistics are essential for economic efficiency** (emerging): Inaccurate official data imposes billions in hidden costs on the economy, highlighting the need for better measurement and verification.
+- **Shift to AI Advertising** (emerging): AI chatbots are transitioning into advertising platforms, changing the landscape of digital marketing.
+- **Shift to Clean Energy** (strengthening): The Gulf war is accelerating the transition from fossil fuels to renewable energy sources.
+- **Skepticism in Research** (strengthening): Experts express concerns about biases in exercise studies compared to conventional treatments.
+- **Stablecoin Growth Stagnation** (emerging): The stablecoin market has not achieved the expected growth due to regulatory uncertainties and low demand.
+- **UniCredit's strategic push for German market dominance** (emerging): UniCredit aims to combine its HVB subsidiary with Commerzbank to control ~9% of German banking revenue, using a low‑price bid to force a merger.
+- **Warsh's Leadership Potential** (emerging): Kevin Warsh's ability to navigate political pressures will define his legacy at the Fed.
+- **Yuan as an Alternative** (strengthening): The yuan is emerging as a viable alternative to the dollar, driven by geopolitical factors and China's financial infrastructure.
+- **eBay resurgence attracts acquisition interest** (emerging): The revival of eBay's marketplace has made it a strategic target for consolidation, exemplified by GameStop's expressed intent to buy.
+- **AI investment boom fuels corporate debt risk** (emerging): SoftBank’s massive commitments to OpenAI and related AI assets amplify its debt burden, creating systemic risk for its lenders.
+- **Challenges of Dependency on Remittances** (strengthening): Relying on remittances for economic growth poses risks due to external economic conditions.
+- **Challenges of Leadership** (strengthening): Ternus faces the challenge of succeeding two legendary CEOs while navigating current market dynamics.
+- **China's Financial Strategy** (emerging): China is strategically positioning the yuan to reduce dependence on the dollar amidst global tensions.
+- **Cloud Market Dynamics** (emerging): The cloud computing market is experiencing significant shifts due to AI advancements and financial pressures on startups.
+- **Competing visions of conglomerate strategy** (emerging): Berkshire Hathaway's diversified, cash‑rich model and SoftBank's high‑growth, tech‑focused approach are mutually exclusive paths, and market dynamics will likely favor only one over the long term.
+- **DeepSeek's Market Position** (weakening): DeepSeek's latest model struggles to compete due to rising competition and state interference.
+- **Dynamic Capitalism** (strengthening): American capitalism is being reshaped by individual actions rather than bureaucratic directives.
+- **Economic Viability of Renewables** (strengthening): The decreasing costs of solar and wind energy make them competitive alternatives to fossil fuels.
+- **Effectiveness of Exercise** (emerging): Exercise may be as effective as traditional treatments for mental health issues.
+- **Epigenomic Medicine** (emerging): Advancements in epigenomic medicine could reshape our understanding of genetics and health.
+- **Erosion of petrodollar dominance** (emerging): Geopolitical conflicts and the rise of alternative currencies (yuan, digital yuan) are gradually weakening the dollar's monopoly over oil trade.
+- **Fragmented brand portfolio hampers agility** (emerging): Operating each brand as an independent 'jewel' limits Estée Lauder's ability to respond quickly to shifting consumer trends.
+- **Geopolitical Risk Assessment** (strengthening): Markets struggle to accurately price the geopolitical risks associated with oil supply.
+- **Government Support for Finance** (emerging): The government should implement policies to support and enhance London's financial industry.
+- **Housing Market Correction** (strengthening): The luxury housing market is booming, but overall housing prices are declining, indicating a correction.
+- **Impact of Brexit** (stable): Brexit has posed challenges but has not led to the catastrophic outcomes predicted for London's financial services.
+- **Integration of Prediction Markets in Central Banking** (emerging): The Federal Reserve is considering the integration of prediction markets like Kalshi to enhance its economic forecasting capabilities.
+- **Investment in Satellite Services** (strengthening): Amazon's aggressive investment in satellite technology aims to compete with established players like SpaceX.
+- **Managerial Responsibility** (strengthening): Managers should actively promote critical thinking to counteract the risks associated with AI reliance.
+- **Market Cooling** (emerging): The insurance market is beginning to cool as competition increases and prices decline.
+- **NAV discount as a market inefficiency** (stable): Long‑standing discounts to NAV in closed‑end funds create arbitrage opportunities and attract activist takeovers, reflecting structural frictions rather than manager performance.
+- **OpenAI's Transformation** (strengthening): The shift from a non-profit to a for-profit model raises questions about the integrity and mission of OpenAI.
+- **Pan‑European market integration** (emerging): Introducing services passports and a unified “28th regime” for startups could deepen the single market and raise growth by up to 3% over a decade.
+- **Pepsi's Turnaround Efforts** (emerging): Pepsi is attempting to recover market share by adopting strategies similar to Coca-Cola.
+- **Political Challenges** (emerging): Political opposition is increasingly hindering the construction of new data centers.
+- **Regulatory Challenges** (emerging): The merger may face scrutiny from antitrust authorities, impacting its approval and execution.
+- **Regulatory Impact on Finance** (strengthening): Increased regulation may hinder the growth of stablecoins and affect traditional banking.
+- **Regulatory and political resistance to foreign takeover of systemically important banks** (emerging): German state ownership and BaFin interventions create barriers to UniCredit's hostile approach, reflecting broader concerns over cross‑border bank consolidation.
+- **Risks of Psychedelic Drugs** (strengthening): While psychedelic drugs show promise, their approval must be approached with caution due to potential health risks and political implications.
+- **Shift in World Bank Policy** (emerging): The World Bank's new report indicates a potential shift towards supporting industrial policy, challenging previous doctrines.
+- **Shift to AI** (emerging): Brands like Allbirds are pivoting to AI to survive in a challenging market.
+- **Transformation of Investment Landscape** (emerging): The ways to invest in major firms are multiplying, changing the nature of American capitalism.
+- **Uneven benefits of the Iran war for major oil companies** (emerging): U.S. oil majors Exxon and Chevron are gaining less from the Iran conflict compared to their European counterparts.
+- **User Engagement with Ads** (strengthening): Users are not deterred by ads in chatbots, maintaining engagement despite sponsored content.
+- **AI Development Costs** (emerging): The costs associated with developing competitive AI models are rising, impacting profitability.
+- **Cultural Views on Genetics** (strengthening): Cultural narratives often oversimplify the role of genetics in human abilities.
+- **Geopolitical Uncertainty** (stable): Ongoing geopolitical tensions could pose risks to future economic growth and corporate profits.
+- **Global jet fuel supply constraints** (emerging): Airlines face tightening jet fuel supplies, creating operational uncertainty about which routes will be most affected.
+- **Hostage capital concept** (emerging): US ability to freeze or confiscate foreign assets creates systemic risk that may drive countries away from the dollar, beyond the petrodollar mechanism.
+- **Inefficiencies in Port Development** (strengthening): The rush to build new ports may lead to inefficiencies and increased operational costs.
+- **Methodological validation challenge** (transitioning): Current ribosome‑profiling and mass‑spectrometry methods may over‑report peptideins, requiring improved validation to separate functional molecules from artefacts.
+- **Sustainability of Chinamaxxing** (emerging): While Chinamaxxing has led to short-term economic benefits, its long-term impact on tourism and local economies is uncertain.
+- **U.S. refiners offset European shortfalls through increased jet‑fuel exports** (emerging): Higher global fuel prices have prompted U.S. refineries to boost jet‑fuel output and ship more to Europe, partially mitigating the regional supply gap.
+- **Placebo and expectation effects in acupuncture outcomes** (emerging): A substantial portion of acupuncture's reported benefits may stem from patient expectations and placebo mechanisms rather than specific physiological effects.
+- **Limited efficacy of acupuncture beyond pain management** (emerging): Systematic reviews find insufficient robust evidence for acupuncture's effectiveness on most non‑pain conditions.

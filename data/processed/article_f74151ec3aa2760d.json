@@ -1,0 +1,136 @@
+{
+  "article_id": "article_f74151ec3aa2760d",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Finance_WorldBank_26Apr2026.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Finance & economics",
+    "title": "Free Exchange",
+    "subtitle": "Has the World Bank performed a U-turn on industrial policy? Interventionists who think so should read its new report more closely",
+    "published_date": "23 Apr 2026",
+    "category": "Finance & economics",
+    "summary": "The World Bank's new report, 'Industrial Policy for Development', suggests a shift towards endorsing government intervention in industrial policy, challenging the long-held Washington Consensus. While it acknowledges the need for public inputs like infrastructure, it remains cautious about market incentives, warning against the risks of interventionism.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "World Bank",
+        "type": "Organization",
+        "role": "Institution",
+        "description": "An international financial institution that provides loans and grants to the governments of poorer countries for the purpose of pursuing capital projects."
+      },
+      {
+        "name": "IMF",
+        "type": "Organization",
+        "role": "Institution",
+        "description": "The International Monetary Fund, an organization of 190 countries working to foster global monetary cooperation and secure financial stability."
+      },
+      {
+        "name": "Jake Sullivan",
+        "type": "Person",
+        "role": "Political figure",
+        "description": "The architect of Joe Biden’s industrial policy."
+      },
+      {
+        "name": "Ethiopia",
+        "type": "Country",
+        "role": "Case study",
+        "description": "Cited in the report for increasing cargo capacity to boost horticulture exports."
+      },
+      {
+        "name": "Morocco",
+        "type": "Country",
+        "role": "Case study",
+        "description": "Example of a country that has created industrial parks to support economic development."
+      },
+      {
+        "name": "Costa Rica",
+        "type": "Country",
+        "role": "Case study",
+        "description": "Another example of a country that has developed industrial parks."
+      },
+      {
+        "name": "Romania",
+        "type": "Country",
+        "role": "Case study",
+        "description": "Cited for a government scheme that produced skilled workers to attract firms."
+      },
+      {
+        "name": "Kenya",
+        "type": "Country",
+        "role": "Case study",
+        "description": "A country aiming to nurture a tech industry through subsidies."
+      },
+      {
+        "name": "Indonesia",
+        "type": "Country",
+        "role": "Case study",
+        "description": "Has banned the export of many raw commodities as part of its industrial policy."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-03-01",
+        "event_summary": "Release of the World Bank report 'Industrial Policy for Development'.",
+        "location": "Global",
+        "importance_score": 9
+      }
+    ],
+    "themes": [
+      {
+        "name": "Industrial Policy",
+        "description": "The role of government intervention in economic development and industry support."
+      },
+      {
+        "name": "Washington Consensus",
+        "description": "A set of economic policy recommendations for developing countries that emphasizes free markets and limited government intervention."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Shift in World Bank Policy",
+        "thesis": "The World Bank's new report indicates a potential shift towards supporting industrial policy, challenging previous doctrines.",
+        "status": "emerging",
+        "importance_score": 7
+      },
+      {
+        "name": "Caution Against Interventionism",
+        "thesis": "Despite acknowledging the need for intervention, the report warns of the risks associated with industrial policy.",
+        "status": "stable",
+        "importance_score": 8
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "World Bank",
+        "relationship": "AFFECTS",
+        "target_node": "Developing Countries",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Jake Sullivan",
+        "relationship": "SUPPORTS",
+        "target_node": "Industrial Policy",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Ethiopia",
+        "relationship": "RELATED_TO",
+        "target_node": "Public Inputs",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "Kenya",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Tech Industry",
+        "confidence": 0.6
+      },
+      {
+        "source_node": "Indonesia",
+        "relationship": "CHALLENGES",
+        "target_node": "Global Trade",
+        "confidence": 0.7
+      }
+    ]
+  }
+}

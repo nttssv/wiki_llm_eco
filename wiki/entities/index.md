@@ -2,13 +2,433 @@
 
 ## Entities
 
-- **AI** (technology): Technological shift challenging the durability of the smartphone model.
-- **Apple** (company): Global technology company whose iPhone franchise anchors the article.
-- **China** (location): Critical production hub in Apple's current supply chain.
-- **China** (Country): A key market for Apple, both for manufacturing and sales.
-- **Gemini** (Technology): AI model from Google that Apple is relying on for its AI integration.
-- **India** (location): Growing alternative manufacturing base for Apple's production footprint.
-- **John Ternus** (person): Apple executive discussed as a potential future leader.
+- **28th regime** (inferred):
+- **ABB** (Corporation): Swiss engineering firm whose robotics division SoftBank plans to buy for $5 bn.
+- **AI** (Technology): Artificial intelligence, a significant factor in future technology strategies.
+- **AI Advertising** (inferred):
+- **AI Growth** (inferred):
+- **AI Supply Chain** (inferred):
+- **AI computing infrastructure** (inferred):
+- **AI in the Workplace** (inferred):
+- **AI sector** (inferred):
+- **AP Moller-Maersk** (Company): Shipping giant involved in expanding terminal operations in Europe.
+- **ASML** (organization): Major EU industrial firm producing lithography machines for AI chips
+- **ASNSD1-uORF** (inferred):
+- **AST SpaceMobile** (Company): An American startup that owns the communications satellite launched by Blue Origin.
+- **Ackman Initiative** (inferred):
+- **Acupuncture** (inferred):
+- **Acupuncture Evidence Base** (inferred):
+- **Acupuncture Pain Benefits** (inferred):
+- **Advent** (Private Equity Firm): Private equity firm involved in the sale of TKE.
+- **Advertising** (inferred):
+- **Air France‑KLM** (company): French‑Dutch airline group that reduced schedules amid fuel shortages.
+- **AirAsia** (company): Singapore‑based low‑cost carrier{—}cut flights as jet‑fuel costs rise.
+- **Airline ticket pricing** (inferred):
+- **Airlines** (Organization):
+- **Alibaba** (Company): A Chinese e-commerce giant producing the Qwen family of AI models.
+- **AlixPartners** (Company): Consultancy providing analysis of Estée Lauder's challenges.
+- **Allbirds** (Company): A wool-sneaker brand that is transitioning to AI computing infrastructure.
+- **Allium** (Organization): Collaborated on research regarding stablecoin transactions.
+- **Alpha Insurance Analysts** (Organization): A firm that invests in insurance syndicates.
+- **Alphabet** (Company): Parent company of Google, holding a significant stake in SpaceX.
+- **Amazon** (inferred):
+- **Amazon Web Services** (Company): Leading cloud service provider, competing with Google Cloud.
+- **American Bankers Association** (Organization): Warned about the potential impact of stablecoins on bank deposits.
+- **American Corporate Profits** (inferred):
+- **American Economic Stability** (inferred):
+- **American Enterprise Institute** (organization): Think‑tank that hosted two of the study’s authors.
+- **Andes hantavirus** (inferred):
+- **Andrea Orcel** (inferred):
+- **Andrew Charlton** (person): Consultant and aviation‑industry commentator quoted in the article.
+- **Anthony Diercks** (Person): A researcher at the Federal Reserve who assessed the potential of Kalshi for economic forecasting.
+- **Anthropic** (Company): Another leading artificial intelligence lab in San Francisco.
+- **Apollo** (Company): An American asset management firm acquiring British insurers.
+- **Apple** (Company): A leading technology company known for its iPhone and other consumer electronics.
+- **Argentina** (Country): Country of departure for the cruise
+- **Arm** (inferred):
+- **Arm valuation** (inferred):
+- **Asia** (Region): Significantly affected by oil supply shortages and high prices.
+- **Association for Financial Markets in Europe** (Organization): A trade association representing the interests of the European financial markets.
+- **Aviation Advocacy** (organization): Aviation consultancy cited for industry insight.
+- **BaFin** (inferred):
+- **Bad government statistics** (inferred):
+- **Baker Hughes** (Company): One of the leading oil-services firms involved in drilling and infrastructure.
+- **Bank for International Settlements** (Organization): An international financial institution owned by central banks that fosters international monetary and financial cooperation.
+- **Bank of England** (Organization): The central bank of the United Kingdom, responsible for monetary policy and financial stability.
+- **Banking Regulation** (inferred):
+- **Beazley** (Organization): A large underwriter acquired by Zurich.
+- **Becca Cosmetics** (Company): Cosmetics brand acquired by Estée Lauder in 2016 and later shut down.
+- **Benjamin Graham** (Person): Mentor of Buffett, author of value‑investing principles.
+- **Berkshire Hathaway** (inferred):
+- **Bernstein** (Broker): Broker analyzing revenue sources in the lift industry.
+- **Bettina Orlopp** (inferred):
+- **Bill Ackman** (inferred):
+- **BlackRock** (Company): American asset manager involved in acquiring non-Chinese ports.
+- **Blue Origin** (Company): A rocket firm owned by Jeff Bezos, focused on spaceflight and satellite services.
+- **Boston Consulting Group** (Organization): Analyzed transaction values using stablecoins.
+- **Brad Setser** (person): CFR fellow noting Saudi current‑account trends.
+- **Brazil** (inferred):
+- **Brent Crude** (Commodity): Benchmark for global oil prices, currently experiencing significant fluctuations.
+- **British Journal of Sports Medicine** (Publication): Published a meta-meta-analysis on the effects of exercise on mental health.
+- **Broadcom** (Company): A global technology company that designs, develops, and supplies a broad range of semiconductor and infrastructure software solutions.
+- **Brookfield** (Company): A Canadian asset management firm also acquiring British insurers.
+- **Bureau of Labor Statistics (BLS)** (organization): U.S. government agency that produces official economic statistics.
+- **Bureau of Labor Statistics ({BLS})** (inferred):
+- **ByteDance** (Company): The creator of TikTok, also developing AI applications.
+- **CEF Advisers** (Organization): Research firm that tracks closed‑end fund discount trends.
+- **CIPS** (System): Cross-Border Interbank Payment System facilitating yuan transactions.
+- **CK Hutchison** (inferred):
+- **COSCO** (Company): Chinese state-owned firm that owns a majority stake in the Port of Piraeus.
+- **CVC** (Private Equity Firm): Private equity firm that previously bid for TKE.
+- **Caelean Barnes** (Person): Comments on OpenAI's ad service performance.
+- **Camille Moore** (Person): A consultant who noted the increased competition faced by millennial brands.
+- **Canary Islands** (Region): Spanish territory where the ship is scheduled to dock for evacuation
+- **Cape Verde** (Country): Destination island nation where passengers were off‑loaded for care
+- **Casper** (Company): A mattress company that went public and later was taken private after significant value loss.
+- **Central Bank Independence** (inferred):
+- **Challenges of Dependency on Remittances** (inferred):
+- **Charles Kenny** (Person): Researcher at the Centre for Global Development who studies the relationship between emigration and economic growth.
+- **ChatGPT** (inferred):
+- **Chevron** (inferred):
+- **China** (inferred):
+- **Chinamaxxing** (Cultural Trend): A trend where Westerners adopt Chinese habits and lifestyles, often popularized through social media.
+- **Chinese Whisky Market** (inferred):
+- **Chinese government** (inferred):
+- **Chronic Pain Reduction** (inferred):
+- **Cinven** (Private Equity Firm): Private equity firm involved in the sale of TKE.
+- **Cirium** (organization): Aviation data firm tracking scheduled flights.
+- **Citigroup** (Company): A major American bank investing in London with a $1.5bn refurbishment.
+- **City of London** (Location): The primary financial district in London, known for its global financial services.
+- **Clarity Act** (Legislation): Follow-up bill concerning stablecoin regulations.
+- **Closed-end fund** (inferred):
+- **Closed‑end fund performance** (inferred):
+- **Coca-Cola** (Company): Leading soft-drink manufacturer with a 17% market share.
+- **Cochrane review** (Study): A meta-analysis of health-care research assessing the effects of exercise on depression.
+- **Cognitive Offloading** (inferred):
+- **Cognitive Surrender** (inferred):
+- **Commerzbank** (inferred):
+- **Compass Pathways** (Company): Company developing a synthetic version of psilocybin for treatment-resistant depression.
+- **Complementary Therapies in Medicine** (Organization): Review journal publishing 2022 systematic review of acupuncture across many conditions.
+- **Conflict with Iran** (inferred):
+- **Consumer Purchasing Power** (inferred):
+- **Cornell University** (inferred):
+- **Costa Rica** (Country): Another example of a country that has developed industrial parks.
+- **Daigou crackdown** (inferred):
+- **Daniel Corsten** (Person): An analyst from IE Business School who commented on the challenges faced by millennial brands.
+- **Daniel Lurie** (Person): Current mayor of San Francisco, working to improve the city's business environment.
+- **Data reliability** (inferred):
+- **David Tollervey** (person): Cell biologist who cautioned about false positives in ribosome profiling.
+- **Debt markets** (inferred):
+- **DeepMind** (Company): AI research lab owned by Alphabet, contributing to Google's AI advancements.
+- **DeepSeek** (Company): A Chinese AI lab known for developing competitive AI models.
+- **Definium** (Company): Company testing a proprietary version of LSD for anxiety and depression.
+- **Delta Air Lines** (company): U.S. major airline that added surcharges and cancelled routes.
+- **Developing Countries** (inferred):
+- **DiDi** (Corporation): Chinese ride‑hailing platform in SoftBank’s holdings.
+- **Diageo** (Company): A British spirits-maker investing in Chinese whisky production.
+- **Diana Choyleva** (person): Research economist at Enodo Economics commenting on US financial dominance.
+- **Digital Marketing** (inferred):
+- **DigitalBridge** (Corporation): Data‑centre operator SoftBank intends to acquire for $4 bn.
+- **Dollar Shave Club** (Company): A brand that was acquired by Unilever and later sold a majority stake at a lower valuation.
+- **Dollar as global invoicing currency** (inferred):
+- **Dollar pricing of oil** (inferred):
+- **Donald Trump** (inferred):
+- **Dr Jart** (Company): Korean skincare label bought by Estée Lauder in 2019.
+- **Duncan Hobbs** (person): Research fellow at the American Enterprise Institute, co-author of the study.
+- **EU business administrative costs** (inferred):
+- **EU regulatory burden** (inferred):
+- **EchoStar** (Company): A telecom company benefiting from its investment in SpaceX.
+- **Economic Policy Uncertainty (EPU) index** (inferred):
+- **Economic decision‑making** (inferred):
+- **Edinburgh Worldwide Investment Trust** (inferred):
+- **Edison Chiao** (Person): A representative from Diageo discussing the luxury market for whisky in China.
+- **Edzard Ernst** (inferred):
+- **Effectiveness of Exercise** (inferred):
+- **Eli Lilly** (Company): A global healthcare leader that develops and manufactures innovative medicines.
+- **Elliott Management** (Investor): Hedge fund that has taken a $4bn stake in Pepsi and pushed for strategic changes.
+- **Elon Musk** (inferred):
+- **Ember** (Organization): A research firm focusing on electricity markets and renewable energy.
+- **Emigration as an Economic Strategy** (inferred):
+- **Emily Apple** (Person): A director at Alpha Insurance Analysts.
+- **Employment in Insurance Sector** (inferred):
+- **Energy Security** (inferred):
+- **Erica Groshen** (inferred):
+- **Erika McEntarfer** (person): Commissioner of the BLS appointed by President Biden, fired by Trump.
+- **Estée Lauder** (inferred):
+- **Estée Lauder Companies** (inferred):
+- **Ethiopia** (Country): Cited in the report for increasing cargo capacity to boost horticulture exports.
+- **Europe** (Region): Attempting to shield consumers from rising fuel prices through subsidies.
+- **Europe (jet fuel exports)** (inferred):
+- **European Commission** (inferred):
+- **European jet fuel market** (inferred):
+- **European rivals** (inferred):
+- **Eurostat** (organization): European statistics office providing cost figures for reporting
+- **Exercise** (inferred):
+- **Exercise Science** (inferred):
+- **Exxon** (inferred):
+- **FDA** (Organization): U.S. Food and Drug Administration responsible for approving drugs.
+- **Fabrizio Freda** (inferred):
+- **Fascia Nerve Mechanism Theory** (inferred):
+- **Federal Maritime Commission (FMC)** (Government Agency): U.S. agency overseeing maritime shipping and protecting American interests.
+- **Federal Reserve** (Organization): The central banking system of the United States.
+- **Federal Reserve governor (unnamed)** (person): U.S. central bank official who resigned on the same day as the BLS firing.
+- **Fitch** (Agency): Warned San Francisco about its budgetary gaps.
+- **Forecast of summer flight growth** (inferred):
+- **Foreign Tourism** (inferred):
+- **Franklin Noll** (Person): Conducted research on the use of stablecoins.
+- **GameStop** (inferred):
+- **Gaurav Khanna** (Person): Researcher who examines the effects of Asian migration on economic growth.
+- **Gemini** (Technology): AI model from Google that Apple is relying on for AI integration.
+- **Genius Act** (Legislation): Regulates stablecoins in America.
+- **German government** (inferred):
+- **Germany** (inferred):
+- **Gideon Nave** (Person): Collaborated with Steven Shaw on cognitive surrender research.
+- **Global Economy** (inferred):
+- **Global Financial Markets** (inferred):
+- **Global Insurance Market** (inferred):
+- **Global Market** (inferred):
+- **Global Oil Prices** (inferred):
+- **Global Oil Supply** (inferred):
+- **Global Oil Trade** (inferred):
+- **Global Shipping** (inferred):
+- **Global Trade** (inferred):
+- **Global carmakers** (inferred):
+- **Global demand for USD** (inferred):
+- **Globalstar** (Company): A satellite operator acquired by Amazon to enhance its satellite internet capabilities.
+- **Glossier** (Company): A beauty label that has struggled to maintain its market position.
+- **Goldman Sachs** (inferred):
+- **Google** (Company): Invested in Anthropic to help meet computing needs.
+- **Google Cloud** (Company): Cloud computing division of Google, focusing on AI technology.
+- **Government statistical agencies** (inferred):
+- **Grab** (Corporation): Southeast Asian food‑delivery platform owned{
+- **Greg Abel** (inferred):
+- **Gulf States** (Location): Region where many Keralites work and send remittances back home.
+- **Hainan** (Location): Duty‑free port in Hainan, a key sales channel for Estée Lauder.
+- **Halliburton** (Company): A major player in the oil-services industry, providing various energy solutions.
+- **Hapag-Lloyd** (Company): German shipping giant involved in acquiring stakes in container-terminal operators.
+- **Harel Amir** (Person): Discusses the new category of advertising.
+- **Helene Langevin** (inferred):
+- **Huangshan** (Location): A mountainous area in China popular with hikers, noted for increased foreign tourist spending.
+- **Huawei** (Company): A Chinese semiconductor company promoted by the government.
+- **Human-to-human transmission** (inferred):
+- **HypoVereinsbank (HVB)** (Bank): UniCredit's existing German subsidiary, already owned.
+- **IEA** (inferred):
+- **IMF** (inferred):
+- **INSEAD** (Organization): Conducted a study on AI assistance in chess training.
+- **Ibrahim Oweiss** (inferred):
+- **Ifo Institute** (organization): Think‑tank that estimated GDP gains from bureaucratic decluttering
+- **India** (inferred):
+- **Indonesia** (Country): Has banned the export of many raw commodities as part of its industrial policy.
+- **Industrial Policy** (inferred):
+- **Intel** (Company): Involved in plans to build a new facility for increased processing power.
+- **International Energy Agency** (organization): Inter‑governmental agency that defines fuel‑stock thresholds for rationing.
+- **International Energy Agency (IEA)** (Organization): Coordinated a historic drawdown of strategic oil reserves among member countries.
+- **International Society of Chinese Medicine** (Organization): International body funding 2022 review of acupuncture.
+- **International Transactions** (inferred):
+- **Iran** (country): Country paying for Iranian crude in yuan.
+- **Iran war** (inferred):
+- **JAMA Internal Medicine** (Organization): Medical journal publishing 2020 study finding no difference between true and sham acupuncture.
+- **JPMorgan Chase** (Company): America's largest bank, currently expanding its presence in London.
+- **Jake Sullivan** (Person): The architect of Joe Biden’s industrial policy.
+- **Jane Lauder** (Person): Member of the founding Lauder family, former executive.
+- **Janet Yellen** (person): U.S. Treasury Secretary who criticized EU working groups
+- **Jeff Bezos** (Person): Business magnate and investor, known for his role in the space industry.
+- **Jerome Powell** (Person): The current chairman of the Federal Reserve, under investigation prior to Warsh's nomination.
+- **Jet fuel** (Commodity):
+- **Jet fuel price increase** (inferred):
+- **Jet fuel supply** (inferred):
+- **Joe Biden** (person): U.S. President who appointed the BLS commissioner in 2024.
+- **Joe Rogan** (Person): Influential podcaster who advocated for the use of ibogaine in treating opioid addiction.
+- **John Ternus** (Person): The incoming CEO of Apple, tasked with continuing the company's success.
+- **Jonathan Roiser** (Person): Professor of neuroscience at University College London, critical of the comparisons made in exercise studies.
+- **Journal of Pain** (Organization): Journal publishing 2018 meta‑analysis of acupuncture for pain.
+- **Kalshi** (Company): A peer-to-peer betting platform where users can wager on various outcomes, including economic indicators.
+- **Kenya** (Country): A country aiming to nurture a tech industry through subsidies.
+- **Kerala** (Location): A southern Indian state that has prospered through remittances from emigrants working in the Gulf.
+- **Kering** (Company): Luxury conglomerate whose beauty division was bought by L’Oréal.
+- **Kering beauty division** (inferred):
+- **Kevin Warsh** (Person): Formerly an inflation hawk, now nominated to lead the Federal Reserve.
+- **Kone** (Company): Finnish company merging with TKE to form the largest lift manufacturer.
+- **Kone and TKE Merger** (inferred):
+- **Labour Party** (Political Party): The ruling political party in Britain, currently facing criticism for its economic policies.
+- **Laurene Powell Jobs** (Person): Widow of Steve Jobs, notable buyer of real estate in San Francisco.
+- **Lindy Firstenberg** (Person): Partner at AlixPartners quoted in the article.
+- **Lisa Cook** (Person): Fed governor whose position may be threatened by political maneuvers.
+- **Lloyd's of London** (Organization): A leading global insurance and reinsurance marketplace based in London.
+- **Local Chinese companies** (inferred):
+- **London** (inferred):
+- **London Marathon** (inferred):
+- **London Market Group (LMG)** (Organization): A trade body representing the London insurance market.
+- **London Stock Exchange** (Financial Institution): A major stock exchange in London, historically a preferred venue for international listings.
+- **Louisa Dahmani** (Person): Studied the impact of GPS usage on spatial memory.
+- **Low survey response rates** (inferred):
+- **Lufthansa** (company): German flag carrier that has cut flights because of higher jet‑fuel prices.
+- **Luxury Consumption** (inferred):
+- **L’Oréal** (inferred):
+- **MV Hondius** (inferred):
+- **Mallika Sachdeva** (person): Deutsche Bank economist linking Iran war to petrodollar erosion.
+- **Maria Luís Albuquerque** (inferred):
+- **Mark LaCour** (Person): Conducted a study on the effects of calculators on students' mathematical performance.
+- **Masayoshi Son** (inferred):
+- **Mental Health** (inferred):
+- **Meta** (Company): An American social media giant attempting to acquire Manus.
+- **Michael Kotzbauer** (Person): Deputy chief executive of Commerzbank, defending the bank's strategy.
+- **Michael Strain** (person): Research fellow at the American Enterprise Institute, co-author of the study.
+- **Micron** (Company): A company that produces memory and storage solutions, crucial for AI applications.
+- **Microsoft** (Company): Reworking partnership with OpenAI to distribute products through various cloud providers.
+- **Microsoft Azure** (Company): Cloud computing service created by Microsoft, a key rival to Google Cloud.
+- **Middle East** (inferred):
+- **Modern‑day Berkshire Hathaway concept** (inferred):
+- **Moody's** (Agency): Stripped San Francisco of its top AAA credit rating.
+- **Morgan Stanley** (Organization): A leading global financial services firm providing investment banking, securities, wealth management, and investment management services.
+- **Morocco** (Country): Example of a country that has created industrial parks to support economic development.
+- **NAV discount** (inferred):
+- **National economy** (inferred):
+- **Nature** (inferred):
+- **Neelkanth Mishra** (Person): An analyst at Axis Bank providing insights on India's economic situation.
+- **New Financial** (Think Tank): A think tank that analyzes the financial services sector and its global competitiveness.
+- **Nicholas Bloom** (inferred):
+- **Nicolás Maduro** (Person): His ousting has opened opportunities for oil-services firms in Venezuela.
+- **Non-Chinese Shipping Companies** (inferred):
+- **Non‑farm payrolls** (inferred):
+- **Non‑pain Conditions** (inferred):
+- **North Sea Expansion** (inferred):
+- **Nvidia** (Company): An American company providing AI infrastructure.
+- **OPEC** (Organization): Influences global oil production and pricing.
+- **Oil Market Stability** (inferred):
+- **OpenAI** (Corporation): AI research lab behind ChatGPT, second‑largest external shareholder is SoftBank.
+- **Otis** (Company): Current leader in the lift market with 18% share.
+- **Paola Sabbione** (Person): Barclays analyst commenting on UniCredit's effective control level.
+- **Passengers on MV Hondius** (inferred):
+- **Pepsi** (Company): Second-largest soft-drink manufacturer with an 11% market share.
+- **Perfume category** (inferred):
+- **Pernod Ricard** (Company): A French rival involved in the Chinese whisky market.
+- **Pershing Square Holdings** (inferred):
+- **Pershing Square USA** (inferred):
+- **Peter Peterson** (person): Former US Commerce Secretary who earlier used the term petrodollar.
+- **Petrodollar dominance** (inferred):
+- **Petrodollar regime** (inferred):
+- **Placebo Effect** (inferred):
+- **Poland** (inferred):
+- **Poppi** (Brand): Prebiotic-soda brand acquired by Pepsi for $2bn.
+- **Princess Máxima Centre** (inferred):
+- **Public Inputs** (inferred):
+- **Public Markets** (inferred):
+- **Puig** (inferred):
+- **Reliable government statistics** (inferred):
+- **Remittances** (inferred):
+- **Renewable Energy Growth** (inferred):
+- **Reserve Bank of India** (Institution): The central banking institution of India responsible for regulating the currency and monetary policy.
+- **Rhode** (Company): A brand founded by Hailey Bieber that was sold to e.l.f. Beauty for up to $1bn.
+- **Roland Berger** (Consultancy): Consultancy providing market estimates for the lift industry.
+- **Romania** (Country): Cited for a government scheme that produced skilled workers to attract firms.
+- **Rongchang braised goose** (Food): A traditional dish from China that gained popularity through social media endorsements.
+- **Rupee** (inferred):
+- **Russia** (inferred):
+- **Rystad Energy** (Company): Provides insights on energy markets, including infrastructure repair costs.
+- **S&P 500** (Index): A stock market index that measures the stock performance of 500 large companies listed on stock exchanges in the United States.
+- **S&P 500 Earnings** (inferred):
+- **SLB** (Company): A leading oil-services company focusing on upstream markets.
+- **SWIFT** (System): Global financial messaging service that facilitates international payments.
+- **Saba Capital** (inferred):
+- **Sabastian Sawe** (Person): Kenyan athlete who finished the London Marathon in under two hours.
+- **Sam Altman** (inferred):
+- **San Francisco** (inferred):
+- **San Francisco Budget** (inferred):
+- **San Francisco Credit Rating** (inferred):
+- **San Francisco Economy** (inferred):
+- **Sanjay Malhotra** (Person): The head of the Reserve Bank of India.
+- **Saudi Arabia** (inferred):
+- **Saudi Aramco** (inferred):
+- **Saudi Central Bank** (organization): Saudi Arabia's central bank, buyer of US Treasuries.
+- **Schindler** (Company): Swiss lift manufacturer competing with Kone and TKE.
+- **Schroders** (Financial Institution): A British asset management company with a focus on investment management.
+- **Scott Bessent** (Person): Predicted significant growth in the stablecoin market.
+- **Sebastiaan van Heesch** (inferred):
+- **Sephora** (inferred):
+- **Serena Williams** (Person): Former tennis champion who reports benefits from acupuncture for muscle recovery.
+- **Shareholder expectations for dividend** (inferred):
+- **Similarweb** (Data Provider): Provides data on ad integration in chatbots.
+- **Social Media** (inferred):
+- **Social Media Exposure** (inferred):
+- **Société Générale** (organization): French bank offering demand forecasts for jet fuel.
+- **SoftBank** (inferred):
+- **SoftBank Group** (inferred):
+- **SoftBank Group financial stability** (inferred):
+- **SpaceX** (Company): A rocket-maker and AI lab controlled by Elon Musk, planning to go public.
+- **Spanish Health Minister** (inferred):
+- **Spirit Airlines** (company): U.S. low‑cost carrier in Chapter 11 that stopped flights on May 2, 2026 due to soaring fuel costs.
+- **Stablecoin Growth Stagnation** (inferred):
+- **Standard Chartered** (Bank): Bank involved in facilitating yuan transactions.
+- **Stanford University** (inferred):
 - **Steve Jobs** (Person): Co-founder and former CEO of Apple, known for his innovative vision.
-- **Tim Cook** (person): Apple chief executive associated with the company's global supply-chain era.
-- **iPhone** (product): Apple's flagship hardware platform and operational dependency.
+- **Steven Shaw** (Person): Coined the term 'cognitive surrender' and studied its implications with AI.
+- **Strait of Hormuz** (inferred):
+- **Study on the cost of bad government statistics** (Study): Research paper estimating economic losses from inaccurate government data
+- **Study on the cost of bad{government statistics}** (inferred):
+- **Stéphane de La Faverie** (inferred):
+- **Swiss government** (inferred):
+- **TKE** (Company): German lift manufacturer being acquired by Kone.
+- **TSMC** (Company): World's largest contract chipmaker facing tight supply conditions.
+- **Tech Industry** (inferred):
+- **TechSverige** (organization): Lobby group representing Swedish tech industry
+- **Tesla** (Company): An electric car manufacturer with ties to SpaceX through shared technology and leadership.
+- **TikTok** (inferred):
+- **TikTok Shop** (inferred):
+- **Tim Cook** (Person): The CEO of Apple who led the company for 15 years, significantly increasing its market value.
+- **Tom Brady** (Person): Retired NFL quarterback who reports benefits from acupuncture for muscle recovery.
+- **Too Faced** (Company): Makeup brand acquired by Estée Lauder in 2016.
+- **T‑Mobile** (Corporation): U.S. telecom operator in SoftBank’s portfolio, value down from prior year.
+- **U.S. GDP** (inferred):
+- **UBS** (Organization): A Swiss multinational investment bank and financial services company.
+- **UK** (inferred):
+- **US Treasury Department** (organization): US Treasury Department facilitating secret bond purchases.
+- **US Treasury secret bond purchases** (inferred):
+- **US financial dominance** (inferred):
+- **USA Rare Earth** (Company): A company involved in the production of rare earth materials.
+- **UniCredit** (inferred):
+- **Unilever** (Company): The company that bought Dollar Shave Club and later sold a majority stake.
+- **United Airlines** (company): U.S. major airline that added surcharges and cancelled routes.
+- **United States** (inferred):
+- **University of Edinburgh** (organization): University affiliated with David Tollervey.
+- **Ursula von der Leyen** (inferred):
+- **User Engagement** (inferred):
+- **Venezuela** (inferred):
+- **Vietjet** (company): Vietnamese low‑cost carrier that trimmed flights due to fuel price spikes.
+- **Warby Parker** (Company): A spectacle merchant that gained popularity through online sales.
+- **Warren Buffett** (Person): World‑renowned value investor and CEO of Berkshire Hathaway.
+- **William Lauder** (Person): Chairman of Estée Lauder, member of the founding family.
+- **Wood Mackenzie** (Company): Analyzes oil and gas markets, highlighting investment needs.
+- **World Bank** (Organization): Provides estimates on remittances and their impact on national income.
+- **World Health Organization (WHO)** (inferred):
+- **Xi Jinping** (Person): Current President of China advocating for a stronger yuan.
+- **Xu Ziyan** (Person): A researcher at the Shanghai Academy of Social Sciences who studies the impact of social media on tourism.
+- **YPF** (Company): Contracted Halliburton for a significant fracking project.
+- **Yuan Transactions** (inferred):
+- **Zoom** (Company): A video-conferencing company with stakes in Anthropic.
+- **Zurich** (Organization): A Swiss insurance giant that recently acquired Beazley.
+- **beauty mega-deal** (inferred):
+- **biotech companies** (Organization): Companies working on techniques to modify epigenomic tags for medical applications.
+- **cellular stress resistance** (inferred):
+- **dopamine** (Chemical): Involved in motivation and reward, its transmission is increased by exercise.
+- **e-CNY** (Currency): Digital currency issued by China's central bank.
+- **e.l.f. Beauty** (Company): The company that acquired Rhode for a significant valuation.
+- **eBay** (inferred):
+- **endocannabinoids** (Chemical): Chemicals produced by the body that may contribute to mood improvements from exercise.
+- **epigenome** (Biological Concept): A set of markers on DNA that influence gene expression and can be affected by environmental factors.
+- **epigenomic medicine** (inferred):
+- **false positive identification** (inferred):
+- **gene expression** (inferred):
+- **humanin** (inferred):
+- **ibogaine** (inferred):
+- **immunotherapy drug development** (inferred):
+- **mass spectrometry** (inferred):
+- **medulloblastoma** (inferred):
+- **national governments** (inferred):
+- **omnibus bills** (inferred):
+- **pan‑European market** (inferred):
+- **peptideins** (inferred):
+- **ribosome profiling** (inferred):
+- **services passports** (inferred):
+- **weight-loss pill** (inferred):
+- **xAI** (inferred):

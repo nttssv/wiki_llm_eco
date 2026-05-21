@@ -1,0 +1,134 @@
+{
+  "article_id": "article_927ac1a9ee5946b7",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Finance_Xi_Jingping_currency_26Apr2026.docx",
+  "chart_references": [
+    "Chart: The Economist",
+    "In pursuing its ambitions for the yuan, China has sometimes let its rhetoric run ahead of reality, points out Josh Lipsky of the Atlantic Council, a think-tank in Washington. But the numbers are beginning to match the words. Some of the global yuan’s “best data points have come in the last six or seven weeks”. Look, he says, at China’s alternative payment rail, the Cross-Border Interbank Payment System (CIPS). In March it handled about 920bn yuan ($134bn) a day in transactions; last year’s daily average was only 680bn (see chart, left panel). On April 2nd the tally topped 1.2trn yuan.",
+    "But the jump in CIPS activity is so large that oil and toll payments cannot account for all of it. The transactions may include capital, some of it Chinese, fleeing the Gulf. And they may capture some of the broader financial hurly-burly stirred up by the crisis. According to China’s banks, cross-border sales and purchases of bonds, stocks and other “portfolio” investments reached $712bn in March, 40% more than the monthly average for last year. Not all of these investments and divestments were settled in China’s currency. But the yuan’s share of China’s overall international transactions, including trade in goods, services and assets, rose to more than 56% in March, after plateauing for much of 2025 (see chart, right panel)."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Finance & economics",
+    "title": "The comfortable yuan",
+    "subtitle": "Xi Jinping wants a powerful currency. America’s war has helped More countries are starting to use China’s payment infrastructure",
+    "published_date": "23 Apr 2026",
+    "category": "Finance & economics",
+    "summary": "China is increasingly promoting the yuan as a viable alternative to the US dollar for international transactions, aided by geopolitical tensions and the development of its payment infrastructure. The yuan's acceptance is growing, particularly in countries wary of US financial dominance, with significant increases in transaction volumes through China's payment systems.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Xi Jinping",
+        "type": "Person",
+        "role": "Leader of China",
+        "description": "Current President of China advocating for a stronger yuan."
+      },
+      {
+        "name": "CIPS",
+        "type": "System",
+        "role": "Payment System",
+        "description": "Cross-Border Interbank Payment System facilitating yuan transactions."
+      },
+      {
+        "name": "e-CNY",
+        "type": "Currency",
+        "role": "Digital Currency",
+        "description": "Digital currency issued by China's central bank."
+      },
+      {
+        "name": "Iran",
+        "type": "Country",
+        "role": "Trade Partner",
+        "description": "Country accepting yuan for oil exports."
+      },
+      {
+        "name": "SWIFT",
+        "type": "System",
+        "role": "Bank Messaging Network",
+        "description": "Global financial messaging service that facilitates international payments."
+      },
+      {
+        "name": "IMF",
+        "type": "Organization",
+        "role": "International Monetary Fund",
+        "description": "International organization discussing global financial stability."
+      },
+      {
+        "name": "Standard Chartered",
+        "type": "Bank",
+        "role": "Financial Institution",
+        "description": "Bank involved in facilitating yuan transactions."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-02",
+        "event_summary": "CIPS transactions exceeded 1.2 trillion yuan in a single day.",
+        "location": "China",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2026-03-01",
+        "event_summary": "Cross-border sales and purchases of bonds and stocks reached $712 billion.",
+        "location": "China",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2026-02-01",
+        "event_summary": "New rules for CIPS made the system more flexible.",
+        "location": "China",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "Currency Internationalization",
+        "description": "The process of promoting a currency for use in international trade and finance."
+      },
+      {
+        "name": "Geopolitical Tensions",
+        "description": "The impact of international conflicts on global financial systems and currency usage."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Yuan as an Alternative",
+        "thesis": "The yuan is emerging as a viable alternative to the dollar, driven by geopolitical factors and China's financial infrastructure.",
+        "status": "strengthening",
+        "importance_score": 8
+      },
+      {
+        "name": "China's Financial Strategy",
+        "thesis": "China is strategically positioning the yuan to reduce dependence on the dollar amidst global tensions.",
+        "status": "emerging",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Xi Jinping",
+        "relationship": "LED_BY",
+        "target_node": "China",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "CIPS",
+        "relationship": "EXPANDS_TO",
+        "target_node": "International Transactions",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Iran",
+        "relationship": "SUPPORTS",
+        "target_node": "Yuan Transactions",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "SWIFT",
+        "relationship": "CHALLENGES",
+        "target_node": "CIPS",
+        "confidence": 0.7
+      }
+    ]
+  }
+}

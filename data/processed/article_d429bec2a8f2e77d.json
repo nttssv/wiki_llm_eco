@@ -1,0 +1,118 @@
+{
+  "article_id": "article_d429bec2a8f2e77d",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Business_Jeff_bezos_26Apr2026.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Business",
+    "title": "Star wars",
+    "subtitle": "Jeff Bezos is raising his game in space But it will be hard for Amazon and Blue Origin to close the gap with SpaceX",
+    "published_date": "23 Apr 2026",
+    "category": "Business",
+    "summary": "Blue Origin's recent launch of the New Glenn rocket ended in failure as it placed its payload in the wrong orbit, leading to an investigation by the FAA. This setback comes as Amazon invests heavily in satellite internet services to compete with SpaceX's Starlink.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Blue Origin",
+        "type": "Company",
+        "role": "Rocket manufacturer",
+        "description": "A rocket firm owned by Jeff Bezos, focused on spaceflight and satellite services."
+      },
+      {
+        "name": "Jeff Bezos",
+        "type": "Person",
+        "role": "Founder of Amazon and Blue Origin",
+        "description": "Business magnate and investor, known for his role in the space industry."
+      },
+      {
+        "name": "SpaceX",
+        "type": "Company",
+        "role": "Competitor",
+        "description": "A private aerospace manufacturer and space transport services company founded by Elon Musk."
+      },
+      {
+        "name": "AST SpaceMobile",
+        "type": "Company",
+        "role": "Payload owner",
+        "description": "An American startup that owns the communications satellite launched by Blue Origin."
+      },
+      {
+        "name": "Amazon",
+        "type": "Company",
+        "role": "Parent company of Blue Origin",
+        "description": "A multinational technology company focusing on e-commerce, cloud computing, and satellite internet."
+      },
+      {
+        "name": "Globalstar",
+        "type": "Company",
+        "role": "Satellite operator",
+        "description": "A satellite operator acquired by Amazon to enhance its satellite internet capabilities."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-19",
+        "event_summary": "Blue Origin's New Glenn rocket launched but failed to place its payload in the correct orbit.",
+        "location": "Ocean-going barge",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2026-04-14",
+        "event_summary": "Amazon acquired Globalstar for $11.6 billion to enhance its satellite internet service.",
+        "location": "",
+        "importance_score": 7
+      }
+    ],
+    "themes": [
+      {
+        "name": "Space Exploration",
+        "description": "The ongoing competition and developments in the space industry, particularly among private companies."
+      },
+      {
+        "name": "Satellite Internet",
+        "description": "The race to establish satellite internet services, with a focus on connectivity in remote areas."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Competition in Space",
+        "thesis": "Blue Origin is struggling to catch up with SpaceX in the space industry despite significant investments.",
+        "status": "weakening",
+        "importance_score": 8
+      },
+      {
+        "name": "Investment in Satellite Services",
+        "thesis": "Amazon's aggressive investment in satellite technology aims to compete with established players like SpaceX.",
+        "status": "strengthening",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Blue Origin",
+        "relationship": "CHALLENGES",
+        "target_node": "SpaceX",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Amazon",
+        "relationship": "SUPPORTS",
+        "target_node": "Blue Origin",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Amazon",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Globalstar",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Blue Origin",
+        "relationship": "DEPENDS_ON",
+        "target_node": "Jeff Bezos",
+        "confidence": 0.95
+      }
+    ]
+  }
+}

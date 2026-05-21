@@ -1,0 +1,140 @@
+{
+  "article_id": "article_dec93e441baa7c55",
+  "original_file_path": "/app/data/raw_articles/Finance_Global_banking_3May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Finance & economics",
+    "title": "Buttonwood",
+    "subtitle": "A global fight over banking rules is just getting started Co-operation on the financial system will be the casualty",
+    "published_date": "28 Apr 2026",
+    "category": "Finance & economics",
+    "summary": "The global banking system faces a potential crisis as the U.S. and Europe diverge on capital requirements, risking a competitive disadvantage for European banks. Recent U.S. regulatory changes could lead to increased leverage in the banking sector, while European regulators respond with their own adjustments. This trend towards deregulation may heighten the risk of financial instability.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Bank for International Settlements",
+        "type": "Organization",
+        "role": "Regulatory body",
+        "description": "An international financial institution owned by central banks that fosters international monetary and financial cooperation."
+      },
+      {
+        "name": "Federal Reserve",
+        "type": "Organization",
+        "role": "Regulatory body",
+        "description": "The central bank of the United States, responsible for implementing monetary policy and regulating banks."
+      },
+      {
+        "name": "Morgan Stanley",
+        "type": "Organization",
+        "role": "Investment bank",
+        "description": "A leading global financial services firm providing investment banking, securities, wealth management, and investment management services."
+      },
+      {
+        "name": "Association for Financial Markets in Europe",
+        "type": "Organization",
+        "role": "Industry group",
+        "description": "A trade association representing the interests of the European financial markets."
+      },
+      {
+        "name": "Bank of England",
+        "type": "Organization",
+        "role": "Regulatory body",
+        "description": "The central bank of the United Kingdom, responsible for monetary policy and financial stability."
+      },
+      {
+        "name": "European Commission",
+        "type": "Organization",
+        "role": "Regulatory body",
+        "description": "The executive branch of the European Union, responsible for proposing legislation and implementing decisions."
+      },
+      {
+        "name": "UBS",
+        "type": "Organization",
+        "role": "Bank",
+        "description": "A Swiss multinational investment bank and financial services company."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2023-03",
+        "event_summary": "Federal Reserve reduces extra capital charges for major banks.",
+        "location": "United States",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2023-12",
+        "event_summary": "Bank of England eases capital requirements for British banks.",
+        "location": "United Kingdom",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2026-04-22",
+        "event_summary": "European Commission considers delaying Basel rules for risk capital calculations.",
+        "location": "European Union",
+        "importance_score": 5
+      },
+      {
+        "event_date": "2026-04",
+        "event_summary": "Swiss government confirms new steep capital requirements for UBS.",
+        "location": "Switzerland",
+        "importance_score": 4
+      }
+    ],
+    "themes": [
+      {
+        "name": "Banking Regulation",
+        "description": "The set of laws and guidelines that govern the banking industry."
+      },
+      {
+        "name": "Global Finance",
+        "description": "The interconnected financial systems and markets across the world."
+      },
+      {
+        "name": "Deregulation",
+        "description": "The reduction or elimination of government rules controlling how banks operate."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Capital Wars",
+        "thesis": "The divergence in banking regulations between the U.S. and Europe could lead to a competitive disadvantage for European banks and increased financial instability.",
+        "status": "emerging",
+        "importance_score": 9
+      },
+      {
+        "name": "Impact of Deregulation",
+        "thesis": "Relaxation of capital requirements may lead to greater leverage in the banking sector, increasing the risk of systemic failures.",
+        "status": "strengthening",
+        "importance_score": 8
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Federal Reserve",
+        "relationship": "CHALLENGES",
+        "target_node": "Bank of England",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Bank of England",
+        "relationship": "SUPPORTS",
+        "target_node": "European Commission",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "Morgan Stanley",
+        "relationship": "AFFECTS",
+        "target_node": "Banking Regulation",
+        "confidence": 0.6
+      },
+      {
+        "source_node": "UBS",
+        "relationship": "DEPENDS_ON",
+        "target_node": "Swiss government",
+        "confidence": 0.9
+      }
+    ]
+  }
+}

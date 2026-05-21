@@ -1,0 +1,143 @@
+{
+  "article_id": "article_332b62a3f2901bf6",
+  "original_file_path": "/app/data/raw_articles/International_The_global_scramble_for_ports_3May2026_Economist.docx",
+  "chart_references": [
+    "Chart: The Economist",
+    "Yet the rush to build port infrastructure is likely to result in huge inefficiencies (see chart). Many investors, including both American and Chinese taxpayers, will see disappointing returns. And political pressure for shipping firms to use particular ports and sea routes, in defiance of all commercial logic, is bound to grow."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "International",
+    "title": "Shipping",
+    "subtitle": "The global scramble for ports The investment frenzy is driven by anxiety about China’s tightening grip on supply chains",
+    "published_date": "30 Apr 2026",
+    "category": "International",
+    "summary": "The global competition for port control is intensifying, driven by geopolitical tensions, particularly between the U.S. and China. Investments in port infrastructure are expected to rise significantly, but this rush may lead to inefficiencies and political pressures affecting shipping routes. China's dominance in global ports is causing concern among Western nations, prompting them to bolster their own maritime capabilities.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "COSCO",
+        "type": "Company",
+        "role": "Owner",
+        "description": "Chinese state-owned firm that owns a majority stake in the Port of Piraeus."
+      },
+      {
+        "name": "Hapag-Lloyd",
+        "type": "Company",
+        "role": "Acquirer",
+        "description": "German shipping giant involved in acquiring stakes in container-terminal operators."
+      },
+      {
+        "name": "AP Moller-Maersk",
+        "type": "Company",
+        "role": "Investor",
+        "description": "Shipping giant involved in expanding terminal operations in Europe."
+      },
+      {
+        "name": "BlackRock",
+        "type": "Company",
+        "role": "Investor",
+        "description": "American asset manager involved in acquiring non-Chinese ports."
+      },
+      {
+        "name": "Federal Maritime Commission (FMC)",
+        "type": "Government Agency",
+        "role": "Regulator",
+        "description": "U.S. agency overseeing maritime shipping and protecting American interests."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2024-01-01",
+        "event_summary": "Hapag-Lloyd acquires 50% of a container-terminal operator in Brazil.",
+        "location": "Brazil",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2024-02-01",
+        "event_summary": "APM Terminals and Eurogate announce €1bn investment to expand a terminal in the North Sea.",
+        "location": "North Sea",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2024-10-01",
+        "event_summary": "Saudi Arabia signs a $450m deal for the Jeddah Islamic Port.",
+        "location": "Saudi Arabia",
+        "importance_score": 5
+      },
+      {
+        "event_date": "2024-01-20",
+        "event_summary": "Donald Trump threatens to take back control of the Panama Canal.",
+        "location": "Panama Canal",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2024-02-01",
+        "event_summary": "Panamanian authorities hand temporary operation of terminals to Maersk and MSC.",
+        "location": "Panama",
+        "importance_score": 7
+      }
+    ],
+    "themes": [
+      {
+        "name": "Geopolitical Tensions",
+        "description": "The competition for control over maritime trade routes and ports driven by U.S.-China relations."
+      },
+      {
+        "name": "Infrastructure Investment",
+        "description": "The significant rise in global spending on port infrastructure and its implications."
+      },
+      {
+        "name": "Supply Chain Security",
+        "description": "Concerns over the reliability of global supply chains and the need for diversification."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Port Control Competition",
+        "thesis": "The global scramble for ports is a reflection of geopolitical anxieties, particularly regarding China's influence.",
+        "status": "emerging",
+        "importance_score": 9
+      },
+      {
+        "name": "Inefficiencies in Port Development",
+        "thesis": "The rush to build new ports may lead to inefficiencies and increased operational costs.",
+        "status": "strengthening",
+        "importance_score": 6
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "COSCO",
+        "relationship": "AFFECTS",
+        "target_node": "Global Shipping",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Hapag-Lloyd",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Brazil",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "AP Moller-Maersk",
+        "relationship": "SUPPORTS",
+        "target_node": "North Sea Expansion",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "Federal Maritime Commission (FMC)",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Non-Chinese Shipping Companies",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Donald Trump",
+        "relationship": "CHALLENGES",
+        "target_node": "CK Hutchison",
+        "confidence": 0.9
+      }
+    ]
+  }
+}

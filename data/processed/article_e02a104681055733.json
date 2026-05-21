@@ -1,0 +1,121 @@
+{
+  "article_id": "article_e02a104681055733",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Finance_Renewables_26Apr2026.docx",
+  "chart_references": [
+    "Chart: The Economist",
+    "The second report, published a day later by Ember, a research firm, focuses on electricity markets. It, too, highlights some record-breaking feats. In 2025, for the first time ever, new renewables generation exceeded the rise in global electricity demand (see chart). And for the first time in over a century, renewables managed to produce more electricity (34%) worldwide than coal did (33%)."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Finance & economics",
+    "title": "Vitamin-D therapy",
+    "subtitle": "Renewables are shining. The Iran war amplifies their appeal Two new reports are a must-read of energy-starved governments",
+    "published_date": "23 Apr 2026",
+    "category": "Finance & economics",
+    "summary": "The ongoing Gulf war is shifting energy dynamics, favoring clean energy, particularly solar power, over fossil fuels. Reports indicate a significant rise in renewable energy generation, with solar surpassing coal for the first time. The cost of solar energy has drastically decreased, making it a viable alternative amid geopolitical tensions.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "International Energy Agency",
+        "type": "Organization",
+        "role": "Publisher",
+        "description": "A club of large oil-consuming countries that publishes annual energy reviews."
+      },
+      {
+        "name": "Ember",
+        "type": "Organization",
+        "role": "Publisher",
+        "description": "A research firm focusing on electricity markets and renewable energy."
+      },
+      {
+        "name": "Germany",
+        "type": "Country",
+        "role": "Case Study",
+        "description": "Benefited from clean energy investments that reduced gas imports significantly."
+      },
+      {
+        "name": "India",
+        "type": "Country",
+        "role": "Market",
+        "description": "A country with significant coal reserves and increasing interest in renewable energy."
+      },
+      {
+        "name": "Russia",
+        "type": "Country",
+        "role": "Geopolitical Actor",
+        "description": "Invaded Ukraine, impacting global energy markets."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2025-04-20",
+        "event_summary": "International Energy Agency publishes its annual 'Global Energy Review'.",
+        "location": "",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2025-04-21",
+        "event_summary": "Ember publishes a report highlighting record-breaking renewable energy generation.",
+        "location": "",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2022-02-24",
+        "event_summary": "Russia invades Ukraine, leading to energy crises in Europe.",
+        "location": "",
+        "importance_score": 9
+      }
+    ],
+    "themes": [
+      {
+        "name": "Renewable Energy Growth",
+        "description": "The increasing share of renewable energy in global electricity generation."
+      },
+      {
+        "name": "Geopolitical Impact on Energy",
+        "description": "How geopolitical tensions influence energy security and market dynamics."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Shift to Clean Energy",
+        "thesis": "The Gulf war is accelerating the transition from fossil fuels to renewable energy sources.",
+        "status": "strengthening",
+        "importance_score": 8
+      },
+      {
+        "name": "Economic Viability of Renewables",
+        "thesis": "The decreasing costs of solar and wind energy make them competitive alternatives to fossil fuels.",
+        "status": "strengthening",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "International Energy Agency",
+        "relationship": "SUPPORTS",
+        "target_node": "Renewable Energy Growth",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Ember",
+        "relationship": "SUPPORTS",
+        "target_node": "Renewable Energy Growth",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Russia",
+        "relationship": "CHALLENGES",
+        "target_node": "Energy Security",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Germany",
+        "relationship": "AFFECTS",
+        "target_node": "Renewable Energy Growth",
+        "confidence": 0.85
+      }
+    ]
+  }
+}

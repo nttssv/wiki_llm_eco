@@ -1,0 +1,190 @@
+{
+  "article_id": "article_25f508af7081474c",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Business_Only_one_of_Berkshire_Hathaway_and_SoftBank_can_survive_9May2026_Economist.docx",
+  "chart_references": [
+    "The most likely answer is more debt. But from where? The firm already faces a steep wall of maturities: the $40bn bridge loan SoftBank took out to invest in OpenAI matures next March. Selling bonds to Japanese retail investors costs more than it used to. The firm says its level of debt is copacetic, but the “loan-to-value” figure it telegraphs is something of a fantasy, since it ignores an additional $28bn borrowed against stock SoftBank owns in Arm and its Japanese telecoms operation. (The firm is also after a further $10bn to be borrowed against its stake in OpenAI.)"
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Business",
+    "title": "Schumpeter",
+    "subtitle": "Only one of Berkshire Hathaway and SoftBank can survive The two represent competing visions of the future",
+    "published_date": "06 May 2026",
+    "category": "Business",
+    "summary": "The Economist compares Berkshire Hathaway’s cash‑rich, low‑risk model under Warren Buffett (now led by Greg Abel) with SoftBank’s high‑leverage, AI‑focused{...}",
+    "importance_score": 9,
+    "entities": [
+      {
+        "name": "Berkshire Hathaway",
+        "type": "Corporation",
+        "role": "subject",
+        "description": "American conglomerate and investment holding company led by Warren Buffett and now Greg Abel."
+      },
+      {
+        "name": "SoftBank Group",
+        "type": "Corporation",
+        "role": "subject",
+        "description": "Japanese conglomerate and investment fund founded by Masayoshi Son, active in AI and tech investments."
+      },
+      {
+        "name": "Warren Buffett",
+        "type": "Person",
+        "role": "key_person",
+        "description": "Founder and long‑time CEO of Berkshire Hathaway, recently retired as chief executive."
+      },
+      {
+        "name": "Greg Abel",
+        "type": "Person",
+        "role": "key_person",
+        "description": "Successor to Buffett as CEO of Berkshire Hathaway."
+      },
+      {
+        "name": "Masayoshi Son",
+        "type": "Person",
+        "role": "key_person",
+        "description": "Founder and visionary leader of SoftBank, driving its AI‑focused bets."
+      },
+      {
+        "name": "Arm",
+        "type": "Corporation",
+        "role": "investment",
+        "description": "British semiconductor design company acquired by SoftBank in 2016."
+      },
+      {
+        "name": "OpenAI",
+        "type": "Corporation",
+        "role": "investment",
+        "description": "AI research lab behind ChatGPT, second‑largest external shareholder is SoftBank."
+      },
+      {
+        "name": "ABB",
+        "type": "Corporation",
+        "role": "target_acquisition",
+        "description": "Swiss engineering firm whose robotics division SoftBank plans to buy for $5 bn."
+      },
+      {
+        "name": "DigitalBridge",
+        "type": "Corporation",
+        "role": "target_acquisition",
+        "description": "Data‑centre operator SoftBank intends to acquire for $4 bn."
+      },
+      {
+        "name": "T‑Mobile",
+        "type": "Corporation",
+        "role": "investment",
+        "description": "U.S. telecom operator in SoftBank’s portfolio, value down from prior year."
+      },
+      {
+        "name": "Grab",
+        "type": "Corporation",
+        "role": "investment",
+        "description": "Southeast Asian food‑delivery platform owned{"
+      },
+      {
+        "name": "DiDi",
+        "type": "Corporation",
+        "role": "investment",
+        "description": "Chinese ride‑hailing platform in SoftBank’s holdings."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-05-02",
+        "event_summary": "Greg Abel delivers first shareholder sermon as new CEO of Berkshire Hathaway.",
+        "location": "Berkshire Hathaway annual meeting, USA",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2026-10-01",
+        "event_summary": "SoftBank sold its remaining Nvidia shares.",
+        "location": "Tokyo, Japan",
+        "importance_score": 5
+      },
+      {
+        "event_date": "2026-03-01",
+        "event_summary": "Maturity of $40 bn bridge loan taken to fund OpenAI investment.",
+        "location": "Japan",
+        "importance_score": 8
+      }
+    ],
+    "themes": [
+      {
+        "name": "Capital Allocation",
+        "description": "Capital allocation strategies in large conglomerates."
+      },
+      {
+        "name": "AI Investment Risk",
+        "description": "Impact of AI investment on corporate balance sheets."
+      },
+      {
+        "name": "US‑Japan Financial Relations",
+        "description": "Cross‑border investment dynamics between the US and Japan."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Berkshire vs SoftBank: divergent capital allocation models",
+        "thesis": "Only one of the two conglomerates can sustain its current strategy—Berkshire’s cash hoarding versus SoftBank’s high‑leverage AI bets.",
+        "status": "emerging",
+        "importance_score": 9
+      },
+      {
+        "name": "AI investment boom fuels corporate debt risk",
+        "thesis": "SoftBank’s massive commitments to OpenAI and related AI assets amplify its debt burden, creating systemic risk for its lenders.",
+        "status": "emerging",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Warren Buffett",
+        "relationship": "LED_BY",
+        "target_node": "Berkshire Hathaway",
+        "confidence": 0.95
+      },
+      {
+        "source_node": "Masayoshi Son",
+        "relationship": "LED_BY",
+        "target_node": "SoftBank Group",
+        "confidence": 0.92
+      },
+      {
+        "source_node": "Warren Buffett",
+        "relationship": "SUCCESSOR",
+        "target_node": "Greg Abel",
+        "confidence": 0.88
+      },
+      {
+        "source_node": "Arm",
+        "relationship": "MANUFACTURES_IN",
+        "target_node": "UK",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "SoftBank Group",
+        "relationship": "EXPANDS_TO",
+        "target_node": "AI sector",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "SoftBank Group",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Debt markets",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Berkshire Hathaway",
+        "relationship": "CHALLENGES",
+        "target_node": "Shareholder expectations for dividend",
+        "confidence": 0.78
+      },
+      {
+        "source_node": "Arm valuation",
+        "relationship": "AFFECTS",
+        "target_node": "SoftBank Group financial stability",
+        "confidence": 0.82
+      }
+    ]
+  }
+}

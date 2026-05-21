@@ -1,0 +1,130 @@
+{
+  "article_id": "article_4dc84c990e8dd8bc",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Science_Technology_How_worried_should_you_be_about_hantavirus_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Science & technology",
+    "title": "Troubled waters",
+    "subtitle": "How worried should you be about hantavirus? An outbreak on a cruise ship has authorities concerned",
+    "published_date": "06 May 2026",
+    "category": "Science & technology",
+    "summary": "A hantavirus outbreak aboard the MV Hondius, sailing from Argentina to Cape Verde, has resulted in three confirmed deaths and several suspected cases. The WHO is leading contact tracing and sequencing, while Spain plans to quarantine remaining passengers at the Canary Islands. The Andes strain involved can spread between humans, but global risk remains low.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "MV Hondius",
+        "type": "Vessel",
+        "role": "outbreak_location",
+        "description": "Cruise ship that experienced the outbreak"
+      },
+      {
+        "name": "World Health Organization (WHO)",
+        "type": "Organization",
+        "role": "health_authority",
+        "description": "World Health Organization, coordinating response"
+      },
+      {
+        "name": "Spanish Health Minister",
+        "type": "Person",
+        "role": "government_official",
+        "description": "Health ministry of Spain overseeing quarantine"
+      },
+      {
+        "name": "Andes hantavirus",
+        "type": "Virus",
+        "role": "pathogen_strain",
+        "description": "Andes strain of hantavirus, known for human‑to‑human transmission"
+      },
+      {
+        "name": "Argentina",
+        "type": "Country",
+        "role": "origin_country",
+        "description": "Country of departure for the cruise"
+      },
+      {
+        "name": "Cape Verde",
+        "type": "Country",
+        "role": "intermediate_port",
+        "description": "Destination island nation where passengers were off‑loaded for care"
+      },
+      {
+        "name": "Canary Islands",
+        "type": "Region",
+        "role": "evacuation_port",
+        "description": "Spanish territory where the ship is scheduled to dock for evacuation"
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-01",
+        "event_summary": "MV Hondius departs Argentina for Cape Verde with ~150 passengers and crew",
+        "location": "Atlantic Ocean (Argentina to Cape Verde)",
+        "importance_score": 5
+      },
+      {
+        "event_date": "2026-05-06",
+        "event_summary": "WHO confirms three deaths and three additional suspected hantavirus cases on MV Hondius",
+        "location": "MV Hondius (at sea, near Cape Verde)",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2026-05-03",
+        "event_summary": "All passengers barred from disembarking; infected individuals airlifted to European hospitals",
+        "location": "Cape Verde",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2026-05-10",
+        "event_summary": "Planned evacuation of remaining passengers at Canary Islands with quarantine measures",
+        "location": "Canary Islands",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "Hantavirus transmission",
+        "description": "Transmission dynamics of hantavirus in confined settings"
+      },
+      {
+        "name": "Maritime health response",
+        "description": "International public‑health coordination during maritime outbreaks"
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Hantavirus outbreak on cruise ships poses low but non‑negligible global health risk",
+        "thesis": "Confined environments like cruise ships can facilitate rare human‑to‑human hantavirus spread, prompting coordinated international containment efforts.",
+        "status": "emerging",
+        "importance_score": 8
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "MV Hondius",
+        "relationship": "LED_BY",
+        "target_node": "World Health Organization (WHO)",
+        "confidence": 0.95
+      },
+      {
+        "source_node": "Andes hantavirus",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Human-to-human transmission",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "World Health Organization (WHO)",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Spanish Health Minister",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Andes hantavirus",
+        "relationship": "AFFECTS",
+        "target_node": "Passengers on MV Hondius",
+        "confidence": 0.8
+      }
+    ]
+  }
+}

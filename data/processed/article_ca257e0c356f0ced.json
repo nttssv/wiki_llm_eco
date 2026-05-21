@@ -1,0 +1,130 @@
+{
+  "article_id": "article_ca257e0c356f0ced",
+  "original_file_path": "/app/data/raw_articles/Business_deepseek_2May2026.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Business",
+    "title": "Sequel struggles",
+    "subtitle": "Why DeepSeek’s sequel failed to impress The AI lab faces stiffening competition and a meddling state",
+    "published_date": "28 Apr 2026",
+    "category": "Business",
+    "summary": "DeepSeek's new AI model, v4, has not met expectations despite its competitive performance and low cost. The lab faces increasing competition from other Chinese AI firms and state interference, which complicates its operations.",
+    "importance_score": 7,
+    "entities": [
+      {
+        "name": "DeepSeek",
+        "type": "Company",
+        "role": "AI Lab",
+        "description": "A Chinese AI lab known for developing competitive AI models."
+      },
+      {
+        "name": "Nvidia",
+        "type": "Company",
+        "role": "Competitor",
+        "description": "An American company providing AI infrastructure."
+      },
+      {
+        "name": "Alibaba",
+        "type": "Company",
+        "role": "Competitor",
+        "description": "A Chinese e-commerce giant producing the Qwen family of AI models."
+      },
+      {
+        "name": "ByteDance",
+        "type": "Company",
+        "role": "Competitor",
+        "description": "The creator of TikTok, also developing AI applications."
+      },
+      {
+        "name": "Huawei",
+        "type": "Company",
+        "role": "State-supported",
+        "description": "A Chinese semiconductor company promoted by the government."
+      },
+      {
+        "name": "Meta",
+        "type": "Company",
+        "role": "Competitor",
+        "description": "An American social media giant attempting to acquire Manus."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2025-04-24",
+        "event_summary": "DeepSeek released its new AI model v4.",
+        "location": "China",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2025-05-07",
+        "event_summary": "Introductory pricing for DeepSeek's v4 model expires.",
+        "location": "China",
+        "importance_score": 5
+      },
+      {
+        "event_date": "2026-04-27",
+        "event_summary": "Chinese government blocks Meta's acquisition of Manus.",
+        "location": "China",
+        "importance_score": 8
+      }
+    ],
+    "themes": [
+      {
+        "name": "AI Competition",
+        "description": "The increasing rivalry among AI labs in China and the impact on market dynamics."
+      },
+      {
+        "name": "State Intervention",
+        "description": "The role of the Chinese government in regulating and influencing the AI sector."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "DeepSeek's Market Position",
+        "thesis": "DeepSeek's latest model struggles to compete due to rising competition and state interference.",
+        "status": "weakening",
+        "importance_score": 7
+      },
+      {
+        "name": "AI Development Costs",
+        "thesis": "The costs associated with developing competitive AI models are rising, impacting profitability.",
+        "status": "emerging",
+        "importance_score": 6
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "DeepSeek",
+        "relationship": "CHALLENGES",
+        "target_node": "Nvidia",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "DeepSeek",
+        "relationship": "CHALLENGES",
+        "target_node": "Alibaba",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "DeepSeek",
+        "relationship": "CHALLENGES",
+        "target_node": "ByteDance",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "Chinese Government",
+        "relationship": "PRESSURE_ON",
+        "target_node": "DeepSeek",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Chinese Government",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Meta",
+        "confidence": 0.8
+      }
+    ]
+  }
+}

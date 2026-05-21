@@ -4,7 +4,7 @@
   "chart_references": [
     "Chart: The Economist"
   ],
-  "extractor": "mock",
+  "extractor": "llm",
   "extraction": {
     "source": "Unknown",
     "section": "Leaders",
@@ -12,136 +12,84 @@
     "subtitle": "Tim Cook wrote a winning recipe for Apple Will it work for his successor?",
     "published_date": "26 Apr 2026",
     "category": "Leaders",
-    "summary": "Apple's iPhone-centered operating model is facing simultaneous pressure from AI disruption, geopolitical tension, and the need to diversify manufacturing.",
-    "importance_score": 9,
+    "summary": "As Tim Cook's tenure at Apple ends, his successor John Ternus faces the challenge of adapting Apple's successful formula of smartphones and global supply chains to the evolving landscape of AI and geopolitical tensions. Cook's leadership saw Apple's market value grow significantly, but the future may require new strategies.",
+    "importance_score": 8,
     "entities": [
       {
         "name": "Apple",
-        "type": "company",
-        "role": "primary subject",
-        "description": "Global technology company whose iPhone franchise anchors the article."
+        "type": "Company",
+        "role": "Subject",
+        "description": "A leading technology company known for its iPhone and other consumer electronics."
       },
       {
         "name": "Tim Cook",
-        "type": "person",
-        "role": "leader",
-        "description": "Apple chief executive associated with the company's global supply-chain era."
+        "type": "Person",
+        "role": "CEO",
+        "description": "The CEO of Apple who led the company for 15 years, significantly increasing its market value."
       },
       {
         "name": "John Ternus",
-        "type": "person",
-        "role": "potential successor",
-        "description": "Apple executive discussed as a potential future leader."
+        "type": "Person",
+        "role": "Successor",
+        "description": "The incoming CEO of Apple, tasked with continuing the company's success."
       },
       {
         "name": "China",
-        "type": "location",
-        "role": "manufacturing base",
-        "description": "Critical production hub in Apple's current supply chain."
-      },
-      {
-        "name": "India",
-        "type": "location",
-        "role": "expansion base",
-        "description": "Growing alternative manufacturing base for Apple's production footprint."
-      },
-      {
-        "name": "iPhone",
-        "type": "product",
-        "role": "core revenue engine",
-        "description": "Apple's flagship hardware platform and operational dependency."
+        "type": "Country",
+        "role": "Market",
+        "description": "A key market for Apple, both for manufacturing and sales."
       },
       {
         "name": "AI",
-        "type": "technology",
-        "role": "disruptive force",
-        "description": "Technological shift challenging the durability of the smartphone model."
+        "type": "Technology",
+        "role": "Trend",
+        "description": "Artificial intelligence, a significant factor in future technology strategies."
       }
     ],
     "events": [
       {
-        "event_date": "26 Apr 2026",
-        "event_summary": "Apple's global manufacturing strategy is reassessed amid geopolitical fragmentation.",
-        "location": "China and India",
-        "importance_score": 8
-      },
-      {
-        "event_date": "26 Apr 2026",
-        "event_summary": "AI is framed as a strategic challenge to Apple's smartphone-led model.",
-        "location": "Global",
+        "event_date": "2026-09",
+        "event_summary": "Tim Cook's tenure as CEO of Apple ends.",
+        "location": "Apple Headquarters",
         "importance_score": 9
       }
     ],
     "themes": [
       {
-        "name": "globalisation",
-        "description": "Cross-border production and market integration that shaped Apple's scale model."
+        "name": "Globalisation",
+        "description": "The integration of global economies and markets, crucial to Apple's business model."
       },
       {
-        "name": "supply chains",
-        "description": "Operational dependence on complex international manufacturing networks."
-      },
-      {
-        "name": "trade wars",
-        "description": "Geopolitical conflict that increases costs and fragility across production networks."
+        "name": "Technology Evolution",
+        "description": "The shift towards AI and its implications for technology companies like Apple."
       }
     ],
     "narratives": [
       {
-        "name": "Apple's globalised iPhone model under pressure",
-        "thesis": "Apple's globalised iPhone model is under pressure from AI and geopolitical fragmentation.",
-        "status": "strengthening",
-        "importance_score": 9
-      },
-      {
-        "name": "Apple enters a post-Tim Cook succession era",
-        "thesis": "Apple's handover from Tim Cook to John Ternus creates a new leadership-era narrative around whether operational continuity is enough for the AI age.",
+        "name": "Apple's Future Strategy",
+        "thesis": "John Ternus must adapt Apple's strategy to the challenges posed by AI and geopolitical tensions.",
         "status": "emerging",
         "importance_score": 8
       }
     ],
     "graph_edges": [
       {
-        "source_node": "Apple",
-        "relationship": "LED_BY",
-        "target_node": "Tim Cook",
-        "confidence": 0.98
-      },
-      {
-        "source_node": "Apple",
+        "source_node": "Tim Cook",
         "relationship": "SUCCESSOR",
         "target_node": "John Ternus",
-        "confidence": 0.72
-      },
-      {
-        "source_node": "Apple",
-        "relationship": "DEPENDS_ON",
-        "target_node": "iPhone",
-        "confidence": 0.95
-      },
-      {
-        "source_node": "Apple",
-        "relationship": "MANUFACTURES_IN",
-        "target_node": "China",
-        "confidence": 0.94
-      },
-      {
-        "source_node": "Apple",
-        "relationship": "EXPANDS_TO",
-        "target_node": "India",
-        "confidence": 0.91
-      },
-      {
-        "source_node": "AI",
-        "relationship": "CHALLENGES",
-        "target_node": "Apple smartphone model",
-        "confidence": 0.89
-      },
-      {
-        "source_node": "Trade wars",
-        "relationship": "PRESSURE_ON",
-        "target_node": "Apple supply chain",
         "confidence": 0.9
+      },
+      {
+        "source_node": "Apple",
+        "relationship": "AFFECTS",
+        "target_node": "China",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Apple",
+        "relationship": "RELATED_TO",
+        "target_node": "AI",
+        "confidence": 0.85
       }
     ]
   }

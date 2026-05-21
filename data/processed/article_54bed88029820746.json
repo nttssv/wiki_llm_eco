@@ -1,0 +1,148 @@
+{
+  "article_id": "article_54bed88029820746",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Finance_Stablecoin_26Apr2026.docx",
+  "chart_references": [
+    "New research by Franklin Noll of the Federal Reserve Bank of Kansas City finds that nearly half of all stablecoins play the role of crypto-trading assets. Less than 1% of stablecoins in circulation are used for payments. Boston Consulting Group and Allium, a blockchain-data firm, arrive at a similar figure looking at annual transaction values using stablecoins. As crypto enters one of its periodic winters amid a broader risk-off mood provoked by Mr Trump’s warmongering on trade, Iran and the Fed (which he wants to lower interest rates), stablecoins feel the chill."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Finance & economics",
+    "title": "Buttonwood",
+    "subtitle": "The stablecoin market has got too stable Rapid growth in dollar-backed crypto has stalled",
+    "published_date": "21 Apr 2026",
+    "category": "Finance & economics",
+    "summary": "The stablecoin market has stagnated after initial growth, facing regulatory challenges and soft demand. Despite predictions of significant growth, the market's value has remained stable, raising concerns among banks about potential impacts on deposits and lending.",
+    "importance_score": 7,
+    "entities": [
+      {
+        "name": "Donald Trump",
+        "type": "Person",
+        "role": "Former President",
+        "description": "Advocate for stablecoins with personal interests in crypto."
+      },
+      {
+        "name": "Scott Bessent",
+        "type": "Person",
+        "role": "Treasury Secretary",
+        "description": "Predicted significant growth in the stablecoin market."
+      },
+      {
+        "name": "American Bankers Association",
+        "type": "Organization",
+        "role": "Industry Group",
+        "description": "Warned about the potential impact of stablecoins on bank deposits."
+      },
+      {
+        "name": "Genius Act",
+        "type": "Legislation",
+        "role": "Regulation",
+        "description": "Regulates stablecoins in America."
+      },
+      {
+        "name": "Clarity Act",
+        "type": "Legislation",
+        "role": "Proposed Regulation",
+        "description": "Follow-up bill concerning stablecoin regulations."
+      },
+      {
+        "name": "Franklin Noll",
+        "type": "Person",
+        "role": "Researcher",
+        "description": "Conducted research on the use of stablecoins."
+      },
+      {
+        "name": "Boston Consulting Group",
+        "type": "Organization",
+        "role": "Consulting Firm",
+        "description": "Analyzed transaction values using stablecoins."
+      },
+      {
+        "name": "Allium",
+        "type": "Organization",
+        "role": "Blockchain Data Firm",
+        "description": "Collaborated on research regarding stablecoin transactions."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-21",
+        "event_summary": "Stablecoin market growth stalls after initial surge.",
+        "location": "United States",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2025-07-01",
+        "event_summary": "Congress passed the Genius Act regulating stablecoins.",
+        "location": "United States",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2025-11-01",
+        "event_summary": "Treasury Secretary predicts stablecoin market could grow to $2trn by 2028.",
+        "location": "United States",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2026-04-01",
+        "event_summary": "Proposal released to treat stablecoin issuers as financial institutions.",
+        "location": "United States",
+        "importance_score": 7
+      }
+    ],
+    "themes": [
+      {
+        "name": "Stablecoin Regulation",
+        "description": "The evolving legal framework surrounding stablecoins and its implications."
+      },
+      {
+        "name": "Market Dynamics",
+        "description": "The relationship between stablecoins and traditional banking systems."
+      },
+      {
+        "name": "Crypto Market Trends",
+        "description": "The impact of broader cryptocurrency market conditions on stablecoins."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Stablecoin Growth Stagnation",
+        "thesis": "The stablecoin market has not achieved the expected growth due to regulatory uncertainties and low demand.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Regulatory Impact on Finance",
+        "thesis": "Increased regulation may hinder the growth of stablecoins and affect traditional banking.",
+        "status": "strengthening",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Genius Act",
+        "relationship": "LED_BY",
+        "target_node": "Donald Trump",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Scott Bessent",
+        "relationship": "SUPPORTS",
+        "target_node": "Genius Act",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "American Bankers Association",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Clarity Act",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Franklin Noll",
+        "relationship": "RELATED_TO",
+        "target_node": "Stablecoin Growth Stagnation",
+        "confidence": 0.75
+      }
+    ]
+  }
+}

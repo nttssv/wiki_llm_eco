@@ -1,0 +1,21 @@
+{
+  "article_id": "article_d4a19f03217784f9",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Finance_Economics_Donald_Trumps_foreign_policy_gets_a_muscular_finance_arm_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "mock",
+  "extraction": {
+    "source": "Economist",
+    "section": "Finance & economics",
+    "title": "TrumpAID",
+    "subtitle": "Donald Trump's foreign policy gets a muscular finance arm The Development Finance Corporation's loan book may soon rival the World Bank's",
+    "published_date": "07 May 2026",
+    "category": "Finance & economics",
+    "summary": "No mock extraction pattern matched this article. Replace mock extraction with an LLM-backed extractor.",
+    "importance_score": 3,
+    "entities": [],
+    "events": [],
+    "themes": [],
+    "narratives": [],
+    "graph_edges": []
+  }
+}

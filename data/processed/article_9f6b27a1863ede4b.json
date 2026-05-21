@@ -1,0 +1,23 @@
+{
+  "article_id": "article_9f6b27a1863ede4b",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Science_Technology_How_AI_tools_could_enable_bioterrorism_9May2026_Economist.docx",
+  "chart_references": [
+    "Chart: The Economist"
+  ],
+  "extractor": "mock",
+  "extraction": {
+    "source": "Economist",
+    "section": "Science & technology",
+    "title": "Bio hazards",
+    "subtitle": "How AI tools could enable bioterrorism Leading models are getting better at designing pathogens",
+    "published_date": "05 May 2026",
+    "category": "Science & technology",
+    "summary": "No mock extraction pattern matched this article. Replace mock extraction with an LLM-backed extractor.",
+    "importance_score": 3,
+    "entities": [],
+    "events": [],
+    "themes": [],
+    "narratives": [],
+    "graph_edges": []
+  }
+}

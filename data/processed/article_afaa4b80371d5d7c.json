@@ -1,0 +1,159 @@
+{
+  "article_id": "article_afaa4b80371d5d7c",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Finance_Economics_The_EU_wants_to_unshackle_its_economy_For_real_this_time_9May2026_Economist.docx",
+  "chart_references": [
+    "Alas, these days the giant is sleepy. The bloc’s GDP and its stockmarket have lagged far behind America’s over the past decade (see charts 1 and 2). In April activity in its services sector fell to a 62-month low. The recent shocks which contributed to the sluggishness were not of its own making: the covid-19 pandemic, Russia’s invasion of Ukraine and now America’s war on Iran. But the EU and its members have also been getting in their own way, by overregulating companies (see chart 3) and failing to properly integrate their supposedly single market.",
+    "Chart: The Economist",
+    "Chart: The Economist",
+    "Chart: The Economist"
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Finance & economics",
+    "title": "Simplify and integrate",
+    "subtitle": "The EU wants to unshackle its economy. For real this time Eurocrats are belatedly developing a healthy distaste for red tape",
+    "published_date": "04 May 2026",
+    "category": "Finance & economics",
+    "summary": "The EU is confronting a decade of sluggish growth by slashing bureaucracy and deepening market integration. New “omnibus” bills aim to cut firms’ reporting costs by €37.5 bn by 2029, while proposals such as services passports and a “28th regime” for pan‑European startups target a 3 % GDP boost over ten years. Political backing from von der Leyen and the finance commissioner is strong, but national resistance and recent negotiation breakdowns threaten implementation.",
+    "importance_score": 9,
+    "entities": [
+      {
+        "name": "European Commission",
+        "type": "organization",
+        "role": "policy_maker",
+        "description": "Executive arm of the EU responsible for proposing legislation"
+      },
+      {
+        "name": "Maria Luís Albuquerque",
+        "type": "person",
+        "role": "official",
+        "description": "EU financial‑services commissioner advocating reform"
+      },
+      {
+        "name": "Ursula von der Leyen",
+        "type": "person",
+        "role": "official",
+        "description": "President of the European Commission (2019‑2024) now championing deregulation"
+      },
+      {
+        "name": "Janet Yellen",
+        "type": "person",
+        "role": "official",
+        "description": "U.S. Treasury Secretary who criticized EU working groups"
+      },
+      {
+        "name": "Ifo Institute",
+        "type": "organization",
+        "role": "researcher",
+        "description": "Think‑tank that estimated GDP gains from bureaucratic decluttering"
+      },
+      {
+        "name": "IMF",
+        "type": "organization",
+        "role": "researcher",
+        "description": "International Monetary Fund, source of integration cost estimates{}"
+      },
+      {
+        "name": "Eurostat",
+        "type": "organization",
+        "role": "data_provider",
+        "description": "European statistics office providing cost figures for reporting"
+      },
+      {
+        "name": "TechSverige",
+        "type": "organization",
+        "role": "advocate",
+        "description": "Lobby group representing Swedish tech industry"
+      },
+      {
+        "name": "ASML",
+        "type": "organization",
+        "role": "industry_player",
+        "description": "Major EU industrial firm producing lithography machines for AI chips"
+      },
+      {
+        "name": "28th regime",
+        "type": "initiative",
+        "role": "policy",
+        "description": "EU‑wide regulatory framework for new pan‑European companies"
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-28",
+        "event_summary": "Negotiations on the AI omnibus bill collapsed between the Commission, Parliament and member states",
+        "location": "Brussels",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2026-03-01",
+        "event_summary": "All 27 EU governments formally agreed to deepen the single market as an urgent shared responsibility",
+        "location": "EU Council",
+        "importance_score": 8
+      }
+    ],
+    "themes": [
+      {
+        "name": "Red‑tape reduction",
+        "description": "Regulatory simplification as a lever for economic growth"
+      },
+      {
+        "name": "Market integration",
+        "description": "Creation of EU‑wide corporate and service frameworks to deepen the single market"
+      }
+    ],
+    "narratives": [
+      {
+        "name": "EU deregulation drive",
+        "thesis": "The European Commission is launching a coordinated effort to cut red tape and harmonise rules, aiming to boost GDP and restore competitiveness.",
+        "status": "emerging",
+        "importance_score": 9
+      },
+      {
+        "name": "Pan‑European market integration",
+        "thesis": "Introducing services passports and a unified “28th regime” for startups could deepen the single market and raise growth by up to 3% over a decade.",
+        "status": "emerging",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Ursula von der Leyen",
+        "relationship": "LED_BY",
+        "target_node": "European Commission",
+        "confidence": 0.92
+      },
+      {
+        "source_node": "Maria Luís Albuquerque",
+        "relationship": "SUPPORTS",
+        "target_node": "omnibus bills",
+        "confidence": 0.88
+      },
+      {
+        "source_node": "omnibus bills",
+        "relationship": "AFFECTS",
+        "target_node": "EU business administrative costs",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "services passports",
+        "relationship": "EXPANDS_TO",
+        "target_node": "pan‑European market",
+        "confidence": 0.81
+      },
+      {
+        "source_node": "national governments",
+        "relationship": "CHALLENGES",
+        "target_node": "28th regime",
+        "confidence": 0.79
+      },
+      {
+        "source_node": "IMF",
+        "relationship": "PRESSURE_ON",
+        "target_node": "EU regulatory burden",
+        "confidence": 0.84
+      }
+    ]
+  }
+}

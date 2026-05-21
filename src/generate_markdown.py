@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-import sqlite3
+from typing import Any, Mapping
 
 from .extract_article import markdown_filename
 from .extract_schema import ArticleExtraction
@@ -96,7 +96,7 @@ def write_article_markdown(output_dir: Path, article_id: str, extraction: Articl
 
 
 def build_wiki_home_index(
-    article_rows: list[sqlite3.Row],
+    article_rows: list[Mapping[str, Any]],
     entity_count: int,
     narrative_count: int,
 ) -> str:
@@ -126,7 +126,7 @@ def build_wiki_home_index(
 """
 
 
-def build_entities_index(entity_rows: list[sqlite3.Row]) -> str:
+def build_entities_index(entity_rows: list[Mapping[str, Any]]) -> str:
     """Render the entities index page."""
 
     entity_lines = "\n".join(
@@ -142,7 +142,7 @@ def build_entities_index(entity_rows: list[sqlite3.Row]) -> str:
 """
 
 
-def build_narratives_index(narrative_rows: list[sqlite3.Row]) -> str:
+def build_narratives_index(narrative_rows: list[Mapping[str, Any]]) -> str:
     """Render the narratives index page."""
 
     narrative_lines = "\n".join(
@@ -162,9 +162,9 @@ def write_wiki_indexes(
     wiki_dir: Path,
     entities_dir: Path,
     narratives_dir: Path,
-    article_rows: list[sqlite3.Row],
-    entity_rows: list[sqlite3.Row],
-    narrative_rows: list[sqlite3.Row],
+    article_rows: list[Mapping[str, Any]],
+    entity_rows: list[Mapping[str, Any]],
+    narrative_rows: list[Mapping[str, Any]],
 ) -> tuple[Path, Path, Path]:
     """Write simple wiki index pages."""
 

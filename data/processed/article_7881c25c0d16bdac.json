@@ -1,0 +1,218 @@
+{
+  "article_id": "article_7881c25c0d16bdac",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Finance_Economics_The_myth_of_the_petrodollar_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Finance & economics",
+    "title": "Free Exchange",
+    "subtitle": "The myth of the petrodollar The dominance of America's currency runs deeper than oil",
+    "published_date": "07 May 2026",
+    "category": "Finance & economics",
+    "summary": "The article traces the origin of the \"petrodollar\" concept, its role in cementing US dollar dominance through oil pricing and secret Treasury bond purchases, and examines how recent geopolitical shifts—especially the Iran war and China's push for yuan‑based oil payments—are challenging that regime, while also introducing the broader idea of \"hostage capital\" as a risk to the dollar's future.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Ibrahim Oweiss",
+        "type": "person",
+        "role": "originator",
+        "description": "Egyptian economist who warned against industrial concentration and later coined \"petrodollar\" term."
+      },
+      {
+        "name": "Peter Peterson",
+        "type": "person",
+        "role": "early user",
+        "description": "Former US Commerce Secretary who earlier used the term petrodollar."
+      },
+      {
+        "name": "Diana Choyleva",
+        "type": "person",
+        "role": "analyst",
+        "description": "Research economist at Enodo Economics commenting on US financial dominance."
+      },
+      {
+        "name": "Mallika Sachdeva",
+        "type": "person",
+        "role": "analyst",
+        "description": "Deutsche Bank economist linking Iran war to petrodollar erosion."
+      },
+      {
+        "name": "Brad Setser",
+        "type": "person",
+        "role": "analyst",
+        "description": "CFR fellow noting Saudi current‑account trends."
+      },
+      {
+        "name": "Saudi Central Bank",
+        "type": "organization",
+        "role": "buyer",
+        "description": "Saudi Arabia's central bank, buyer of US Treasuries."
+      },
+      {
+        "name": "Saudi Aramco",
+        "type": "organization",
+        "role": "price setter",
+        "description": "State‑owned oil producer that switched to dollar pricing in the 1970s."
+      },
+      {
+        "name": "US Treasury Department",
+        "type": "organization",
+        "role": "facilitator",
+        "description": "US Treasury Department facilitating secret bond purchases."
+      },
+      {
+        "name": "China",
+        "type": "country",
+        "role": "alternative payer",
+        "description": "Country increasingly paying for oil in yuan and experimenting with digital yuan."
+      },
+      {
+        "name": "Iran",
+        "type": "country",
+        "role": "seller",
+        "description": "Country paying for Iranian crude in yuan."
+      },
+      {
+        "name": "Russia",
+        "type": "country",
+        "role": "alternative payer",
+        "description": "Country seeking oil trade settlement in its own currency."
+      },
+      {
+        "name": "India",
+        "type": "country",
+        "role": "alternative payer",
+        "description": "Country seeking oil trade settlement in its own currency."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "1974-03",
+        "event_summary": "Ibrahim Oweiss coins term \"petrodollar\" in a speech.",
+        "location": "Georgetown University, Washington, D.C.",
+        "importance_score": 7
+      },
+      {
+        "event_date": "1974-12",
+        "event_summary": "US Treasury allows Saudi central bank to buy Treasury bonds secretly.",
+        "location": "United States",
+        "importance_score": 8
+      },
+      {
+        "event_date": "1974",
+        "event_summary": "Saudi Aramco adopts dollar‑only pricing for crude exports.",
+        "location": "Saudi Arabia",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2022-2025",
+        "event_summary": "Saudi Arabia runs current‑account deficits, reducing petrodollar inflows.",
+        "location": "Saudi Arabia",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2024-2025",
+        "event_summary": "Combined oil‑exporter surplus falls to $200bn, far below East Asian manufacturers' surplus.",
+        "location": "Global",
+        "importance_score": 5
+      },
+      {
+        "event_date": "2026-05-07",
+        "event_summary": "Iran war intensifies scrutiny of petrodollar regime; China, Russia, India explore non‑dollar oil payments.",
+        "location": "Middle East / Global",
+        "importance_score": 7
+      }
+    ],
+    "themes": [
+      {
+        "name": "Petrodollar dominance",
+        "description": "Link between oil pricing in dollars and global financial dominance."
+      },
+      {
+        "name": "Petroyuan and currency diversification",
+        "description": "Emergence of alternative currencies for oil trade."
+      },
+      {
+        "name": "Hostage capital",
+        "description": "US financial sanctions and asset seizure as systemic risk."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Petrodollar as pillar of US dollar dominance",
+        "thesis": "The concentration of oil revenues in dollars since the 1970s has underpinned the United States' financial and geopolitical power.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Erosion of petrodollar dominance",
+        "thesis": "Geopolitical conflicts and the rise of alternative currencies (yuan, digital yuan) are gradually weakening the dollar's monopoly over oil trade.",
+        "status": "emerging",
+        "importance_score": 7
+      },
+      {
+        "name": "Hostage capital concept",
+        "thesis": "US ability to freeze or confiscate foreign assets creates systemic risk that may drive countries away from the dollar, beyond the petrodollar mechanism.",
+        "status": "emerging",
+        "importance_score": 6
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Petrodollar regime",
+        "relationship": "LED_BY",
+        "target_node": "Ibrahim Oweiss",
+        "confidence": 0.95
+      },
+      {
+        "source_node": "Saudi Aramco",
+        "relationship": "MANUFACTURES_IN",
+        "target_node": "Saudi Arabia",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Dollar pricing of oil",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Global demand for USD",
+        "confidence": 0.92
+      },
+      {
+        "source_node": "Iran war",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Petrodollar dominance",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "China",
+        "relationship": "CHALLENGES",
+        "target_node": "Petrodollar regime",
+        "confidence": 0.88
+      },
+      {
+        "source_node": "Russia",
+        "relationship": "CHALLENGES",
+        "target_node": "Petrodollar regime",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "India",
+        "relationship": "CHALLENGES",
+        "target_node": "Petrodollar regime",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "US Treasury secret bond purchases",
+        "relationship": "SUPPORTS",
+        "target_node": "US financial dominance",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Petrodollar regime",
+        "relationship": "AFFECTS",
+        "target_node": "Dollar as global invoicing currency",
+        "confidence": 0.75
+      }
+    ]
+  }
+}

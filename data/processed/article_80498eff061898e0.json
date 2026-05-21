@@ -1,0 +1,158 @@
+{
+  "article_id": "article_80498eff061898e0",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Science_Technology_Does_acupuncture_work_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Science & technology",
+    "title": "Well Informed",
+    "subtitle": "Does acupuncture work? It seems useful for pain. The jury's out on everything else",
+    "published_date": "01 May 2026",
+    "category": "Science & technology",
+    "summary": "Acupuncture shows modest, lasting pain relief in multiple trials, possibly via fascia‑nerve interaction, but placebo effects are strong and evidence for non‑pain benefits remains weak.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Acupuncture",
+        "type": "MedicalPractice",
+        "role": "intervention",
+        "description": "Traditional Chinese practice involving needle insertion to stimulate qi."
+      },
+      {
+        "name": "Serena Williams",
+        "type": "Person",
+        "role": "user",
+        "description": "Former tennis champion who reports benefits from acupuncture for muscle recovery."
+      },
+      {
+        "name": "Tom Brady",
+        "type": "Person",
+        "role": "user",
+        "description": "Retired NFL quarterback who reports benefits from acupuncture for muscle recovery."
+      },
+      {
+        "name": "Helene Langevin",
+        "type": "Person",
+        "role": "researcher",
+        "description": "Retired director of NIH's National Centre for Complementary and Integrative Health, proposes fascia mechanism."
+      },
+      {
+        "name": "Edzard Ernst",
+        "type": "Person",
+        "role": "critic",
+        "description": "Emeritus professor at University of Exeter, critic of acupuncture evidence."
+      },
+      {
+        "name": "Journal of Pain",
+        "type": "Organization",
+        "role": "publisher",
+        "description": "Journal publishing 2018 meta‑analysis of acupuncture for pain."
+      },
+      {
+        "name": "JAMA Internal Medicine",
+        "type": "Organization",
+        "role": "publisher",
+        "description": "Medical journal publishing 2020 study finding no difference between true and sham acupuncture."
+      },
+      {
+        "name": "Complementary Therapies in Medicine",
+        "type": "Organization",
+        "role": "publisher",
+        "description": "Review journal publishing 2022 systematic review of acupuncture across many conditions."
+      },
+      {
+        "name": "International Society of Chinese Medicine",
+        "type": "Organization",
+        "role": "funder",
+        "description": "International body funding 2022 review of acupuncture."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2018-01-01",
+        "event_summary": "Meta‑analysis of 39 randomized trials (20,827 patients) shows acupuncture reduces pain for several musculoskeletal conditions.",
+        "location": "",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2020-01-01",
+        "event_summary": "JAMA Internal Medicine study finds no significant pain difference between true and sham acupuncture, highlighting placebo effect.",
+        "location": "",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2022-01-01",
+        "event_summary": "Systematic review of 862 meta‑analyses reports modest benefits of acupuncture for nausea, migraines, fatigue, infertility and pelvic pain, but insufficient evidence for many other conditions.",
+        "location": "",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "Evidence Assessment",
+        "description": "Evaluation of complementary medicine through rigorous clinical trials."
+      },
+      {
+        "name": "Placebo Effect",
+        "description": "Interaction between patient expectations and therapeutic outcomes."
+      },
+      {
+        "name": "Fascia‑Nerve Theory",
+        "description": "Potential physiological mechanisms behind needle stimulation."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Acupuncture as evidence‑based pain therapy",
+        "thesis": "Randomized trials demonstrate modest but lasting pain relief from acupuncture, making it a viable alternative to drugs for chronic pain.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Placebo and expectation effects in acupuncture outcomes",
+        "thesis": "A substantial portion of acupuncture's reported benefits may stem from patient expectations and placebo mechanisms rather than specific physiological effects.",
+        "status": "emerging",
+        "importance_score": 5
+      },
+      {
+        "name": "Limited efficacy of acupuncture beyond pain management",
+        "thesis": "Systematic reviews find insufficient robust evidence for acupuncture's effectiveness on most non‑pain conditions.",
+        "status": "emerging",
+        "importance_score": 4
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Acupuncture",
+        "relationship": "AFFECTS",
+        "target_node": "Chronic Pain Reduction",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Placebo Effect",
+        "relationship": "CHALLENGES",
+        "target_node": "Acupuncture Pain Benefits",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "Helene Langevin",
+        "relationship": "SUPPORTS",
+        "target_node": "Fascia Nerve Mechanism Theory",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Edzard Ernst",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Acupuncture Evidence Base",
+        "confidence": 0.6
+      },
+      {
+        "source_node": "Acupuncture",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Non‑pain Conditions",
+        "confidence": 0.85
+      }
+    ]
+  }
+}

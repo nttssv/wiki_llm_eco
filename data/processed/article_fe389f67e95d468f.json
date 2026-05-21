@@ -1,0 +1,128 @@
+{
+  "article_id": "article_fe389f67e95d468f",
+  "original_file_path": "/app/data/raw_articles/Leaders_London_3May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Leaders",
+    "title": "The bright bit of Britain",
+    "subtitle": "How to capitalise on London’s thriving financial industry The City has bounced back despite fears over Brexit",
+    "published_date": "30 Apr 2026",
+    "category": "Leaders",
+    "summary": "Despite economic challenges, London's financial sector remains robust, showing resilience post-Brexit. Major banks are investing in new headquarters, and the City is regaining its competitive edge in global finance. The government is encouraged to support this growth through regulatory reforms and investment strategies.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "City of London",
+        "type": "Location",
+        "role": "Financial Hub",
+        "description": "The primary financial district in London, known for its global financial services."
+      },
+      {
+        "name": "JPMorgan Chase",
+        "type": "Company",
+        "role": "Bank",
+        "description": "America's largest bank, currently expanding its presence in London."
+      },
+      {
+        "name": "Citigroup",
+        "type": "Company",
+        "role": "Bank",
+        "description": "A major American bank investing in London with a $1.5bn refurbishment."
+      },
+      {
+        "name": "Apollo",
+        "type": "Company",
+        "role": "Asset Manager",
+        "description": "An American asset management firm acquiring British insurers."
+      },
+      {
+        "name": "Brookfield",
+        "type": "Company",
+        "role": "Asset Manager",
+        "description": "A Canadian asset management firm also acquiring British insurers."
+      },
+      {
+        "name": "Schroders",
+        "type": "Company",
+        "role": "Investment Firm",
+        "description": "A British investment firm being acquired by an American company."
+      },
+      {
+        "name": "Labour Party",
+        "type": "Political Party",
+        "role": "Government",
+        "description": "The ruling political party in Britain, currently facing criticism for its economic policies."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-30",
+        "event_summary": "London's financial sector shows resilience and growth post-Brexit.",
+        "location": "London",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2026-04-30",
+        "event_summary": "JPMorgan Chase announces plans for a new European headquarters in Canary Wharf.",
+        "location": "Canary Wharf, London",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2026-04-30",
+        "event_summary": "Citigroup invests $1.5bn in refurbishing its London tower.",
+        "location": "London",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "Economic Resilience",
+        "description": "The ability of London's financial sector to thrive despite economic challenges."
+      },
+      {
+        "name": "Investment Opportunities",
+        "description": "The potential for growth in London's financial services through strategic investments."
+      },
+      {
+        "name": "Regulatory Environment",
+        "description": "The impact of government policies on the financial sector's growth and competitiveness."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "London's Financial Recovery",
+        "thesis": "London's financial sector is recovering and expanding despite Brexit and economic challenges.",
+        "status": "strengthening",
+        "importance_score": 8
+      },
+      {
+        "name": "Government Support for Finance",
+        "thesis": "The government should implement policies to support and enhance London's financial industry.",
+        "status": "emerging",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "City of London",
+        "relationship": "EXPANDS_TO",
+        "target_node": "JPMorgan Chase",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "City of London",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Citigroup",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Labour Party",
+        "relationship": "SUPPORTS",
+        "target_node": "City of London",
+        "confidence": 0.8
+      }
+    ]
+  }
+}

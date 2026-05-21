@@ -1,0 +1,176 @@
+{
+  "article_id": "article_b487562bd859c586",
+  "original_file_path": "/app/data/raw_articles/Business_AI_supply_chain_1May2026_the_economist.docx",
+  "chart_references": [
+    "Chart: The Economist",
+    "Chart: The Economist",
+    "The shortages are now spreading to central-processing units (CPUs). “Agentic” AI tools that plan, reason and carry out tasks rely more heavily on these types of chips to co-ordinate their work. Morgan Stanley, an investment bank, estimates that agentic systems require one CPU for every GPU, compared with a ratio of one to 12 for chatbot-style systems. Indeed, demand for CPUs has been so robust that it has breathed new life into Intel, which not long ago looked like it was headed for collapse. The market capitalisation of the American chipmaker, which is one of the leading producers of CPUs, has more than doubled over the past six months (see chart 1).",
+    "The crux of the problem is that companies along the AI supply chain are investing far less than the hyperscalers in expanding their capacity. We examined the planned capital spending this year of the 50 or so largest manufacturers of chips, chipmaking tools, servers, networking gear and cooling equipment, and how it has changed since 2024. Over that period, the five hyperscalers have increased their combined capital spending by 190%, from $234bn to $677bn, whereas the hardware suppliers they rely on have increased theirs by only 45%, from $153bn to $223bn (see chart 2).",
+    "Take TSMC, the world’s biggest contract chipmaker and the dominant supplier of cutting-edge GPUs and CPUs. Its most advanced fabs—those making chips that are five nanometres or smaller—are already running flat out. C.C. Wei, its boss, has admitted that supply is “very tight”, but that “there are no shortcuts”: building a new fab takes two to three years. The company plans to spend about $55bn in 2026, up by 34% from a year earlier; analysts expect the figure to rise to $65bn in 2027. As a share of sales, however, its capital expenditure has fallen from around half in 2022 to a third this year."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "economist",
+    "section": "Business",
+    "title": "Silicon ceiling",
+    "subtitle": "AI is confronting a supply-chain crunch Hardware-makers are failing to invest enough to keep up with demand",
+    "published_date": "27 Apr 2026",
+    "category": "Business",
+    "summary": "The AI industry is facing a significant supply-chain crunch as demand for computing power surges. Major AI firms are struggling to keep up, leading to service throttling and outages. Investments in infrastructure are increasing, but political opposition and insufficient hardware manufacturing threaten to exacerbate the situation.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Anthropic",
+        "type": "Company",
+        "role": "AI lab",
+        "description": "An AI lab that has begun throttling access to its tools due to high demand."
+      },
+      {
+        "name": "OpenAI",
+        "type": "Company",
+        "role": "AI lab",
+        "description": "A leading AI lab that has shut down its video-generation tool to redirect resources."
+      },
+      {
+        "name": "Amazon",
+        "type": "Company",
+        "role": "Investor",
+        "description": "Partnered with Anthropic to secure server capacity."
+      },
+      {
+        "name": "Google",
+        "type": "Company",
+        "role": "Investor",
+        "description": "Invested in Anthropic to help meet computing needs."
+      },
+      {
+        "name": "Microsoft",
+        "type": "Company",
+        "role": "Investor",
+        "description": "Reworking partnership with OpenAI to distribute products through various cloud providers."
+      },
+      {
+        "name": "Meta",
+        "type": "Company",
+        "role": "Tech company",
+        "description": "Announced layoffs to free up cash for investments."
+      },
+      {
+        "name": "Nvidia",
+        "type": "Company",
+        "role": "Chip manufacturer",
+        "description": "Supplies GPUs critical for AI computing power."
+      },
+      {
+        "name": "Intel",
+        "type": "Company",
+        "role": "Chip manufacturer",
+        "description": "Involved in plans to build a new facility for increased processing power."
+      },
+      {
+        "name": "TSMC",
+        "type": "Company",
+        "role": "Chip manufacturer",
+        "description": "World's largest contract chipmaker facing tight supply conditions."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-20",
+        "event_summary": "Anthropic announced a $100bn partnership with Amazon for server capacity.",
+        "location": "",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2026-04-24",
+        "event_summary": "Google announced a $40bn investment in Anthropic.",
+        "location": "",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2026-04-27",
+        "event_summary": "OpenAI announced changes to its partnership with Microsoft.",
+        "location": "",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2026-04-20",
+        "event_summary": "GitHub stopped accepting new subscriptions for its programming bot.",
+        "location": "",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2026-04-01",
+        "event_summary": "Legislators in Maine voted on a bill to ban large data center constructions.",
+        "location": "Maine, USA",
+        "importance_score": 5
+      }
+    ],
+    "themes": [
+      {
+        "name": "AI Supply Chain",
+        "description": "The challenges and dynamics of the supply chain supporting AI technology."
+      },
+      {
+        "name": "Investment in Infrastructure",
+        "description": "The financial commitments made by tech companies to expand computing capacity."
+      },
+      {
+        "name": "Political Opposition",
+        "description": "The growing resistance to data center constructions due to environmental and economic concerns."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "AI Demand vs. Supply",
+        "thesis": "The rapid growth in AI demand is outpacing the supply chain's ability to provide necessary hardware.",
+        "status": "emerging",
+        "importance_score": 9
+      },
+      {
+        "name": "Investment Disparity",
+        "thesis": "Hyperscalers are significantly outpacing hardware manufacturers in capital investment.",
+        "status": "strengthening",
+        "importance_score": 8
+      },
+      {
+        "name": "Political Challenges",
+        "thesis": "Political opposition is increasingly hindering the construction of new data centers.",
+        "status": "emerging",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Anthropic",
+        "relationship": "SUPPORTS",
+        "target_node": "Amazon",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Google",
+        "relationship": "SUPPORTS",
+        "target_node": "Anthropic",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "OpenAI",
+        "relationship": "DEPENDS_ON",
+        "target_node": "Microsoft",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Meta",
+        "relationship": "CHALLENGES",
+        "target_node": "AI Supply Chain",
+        "confidence": 0.75
+      },
+      {
+        "source_node": "TSMC",
+        "relationship": "AFFECTS",
+        "target_node": "AI Supply Chain",
+        "confidence": 0.8
+      }
+    ]
+  }
+}

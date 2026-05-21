@@ -5,7 +5,6 @@ from __future__ import annotations
 from html import escape
 import json
 from pathlib import Path
-import sqlite3
 import sys
 from typing import Any
 from zipfile import ZipFile
@@ -19,20 +18,22 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 try:
-    from .db import NarrativeDatabase
-    from .narrative_tracking import narrative_trends_as_dicts, get_narrative_trends
     from .date_utils import week_label_for_published_date
     from .graph_rag import answer_question
-    from .paths import DB_PATH, EXPORTS_DIR, PROJECT_ROOT
+    from .config import get_neo4j_database
+    from .neo4j_store import neo4j_driver
+    from .paths import EXPORTS_DIR, PROCESSED_MANIFEST_PATH, PROJECT_ROOT
+    from .processed_registry import processed_article_records
 except ImportError:
     PROJECT_ROOT = Path(__file__).resolve().parents[1]
     if str(PROJECT_ROOT) not in sys.path:
         sys.path.insert(0, str(PROJECT_ROOT))
-    from src.db import NarrativeDatabase
-    from src.narrative_tracking import narrative_trends_as_dicts, get_narrative_trends
     from src.date_utils import week_label_for_published_date
     from src.graph_rag import answer_question
-    from src.paths import DB_PATH, EXPORTS_DIR, PROJECT_ROOT
+    from src.config import get_neo4j_database
+    from src.neo4j_store import neo4j_driver
+    from src.paths import EXPORTS_DIR, PROCESSED_MANIFEST_PATH, PROJECT_ROOT
+    from src.processed_registry import processed_article_records
 
 
 GRAPH_EXPORT_PATH = EXPORTS_DIR / "graph.json"
@@ -87,91 +88,84 @@ def _path_version(path: Path) -> tuple[int, int]:
     return (stat.st_mtime_ns, stat.st_size)
 
 
-def get_connection() -> sqlite3.Connection:
-    """Return a read-only SQLite connection."""
-
-    connection = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
-
-
-def ensure_database_schema() -> bool:
-    """Check that the database file exists and is readable for the read-only dashboard."""
-    if not DB_PATH.exists():
-        st.error("Database not found. Run weekly extraction first.")
-        return False
-
-    # Try to open a read-only connection to verify accessibility
-    try:
-        with get_connection() as connection:
-            connection.execute("SELECT 1")
-    except Exception as e:
-        st.error(f"Cannot read database: {e}")
-        return False
-
-    return True
+def _empty_narratives_frame() -> pd.DataFrame:
+    return pd.DataFrame(
+        columns=[
+            "id",
+            "name",
+            "thesis",
+            "status",
+            "importance_score",
+            "first_seen_date",
+            "last_seen_date",
+            "mention_count",
+            "linked_articles",
+            "article_ids",
+        ]
+    )
 
 
-@st.cache_data(show_spinner=False)
-def load_metrics(db_version: tuple[int, int]) -> dict[str, int]:
-    """Load top-line database metrics."""
-
-    with get_connection() as connection:
-        return {
-            "articles": int(connection.execute("SELECT COUNT(*) FROM articles").fetchone()[0]),
-            "entities": int(connection.execute("SELECT COUNT(*) FROM entities").fetchone()[0]),
-            "themes": int(connection.execute("SELECT COUNT(*) FROM themes").fetchone()[0]),
-            "narratives": int(connection.execute("SELECT COUNT(*) FROM narratives").fetchone()[0]),
-            "graph_edges": int(connection.execute("SELECT COUNT(*) FROM graph_edges").fetchone()[0]),
-        }
+def _empty_entities_frame() -> pd.DataFrame:
+    return pd.DataFrame(
+        columns=[
+            "id",
+            "name",
+            "type",
+            "description",
+            "linked_articles",
+            "article_ids",
+            "graph_relationships",
+        ]
+    )
 
 
 @st.cache_data(show_spinner=False)
-def load_articles(db_version: tuple[int, int]) -> pd.DataFrame:
-    """Load article-level dashboard data."""
+def load_metrics(registry_version: tuple[int, int]) -> dict[str, int]:
+    """Load top-line metrics from processed extraction artifacts."""
 
-    query = """
-        SELECT
-            a.id,
-            a.title,
-            a.source,
-            a.published_date,
-            a.category,
-            a.summary,
-            a.importance_score,
-            a.original_file_path,
-            COALESCE(
-                (
-                    SELECT GROUP_CONCAT(e.name, ', ')
-                    FROM article_entities AS ae
-                    JOIN entities AS e ON e.id = ae.entity_id
-                    WHERE ae.article_id = a.id
-                ),
-                ''
-            ) AS linked_entities,
-            COALESCE(
-                (
-                    SELECT GROUP_CONCAT(t.name, ', ')
-                    FROM article_themes AS at
-                    JOIN themes AS t ON t.id = at.theme_id
-                    WHERE at.article_id = a.id
-                ),
-                ''
-            ) AS linked_themes,
-            COALESCE(
-                (
-                    SELECT GROUP_CONCAT(n.name, ', ')
-                    FROM article_narratives AS an
-                    JOIN narratives AS n ON n.id = an.narrative_id
-                    WHERE an.article_id = a.id
-                ),
-                ''
-            ) AS linked_narratives
-        FROM articles AS a
-        ORDER BY a.published_date DESC, a.title ASC
-    """
-    with get_connection() as connection:
-        dataframe = pd.read_sql_query(query, connection)
+    del registry_version
+    return {
+        "articles": len(processed_article_records()),
+        "entities": 0,
+        "themes": 0,
+        "narratives": 0,
+        "graph_edges": 0,
+    }
+
+
+@st.cache_data(show_spinner=False)
+def load_articles(registry_version: tuple[int, int]) -> pd.DataFrame:
+    """Load article-level dashboard data from processed extraction artifacts."""
+
+    del registry_version
+    columns = [
+        "id",
+        "title",
+        "source",
+        "published_date",
+        "category",
+        "summary",
+        "importance_score",
+        "original_file_path",
+        "linked_entities",
+        "linked_themes",
+        "linked_narratives",
+        "week_label",
+        "selection_label",
+    ]
+    records = []
+    for record in processed_article_records():
+        records.append(
+            {
+                **record,
+                "linked_entities": "",
+                "linked_themes": "",
+                "linked_narratives": "",
+            }
+        )
+    dataframe = pd.DataFrame(records)
+    if dataframe.empty:
+        return pd.DataFrame(columns=columns)
 
     dataframe["week_label"] = dataframe["published_date"].apply(
         lambda value: week_label_for_published_date(str(value or ""))
@@ -180,43 +174,27 @@ def load_articles(db_version: tuple[int, int]) -> pd.DataFrame:
         lambda row: f"{row['title']} | {row['published_date'] or 'Undated'} | {row['source']}",
         axis=1,
     )
-    return dataframe
+    return dataframe[columns]
 
 
 @st.cache_data(show_spinner=False)
-def load_narratives(db_version: tuple[int, int]) -> pd.DataFrame:
-    """Load narrative-level dashboard data."""
+def load_narratives(registry_version: tuple[int, int]) -> pd.DataFrame:
+    """Return an empty narrative frame when Neo4j graph data is unavailable."""
 
-    query = """
-        SELECT
-            n.id,
-            n.name,
-            n.thesis,
-            n.status,
-            n.importance_score,
-            n.first_seen_date,
-            n.last_seen_date,
-            n.mention_count,
-            COALESCE(GROUP_CONCAT(a.title, ' | '), '') AS linked_articles,
-            COALESCE(GROUP_CONCAT(a.id, '|'), '') AS article_ids
-        FROM narratives AS n
-        LEFT JOIN article_narratives AS an ON an.narrative_id = n.id
-        LEFT JOIN articles AS a ON a.id = an.article_id
-        GROUP BY n.id, n.name, n.thesis, n.status, n.importance_score, n.first_seen_date, n.last_seen_date, n.mention_count
-        ORDER BY n.mention_count DESC, n.importance_score DESC, n.name ASC
-    """
-    with get_connection() as connection:
-        return pd.read_sql_query(query, connection)
+    del registry_version
+    return _empty_narratives_frame()
 
 
 @st.cache_data(show_spinner=False)
-def load_narrative_trends(week_label: str, db_version: tuple[int, int]) -> pd.DataFrame:
-    """Load narrative trends for a selected week."""
+def load_narrative_trends(week_label: str, registry_version: tuple[int, int]) -> pd.DataFrame:
+    """Return an empty trend frame when Neo4j graph data is unavailable."""
 
-    with get_connection() as connection:
-        trends = narrative_trends_as_dicts(get_narrative_trends(connection, week_label))
+    del week_label, registry_version
+    return _empty_narrative_trends_frame()
+
+
+def _empty_narrative_trends_frame() -> pd.DataFrame:
     return pd.DataFrame(
-        trends,
         columns=[
             "id",
             "name",
@@ -232,37 +210,296 @@ def load_narrative_trends(week_label: str, db_version: tuple[int, int]) -> pd.Da
     )
 
 
-@st.cache_data(show_spinner=False)
-def load_entities(db_version: tuple[int, int]) -> pd.DataFrame:
-    """Load entity-level dashboard data."""
+def _classify_narrative_trend(week_label: str, first_seen_date: str, last_seen_date: str, week_mentions: int) -> str:
+    if first_seen_date == week_label and week_mentions > 0:
+        return "NEW"
+    if week_mentions > 1:
+        return "STRENGTHENING"
+    if week_mentions == 1 and first_seen_date and first_seen_date < week_label:
+        return "RECURRING"
+    if week_mentions == 0 and first_seen_date and first_seen_date < week_label and last_seen_date < week_label:
+        return "WEAKENING"
+    return "NEW" if week_mentions > 0 else "WEAKENING"
 
-    query = """
-        SELECT
-            e.id,
-            e.name,
-            e.type,
-            e.description,
-            COALESCE(GROUP_CONCAT(a.title, ' | '), '') AS linked_articles,
-            COALESCE(GROUP_CONCAT(a.id, '|'), '') AS article_ids,
-            COALESCE(
-                (
-                    SELECT GROUP_CONCAT(
-                        ge.source_node || ' --' || ge.relationship || '--> ' || ge.target_node,
-                        ' | '
-                    )
-                    FROM graph_edges AS ge
-                    WHERE ge.source_node = e.name OR ge.target_node = e.name
+
+@st.cache_data(show_spinner=False, ttl=30)
+def load_narrative_trends_neo4j(week_label: str, cache_token: int) -> pd.DataFrame:
+    """Load narrative trend classifications from Neo4j."""
+
+    with neo4j_driver() as driver:
+        with driver.session(database=get_neo4j_database()) as session:
+            rows = session.run(
+                """
+                MATCH (n:Narrative)
+                OPTIONAL MATCH (a:Article)-[:HAS_NARRATIVE]->(n)
+                WITH n, [article IN collect(DISTINCT a) WHERE article IS NOT NULL] AS articles
+                WITH n, articles, [article IN articles WHERE article.week = $week] AS week_articles
+                RETURN
+                    n.id AS id,
+                    coalesce(n.name, '') AS name,
+                    coalesce(n.thesis, '') AS thesis,
+                    coalesce(n.status, '') AS extracted_status,
+                    coalesce(n.importance_score, 0) AS importance_score,
+                    coalesce(n.mention_count, size(articles)) AS mention_count,
+                    coalesce(n.first_seen_date, '') AS first_seen_date,
+                    coalesce(n.last_seen_date, '') AS last_seen_date,
+                    size(week_articles) AS week_mentions
+                ORDER BY mention_count DESC, importance_score DESC, name ASC
+                """,
+                week=week_label,
+            ).data()
+
+    if not rows:
+        return _empty_narrative_trends_frame()
+
+    trend_rows: list[dict[str, Any]] = []
+    for row in rows:
+        first_seen_date = str(row.get("first_seen_date") or "")
+        last_seen_date = str(row.get("last_seen_date") or "")
+        week_mentions = int(row.get("week_mentions") or 0)
+        if first_seen_date and first_seen_date > week_label and week_mentions == 0:
+            continue
+        trend_rows.append(
+            {
+                "id": str(row.get("id") or ""),
+                "name": str(row.get("name") or ""),
+                "thesis": str(row.get("thesis") or ""),
+                "extracted_status": str(row.get("extracted_status") or ""),
+                "trend_status": _classify_narrative_trend(
+                    week_label,
+                    first_seen_date,
+                    last_seen_date,
+                    week_mentions,
                 ),
-                ''
-            ) AS graph_relationships
-        FROM entities AS e
-        LEFT JOIN article_entities AS ae ON ae.entity_id = e.id
-        LEFT JOIN articles AS a ON a.id = ae.article_id
-        GROUP BY e.id, e.name, e.type, e.description
-        ORDER BY e.name ASC
-    """
-    with get_connection() as connection:
-        return pd.read_sql_query(query, connection)
+                "importance_score": int(row.get("importance_score") or 0),
+                "mention_count": int(row.get("mention_count") or 0),
+                "first_seen_date": first_seen_date,
+                "last_seen_date": last_seen_date,
+                "week_mentions": week_mentions,
+            }
+        )
+
+    if not trend_rows:
+        return _empty_narrative_trends_frame()
+    return pd.DataFrame(trend_rows, columns=_empty_narrative_trends_frame().columns)
+
+
+@st.cache_data(show_spinner=False)
+def load_entities(registry_version: tuple[int, int]) -> pd.DataFrame:
+    """Return an empty entity frame when Neo4j graph data is unavailable."""
+
+    del registry_version
+    return _empty_entities_frame()
+
+
+def _join_values(values: Any, separator: str) -> str:
+    if not isinstance(values, list):
+        return ""
+    return separator.join(str(value) for value in values if value)
+
+
+def _first_sentence(text: str, limit: int = 220) -> str:
+    compact = " ".join(str(text or "").split())
+    if not compact:
+        return ""
+    sentence_end = compact.find(". ")
+    if 0 <= sentence_end <= limit:
+        return compact[: sentence_end + 1]
+    return compact[:limit].rstrip()
+
+
+@st.cache_data(show_spinner=False, ttl=30)
+def neo4j_dashboard_available(cache_token: int = 0) -> bool:
+    """Return whether the dashboard can read the Neo4j graph."""
+
+    try:
+        with neo4j_driver() as driver:
+            driver.verify_connectivity()
+        return True
+    except Exception:
+        return False
+
+
+@st.cache_data(show_spinner=False, ttl=30)
+def load_metrics_neo4j(cache_token: int) -> dict[str, int]:
+    """Load top-line dashboard metrics from Neo4j."""
+
+    statements = {
+        "articles": "MATCH (n:Article) RETURN count(n) AS count",
+        "entities": "MATCH (n:Entity) RETURN count(n) AS count",
+        "themes": "MATCH (n:Theme) RETURN count(n) AS count",
+        "narratives": "MATCH (n:Narrative) RETURN count(n) AS count",
+        "graph_edges": "MATCH ()-[r:RELATES_TO]->() RETURN count(r) AS count",
+    }
+    with neo4j_driver() as driver:
+        with driver.session(database=get_neo4j_database()) as session:
+            metrics: dict[str, int] = {}
+            for key, statement in statements.items():
+                row = session.run(statement).single()
+                metrics[key] = int(row["count"] if row else 0)
+    return metrics
+
+
+@st.cache_data(show_spinner=False, ttl=30)
+def load_articles_neo4j(cache_token: int) -> pd.DataFrame:
+    """Load article-level dashboard data from Neo4j."""
+
+    columns = [
+        "id",
+        "title",
+        "source",
+        "published_date",
+        "category",
+        "summary",
+        "importance_score",
+        "original_file_path",
+        "linked_entities",
+        "linked_themes",
+        "linked_narratives",
+        "week_label",
+        "selection_label",
+    ]
+    with neo4j_driver() as driver:
+        with driver.session(database=get_neo4j_database()) as session:
+            rows = session.run(
+                """
+                MATCH (a:Article)
+                OPTIONAL MATCH (a)-[:IN_WEEK]->(w:Week)
+                WITH a, w
+                OPTIONAL MATCH (a)-[:MENTIONS]->(e:Entity)
+                WITH a, w, collect(DISTINCT e.name) AS entities
+                OPTIONAL MATCH (a)-[:HAS_THEME]->(t:Theme)
+                WITH a, w, entities, collect(DISTINCT t.name) AS themes
+                OPTIONAL MATCH (a)-[:HAS_NARRATIVE]->(n:Narrative)
+                WITH a, w, entities, themes, collect(DISTINCT n.name) AS narratives
+                RETURN
+                    a.id AS id,
+                    coalesce(a.title, '') AS title,
+                    coalesce(a.source, '') AS source,
+                    coalesce(a.published_date, '') AS published_date,
+                    coalesce(a.category, '') AS category,
+                    coalesce(a.summary, '') AS summary,
+                    coalesce(a.importance_score, 0) AS importance_score,
+                    coalesce(a.original_file_path, '') AS original_file_path,
+                    coalesce(a.week, w.label, '') AS week_label,
+                    entities,
+                    themes,
+                    narratives
+                ORDER BY published_date DESC, title ASC
+                """
+            ).data()
+
+    dataframe = pd.DataFrame(rows)
+    if dataframe.empty:
+        return pd.DataFrame(columns=columns)
+
+    dataframe["linked_entities"] = dataframe["entities"].apply(lambda values: _join_values(values, ", "))
+    dataframe["linked_themes"] = dataframe["themes"].apply(lambda values: _join_values(values, ", "))
+    dataframe["linked_narratives"] = dataframe["narratives"].apply(lambda values: _join_values(values, ", "))
+    dataframe["week_label"] = dataframe.apply(
+        lambda row: row["week_label"] or week_label_for_published_date(str(row["published_date"] or "")),
+        axis=1,
+    )
+    dataframe["selection_label"] = dataframe.apply(
+        lambda row: f"{row['title']} | {row['published_date'] or 'Undated'} | {row['source']}",
+        axis=1,
+    )
+    return dataframe[columns]
+
+
+@st.cache_data(show_spinner=False, ttl=30)
+def load_narratives_neo4j(cache_token: int) -> pd.DataFrame:
+    """Load narrative-level dashboard data from Neo4j."""
+
+    columns = [
+        "id",
+        "name",
+        "thesis",
+        "status",
+        "importance_score",
+        "first_seen_date",
+        "last_seen_date",
+        "mention_count",
+        "linked_articles",
+        "article_ids",
+    ]
+    with neo4j_driver() as driver:
+        with driver.session(database=get_neo4j_database()) as session:
+            rows = session.run(
+                """
+                MATCH (n:Narrative)
+                OPTIONAL MATCH (a:Article)-[:HAS_NARRATIVE]->(n)
+                WITH n, collect(DISTINCT a.title) AS article_titles, collect(DISTINCT a.id) AS article_ids
+                RETURN
+                    n.id AS id,
+                    coalesce(n.name, '') AS name,
+                    coalesce(n.thesis, '') AS thesis,
+                    coalesce(n.status, '') AS status,
+                    coalesce(n.importance_score, 0) AS importance_score,
+                    coalesce(n.first_seen_date, '') AS first_seen_date,
+                    coalesce(n.last_seen_date, '') AS last_seen_date,
+                    coalesce(n.mention_count, size(article_ids)) AS mention_count,
+                    article_titles,
+                    article_ids
+                ORDER BY mention_count DESC, importance_score DESC, name ASC
+                """
+            ).data()
+
+    dataframe = pd.DataFrame(rows)
+    if dataframe.empty:
+        return pd.DataFrame(columns=columns)
+
+    dataframe["linked_articles"] = dataframe["article_titles"].apply(lambda values: _join_values(values, " | "))
+    dataframe["article_ids"] = dataframe["article_ids"].apply(lambda values: _join_values(values, "|"))
+    return dataframe[columns]
+
+
+@st.cache_data(show_spinner=False, ttl=30)
+def load_entities_neo4j(cache_token: int) -> pd.DataFrame:
+    """Load entity-level dashboard data from Neo4j."""
+
+    columns = [
+        "id",
+        "name",
+        "type",
+        "description",
+        "linked_articles",
+        "article_ids",
+        "graph_relationships",
+    ]
+    with neo4j_driver() as driver:
+        with driver.session(database=get_neo4j_database()) as session:
+            rows = session.run(
+                """
+                MATCH (e:Entity)
+                OPTIONAL MATCH (a:Article)-[:MENTIONS]->(e)
+                WITH e, collect(DISTINCT a.title) AS article_titles, collect(DISTINCT a.id) AS article_ids
+                OPTIONAL MATCH (e)-[out:RELATES_TO]->(target:Entity)
+                WITH e, article_titles, article_ids,
+                     collect(DISTINCT e.name + ' --' + coalesce(out.relationship, 'RELATES_TO') + '--> ' + target.name) AS outgoing
+                OPTIONAL MATCH (source:Entity)-[inc:RELATES_TO]->(e)
+                WITH e, article_titles, article_ids, outgoing,
+                     collect(DISTINCT source.name + ' --' + coalesce(inc.relationship, 'RELATES_TO') + '--> ' + e.name) AS incoming
+                RETURN
+                    e.id AS id,
+                    coalesce(e.name, '') AS name,
+                    coalesce(e.type, '') AS type,
+                    coalesce(e.description, '') AS description,
+                    article_titles,
+                    article_ids,
+                    outgoing + incoming AS relationships
+                ORDER BY name ASC
+                """
+            ).data()
+
+    dataframe = pd.DataFrame(rows)
+    if dataframe.empty:
+        return pd.DataFrame(columns=columns)
+
+    dataframe["linked_articles"] = dataframe["article_titles"].apply(lambda values: _join_values(values, " | "))
+    dataframe["article_ids"] = dataframe["article_ids"].apply(lambda values: _join_values(values, "|"))
+    dataframe["graph_relationships"] = dataframe["relationships"].apply(lambda values: _join_values(values, " | "))
+    return dataframe[columns]
 
 
 def _graph_snapshot_path(week_label: str | None) -> Path:
@@ -281,6 +518,21 @@ def list_available_graph_weeks() -> list[str]:
     )
 
 
+@st.cache_data(show_spinner=False, ttl=30)
+def list_available_graph_weeks_neo4j(cache_token: int) -> list[str]:
+    with neo4j_driver() as driver:
+        with driver.session(database=get_neo4j_database()) as session:
+            rows = session.run(
+                """
+                MATCH (a:Article)
+                WHERE coalesce(a.week, '') <> ''
+                RETURN DISTINCT a.week AS week
+                ORDER BY week ASC
+                """
+            ).data()
+    return [str(row["week"]) for row in rows if row.get("week")]
+
+
 @st.cache_data(show_spinner=False)
 def load_graph_snapshot(week_label: str | None, graph_version: tuple[int, int]) -> dict[str, Any] | None:
     """Load one exported graph snapshot."""
@@ -289,6 +541,205 @@ def load_graph_snapshot(week_label: str | None, graph_version: tuple[int, int]) 
     if not graph_path.exists():
         return None
     return json.loads(graph_path.read_text(encoding="utf-8"))
+
+
+@st.cache_data(show_spinner=False, ttl=30)
+def load_graph_snapshot_neo4j(week_label: str | None, cache_token: int) -> dict[str, Any] | None:
+    """Build a graph-view snapshot directly from Neo4j."""
+
+    selected_week = week_label
+    if not selected_week or selected_week == "latest":
+        weeks = list_available_graph_weeks_neo4j(cache_token)
+        selected_week = weeks[-1] if weeks else None
+    if not selected_week:
+        return None
+
+    with neo4j_driver() as driver:
+        with driver.session(database=get_neo4j_database()) as session:
+            article_rows = session.run(
+                """
+                MATCH (a:Article)
+                WHERE a.week = $week
+                RETURN
+                    a.id AS id,
+                    coalesce(a.title, '') AS title,
+                    coalesce(a.summary, '') AS summary,
+                    coalesce(a.importance_score, 0) AS importance_score,
+                    coalesce(a.published_date, '') AS published_date,
+                    coalesce(a.source, '') AS source
+                ORDER BY published_date DESC, title ASC
+                """,
+                week=selected_week,
+            ).data()
+            article_ids = [str(row["id"]) for row in article_rows if row.get("id")]
+
+            context_rows = session.run(
+                """
+                MATCH (a:Article)-[r:MENTIONS|HAS_THEME|HAS_NARRATIVE]->(node)
+                WHERE a.id IN $article_ids
+                RETURN
+                    a.id AS article_id,
+                    coalesce(a.title, '') AS article_title,
+                    coalesce(a.summary, '') AS article_summary,
+                    type(r) AS relationship,
+                    labels(node) AS labels,
+                    node.id AS node_id,
+                    coalesce(node.name, node.title, node.id) AS label,
+                    coalesce(node.description, node.thesis, '') AS detail,
+                    coalesce(node.importance_score, 0) AS importance_score,
+                    coalesce(node.mention_count, 0) AS mention_count
+                ORDER BY article_title ASC, label ASC
+                """,
+                article_ids=article_ids,
+            ).data() if article_ids else []
+
+            relationship_rows = session.run(
+                """
+                MATCH (source:Entity)-[rel:RELATES_TO]->(target:Entity)
+                MATCH (article:Article {id: rel.evidence_article_id})
+                WHERE article.id IN $article_ids
+                RETURN
+                    source.id AS source_id,
+                    coalesce(source.name, '') AS source_label,
+                    coalesce(source.description, '') AS source_detail,
+                    coalesce(source.type, '') AS source_entity_type,
+                    target.id AS target_id,
+                    coalesce(target.name, '') AS target_label,
+                    coalesce(target.description, '') AS target_detail,
+                    coalesce(target.type, '') AS target_entity_type,
+                    coalesce(rel.relationship, 'RELATES_TO') AS relationship,
+                    coalesce(rel.confidence, 0.0) AS confidence,
+                    article.id AS article_id,
+                    coalesce(article.title, '') AS article_title,
+                    coalesce(article.summary, '') AS article_summary
+                ORDER BY article.published_date DESC, confidence DESC
+                """,
+                article_ids=article_ids,
+            ).data() if article_ids else []
+
+    nodes_by_id: dict[str, dict[str, Any]] = {}
+    linked_articles_by_node: dict[str, set[str]] = {}
+    edges: list[dict[str, Any]] = []
+
+    for row in article_rows:
+        article_id = str(row.get("id") or "")
+        if not article_id:
+            continue
+        nodes_by_id[article_id] = {
+            "id": article_id,
+            "label": str(row.get("title") or article_id),
+            "type": "article",
+            "detail": str(row.get("summary") or ""),
+            "importance_score": int(row.get("importance_score") or 0),
+            "linked_articles": 1,
+            "mention_count": 0,
+            "week": selected_week,
+        }
+
+    def add_related_node(
+        node_id: str,
+        label: str,
+        node_type: str,
+        detail: str,
+        importance_score: int = 0,
+        mention_count: int = 0,
+    ) -> None:
+        if not node_id:
+            return
+        existing = nodes_by_id.get(node_id)
+        if existing:
+            existing["linked_articles"] = len(linked_articles_by_node.get(node_id, set()))
+            return
+        nodes_by_id[node_id] = {
+            "id": node_id,
+            "label": label or node_id,
+            "type": node_type,
+            "detail": detail or "",
+            "importance_score": int(importance_score or 0),
+            "linked_articles": len(linked_articles_by_node.get(node_id, set())),
+            "mention_count": int(mention_count or 0),
+            "week": selected_week,
+        }
+
+    for row in context_rows:
+        node_id = str(row.get("node_id") or "")
+        labels = row.get("labels") if isinstance(row.get("labels"), list) else []
+        node_type = "entity"
+        if "Theme" in labels:
+            node_type = "theme"
+        elif "Narrative" in labels:
+            node_type = "narrative"
+        article_id = str(row.get("article_id") or "")
+        if article_id and node_id:
+            linked_articles_by_node.setdefault(node_id, set()).add(article_id)
+        add_related_node(
+            node_id,
+            str(row.get("label") or ""),
+            node_type,
+            str(row.get("detail") or ""),
+            int(row.get("importance_score") or 0),
+            int(row.get("mention_count") or 0),
+        )
+        if article_id and node_id:
+            edges.append(
+                {
+                    "source": article_id,
+                    "target": node_id,
+                    "relationship": str(row.get("relationship") or ""),
+                    "evidence_article_id": article_id,
+                    "confidence": 1.0,
+                    "evidence_title": str(row.get("article_title") or ""),
+                    "narrative_sentence": _first_sentence(str(row.get("article_summary") or "")),
+                    "week": selected_week,
+                }
+            )
+
+    for row in relationship_rows:
+        article_id = str(row.get("article_id") or "")
+        source_id = str(row.get("source_id") or "")
+        target_id = str(row.get("target_id") or "")
+        if article_id and source_id:
+            linked_articles_by_node.setdefault(source_id, set()).add(article_id)
+        if article_id and target_id:
+            linked_articles_by_node.setdefault(target_id, set()).add(article_id)
+        add_related_node(
+            source_id,
+            str(row.get("source_label") or ""),
+            "entity",
+            str(row.get("source_detail") or ""),
+        )
+        add_related_node(
+            target_id,
+            str(row.get("target_label") or ""),
+            "entity",
+            str(row.get("target_detail") or ""),
+        )
+        if source_id and target_id:
+            edges.append(
+                {
+                    "source": source_id,
+                    "target": target_id,
+                    "relationship": str(row.get("relationship") or "RELATES_TO"),
+                    "evidence_article_id": article_id,
+                    "confidence": float(row.get("confidence") or 0.0),
+                    "evidence_title": str(row.get("article_title") or ""),
+                    "narrative_sentence": (
+                        f"{row.get('source_label') or source_id} --{row.get('relationship') or 'RELATES_TO'}--> "
+                        f"{row.get('target_label') or target_id}"
+                    ),
+                    "week": selected_week,
+                }
+            )
+
+    for node_id, article_links in linked_articles_by_node.items():
+        if node_id in nodes_by_id:
+            nodes_by_id[node_id]["linked_articles"] = len(article_links)
+
+    return {
+        "week": selected_week,
+        "nodes": list(nodes_by_id.values()),
+        "edges": edges,
+    }
 
 
 def _node_signature(node: dict[str, Any]) -> tuple[str, str]:
@@ -545,9 +996,10 @@ def _filter_articles(
 
 
 def _filter_related_rows(dataframe: pd.DataFrame, article_ids: set[str]) -> pd.DataFrame:
-    if not article_ids:
+    if not article_ids or dataframe.empty or "article_ids" not in dataframe.columns:
         return dataframe.iloc[0:0].copy()
-    return dataframe[dataframe["article_ids"].apply(lambda value: bool(_split_ids(str(value)) & article_ids))].copy()
+    mask = dataframe["article_ids"].apply(lambda value: bool(_split_ids(str(value)) & article_ids))
+    return dataframe.loc[mask].copy()
 
 
 def _node_visual_weight(attributes: dict[str, Any], visible_connections: int) -> tuple[int, str]:
@@ -1414,6 +1866,465 @@ def inject_dashboard_css() -> None:
         """,
         unsafe_allow_html=True,
     )
+    st.markdown(
+        """
+        <style media="not all" data-disabled="command-center">
+        :root {
+            --na-ink: #0f172a;
+            --na-muted: #64748b;
+            --na-panel: #ffffff;
+            --na-line: #dbe3ef;
+            --na-blue: #2563eb;
+            --na-teal: #0f766e;
+            --na-amber: #b45309;
+            --na-red: #dc2626;
+            --na-violet: #7c3aed;
+            --na-bg: #f4f7fb;
+            --na-rail: #0f172a;
+        }
+        .stApp {
+            background: var(--na-bg) !important;
+            color: var(--na-ink) !important;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+        .block-container {
+            max-width: 1320px;
+            padding-top: 1.5rem;
+            padding-bottom: 3rem;
+        }
+        h1, h2, h3,
+        .hero-title,
+        .section-title,
+        .graph-stage-title,
+        .graph-control-title,
+        .media-title,
+        .narrative-card-title {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+            letter-spacing: 0 !important;
+            color: var(--na-ink);
+        }
+        [data-testid="stSidebar"] {
+            background: var(--na-rail) !important;
+            border-right: 1px solid #1e293b !important;
+        }
+        [data-testid="stSidebar"] * {
+            color: #e2e8f0;
+        }
+        [data-testid="stSidebar"] [data-testid="stCaptionContainer"],
+        [data-testid="stSidebar"] [data-testid="stCaptionContainer"] p,
+        [data-testid="stSidebar"] .stMarkdown p {
+            color: #94a3b8 !important;
+        }
+        .sidebar-brand {
+            margin-bottom: 0.9rem;
+        }
+        .sidebar-brand-title {
+            color: #f8fafc;
+            font-size: 1.55rem;
+            line-height: 1.25;
+            font-weight: 800;
+        }
+        .sidebar-brand-copy {
+            color: #94a3b8;
+            font-size: 0.78rem;
+            line-height: 1.35;
+        }
+        .sidebar-source-card {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            background: #12213a;
+            border: 1px solid #243b5a;
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin: 0.5rem 0 1rem;
+        }
+        .sidebar-source-dot {
+            width: 0.62rem;
+            height: 0.62rem;
+            flex: 0 0 auto;
+            border-radius: 999px;
+            background: #2dd4bf;
+        }
+        .sidebar-source-label {
+            color: #94a3b8;
+            font-size: 0.74rem;
+            line-height: 1.1;
+        }
+        .sidebar-source-value {
+            color: #f8fafc;
+            font-size: 0.95rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        [data-testid="stSidebar"] [data-baseweb="select"] > div,
+        [data-testid="stSidebar"] .stTextInput > div > div {
+            background: #172a45 !important;
+            border: 1px solid #254465 !important;
+            border-radius: 7px !important;
+            color: #e2e8f0 !important;
+        }
+        [data-testid="stSidebar"] input,
+        [data-testid="stSidebar"] [data-baseweb="select"] span {
+            color: #e2e8f0 !important;
+        }
+        [data-testid="stSidebar"] label,
+        [data-testid="stSidebar"] label p {
+            color: #7dd3fc !important;
+            font-size: 0.72rem !important;
+            font-weight: 800 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .sidebar-db-card {
+            background: #f8fafc !important;
+            border: 0 !important;
+            border-radius: 8px !important;
+            padding: 0.9rem !important;
+        }
+        .sidebar-db-kicker {
+            color: #475569 !important;
+            letter-spacing: 0;
+            text-transform: none;
+            font-size: 0.94rem;
+            font-weight: 800;
+        }
+        .sidebar-stat-row {
+            font-size: 0.8rem;
+            padding: 0.23rem 0;
+        }
+        .sidebar-stat-label { color: #0f172a !important; }
+        .sidebar-stat-value { color: #0f172a !important; }
+        .na-command-bar {
+            display: grid;
+            grid-template-columns: minmax(18rem, 1fr) minmax(18rem, 23rem) auto auto;
+            gap: 0.9rem;
+            align-items: center;
+            min-height: 5.4rem;
+            background: #ffffff;
+            border: 1px solid var(--na-line);
+            border-radius: 8px;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+            padding: 1.1rem 1.35rem;
+            margin-bottom: 1.25rem;
+        }
+        .na-command-title {
+            font-size: 1.32rem;
+            line-height: 1.28;
+            font-weight: 850;
+            color: var(--na-ink);
+        }
+        .na-command-subtitle {
+            color: #7b8da8;
+            font-size: 0.78rem;
+            line-height: 1.35;
+            margin-top: 0.15rem;
+        }
+        .na-command-query {
+            min-height: 2.85rem;
+            display: flex;
+            align-items: center;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 0 0.9rem;
+            color: var(--na-muted);
+            font-size: 0.9rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .na-command-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 2.5rem;
+            border-radius: 8px;
+            padding: 0 1rem;
+            color: #ffffff;
+            background: #111827;
+            font-size: 0.82rem;
+            font-weight: 850;
+            white-space: nowrap;
+        }
+        .na-command-button.teal {
+            background: var(--na-teal);
+        }
+        .metric-card {
+            background: #ffffff !important;
+            border: 1px solid var(--na-line) !important;
+            border-radius: 8px !important;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.05) !important;
+            min-height: 7.25rem !important;
+            padding: 1rem !important;
+        }
+        .metric-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--na-muted) !important;
+            letter-spacing: 0.06em !important;
+            font-size: 0.68rem !important;
+            font-weight: 850 !important;
+            margin-bottom: 0.55rem;
+        }
+        .metric-dot {
+            width: 0.55rem;
+            height: 0.55rem;
+            border-radius: 999px;
+            background: var(--metric-accent, var(--na-blue));
+        }
+        .metric-value {
+            color: var(--na-ink) !important;
+            font-size: 2rem !important;
+            font-weight: 850 !important;
+            line-height: 1 !important;
+        }
+        .metric-note {
+            color: #475569 !important;
+            font-size: 0.78rem !important;
+            margin-top: 0.45rem;
+        }
+        .na-command-center {
+            display: grid;
+            grid-template-columns: minmax(32rem, 1.55fr) minmax(19rem, 0.9fr);
+            gap: 1.5rem;
+            margin: 1.35rem 0 1.5rem;
+        }
+        .na-panel {
+            background: #ffffff;
+            border: 1px solid var(--na-line);
+            border-radius: 8px;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+            padding: 1.5rem;
+            min-width: 0;
+        }
+        .na-panel.dark {
+            background: #111827;
+            border-color: #243244;
+            color: #f8fafc;
+        }
+        .na-panel-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .na-panel-title {
+            color: inherit;
+            font-size: 1.12rem;
+            line-height: 1.25;
+            font-weight: 850;
+        }
+        .na-panel-copy {
+            color: #7b8da8;
+            font-size: 0.78rem;
+            line-height: 1.35;
+            margin-top: 0.15rem;
+        }
+        .na-panel.dark .na-panel-copy {
+            color: #94a3b8;
+        }
+        .na-chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .na-chip {
+            display: inline-flex;
+            align-items: center;
+            min-height: 1.75rem;
+            border-radius: 7px;
+            padding: 0 0.65rem;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 0.7rem;
+            font-weight: 850;
+            white-space: nowrap;
+        }
+        .na-chip.teal { background: #ecfdf5; color: #047857; }
+        .na-chip.amber { background: #fef3c7; color: #92400e; }
+        .na-chip.violet { background: #f5f3ff; color: #6d28d9; }
+        .na-chip.slate { background: #f1f5f9; color: #475569; }
+        .na-graph-stage {
+            height: 24rem;
+            border-radius: 8px;
+            border: 1px solid var(--na-line);
+            background: #f8fafc;
+            overflow: hidden;
+        }
+        .na-graph-stage svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .na-question-card {
+            border: 1px solid #334155;
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.15rem;
+        }
+        .na-question-label,
+        .na-answer-label {
+            display: block;
+            color: #7dd3fc;
+            font-size: 0.64rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .na-question-card strong {
+            color: #f8fafc;
+            font-size: 1rem;
+            line-height: 1.25;
+        }
+        .na-answer-card {
+            background: #f8fafc;
+            color: var(--na-ink);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.15rem;
+        }
+        .na-answer-label {
+            color: #475569;
+        }
+        .na-answer-card p {
+            color: var(--na-ink) !important;
+            font-size: 0.95rem;
+            line-height: 1.34;
+            margin: 0;
+        }
+        .na-lower-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .na-trend-row {
+            display: grid;
+            grid-template-columns: 6.8rem 1fr 2.2rem;
+            gap: 0.65rem;
+            align-items: center;
+            min-height: 1.9rem;
+            font-size: 0.78rem;
+        }
+        .na-trend-bar {
+            height: 0.5rem;
+            border-radius: 999px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+        .na-trend-fill {
+            height: 100%;
+            border-radius: inherit;
+            background: var(--bar-color, var(--na-teal));
+            width: var(--bar-width, 0%);
+        }
+        .na-article-title {
+            margin-top: 1.05rem;
+            color: var(--na-ink);
+            font-size: 1.25rem;
+            line-height: 1.25;
+            font-weight: 850;
+        }
+        .na-article-copy {
+            color: #334155 !important;
+            font-size: 0.84rem;
+            line-height: 1.45;
+            margin: 0.65rem 0 1rem;
+        }
+        .na-pipeline-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            border-top: 1px solid #eef2f7;
+            padding-top: 0.65rem;
+            margin-top: 0.65rem;
+            font-size: 0.8rem;
+        }
+        [data-testid="stTabs"] {
+            background: transparent !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            backdrop-filter: none !important;
+        }
+        [data-testid="stTabs"] button[role="tab"] {
+            border-radius: 8px !important;
+            padding: 0.65rem 0.85rem !important;
+            color: #475569 !important;
+            font-weight: 750;
+        }
+        [data-testid="stTabs"] button[aria-selected="true"] {
+            background: #111827 !important;
+            color: #ffffff !important;
+        }
+        .hero-panel {
+            background: #ffffff !important;
+            color: var(--na-ink) !important;
+            border: 1px solid var(--na-line) !important;
+            border-radius: 8px !important;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06) !important;
+            padding: 1.15rem 1.3rem !important;
+        }
+        .hero-kicker,
+        .section-kicker {
+            color: #475569 !important;
+            letter-spacing: 0.06em !important;
+        }
+        .hero-title {
+            font-size: 1.55rem !important;
+            color: var(--na-ink) !important;
+        }
+        .hero-copy,
+        .section-copy {
+            color: #64748b !important;
+        }
+        .hero-badge,
+        .signal-pill {
+            border-radius: 7px !important;
+            border: 0 !important;
+            background: #eff6ff !important;
+            color: #1d4ed8 !important;
+            font-size: 0.76rem !important;
+            font-weight: 800 !important;
+        }
+        .overview-card, .panel-card, .list-card, .summary-card, .meta-card,
+        .graph-shell, .graph-control-card, .narrative-card, .media-shell, .image-rail {
+            border-radius: 8px !important;
+            background: #ffffff !important;
+            border: 1px solid var(--na-line) !important;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.05) !important;
+        }
+        .stButton button,
+        [data-testid="stFormSubmitButton"] button {
+            border-radius: 8px !important;
+            font-weight: 800 !important;
+        }
+        [data-testid="stFormSubmitButton"] button {
+            background: var(--na-teal) !important;
+            border-color: var(--na-teal) !important;
+        }
+        [data-testid="stChatMessage"] {
+            border-radius: 8px !important;
+            box-shadow: none !important;
+        }
+        @media (max-width: 1100px) {
+            .na-command-bar,
+            .na-command-center,
+            .na-lower-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def _render_metric_card(label: str, value: str, note: str) -> None:
@@ -1435,6 +2346,283 @@ def _render_section_intro(title: str, copy: str, kicker: str = "Briefing") -> No
         <div class="section-kicker">{escape(kicker)}</div>
         <div class="section-title">{escape(title)}</div>
         <div class="section-copy">{escape(copy)}</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _render_command_bar(selected_week: str, total_filtered: int, avg_importance: float, search_term: str) -> None:
+    scope_label = selected_week if selected_week != "All" else "All indexed weeks"
+    query_label = search_term or "Ask about entities, relationships, or weekly shifts"
+    st.markdown(
+        f"""
+        <div class="na-command-bar">
+          <div>
+            <div class="na-command-title">Narrative Intelligence Console</div>
+            <div class="na-command-subtitle">
+              Latest scope: {escape(scope_label)} | {total_filtered} article(s) | average importance {avg_importance:.1f}
+            </div>
+          </div>
+          <div class="na-command-query">{escape(query_label)}</div>
+          <div class="na-command-button teal">Deep Search</div>
+          <div class="na-command-button">Run Pipeline</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _first_nonempty_value(dataframe: pd.DataFrame, column: str, fallback: str) -> str:
+    if dataframe.empty or column not in dataframe.columns:
+        return fallback
+    values = dataframe[column].dropna().astype(str)
+    for value in values:
+        stripped = value.strip()
+        if stripped:
+            return stripped
+    return fallback
+
+
+def _graph_preview_stats(
+    preview_graph: dict[str, Any] | None,
+    metrics: dict[str, int],
+) -> tuple[int, int, str]:
+    if preview_graph:
+        return (
+            len(preview_graph.get("nodes", [])),
+            len(preview_graph.get("edges", [])),
+            str(preview_graph.get("week") or "latest"),
+        )
+    return (
+        int(metrics.get("entities", 0)) + int(metrics.get("themes", 0)) + int(metrics.get("narratives", 0)),
+        int(metrics.get("graph_edges", 0)),
+        "latest",
+    )
+
+
+def _render_graph_preview_svg(labels: dict[str, str]) -> str:
+    label_openai = escape(labels["source"])
+    label_narrative = escape(labels["narrative"])
+    label_entity = escape(labels["entity"])
+    label_theme = escape(labels["theme"])
+    label_article = escape(labels["article"])
+    return f"""
+    <svg viewBox="0 0 700 384" role="img" aria-label="Narrative graph preview">
+      <rect width="700" height="384" fill="#f8fafc"></rect>
+      <g stroke="#cbd5e1" stroke-opacity=".35">
+        <path d="M40 48 L170 318"></path>
+        <path d="M120 48 L220 318"></path>
+        <path d="M200 48 L290 318"></path>
+        <path d="M280 48 L355 318"></path>
+        <path d="M360 48 L430 318"></path>
+        <path d="M440 48 L505 318"></path>
+        <path d="M520 48 L580 318"></path>
+      </g>
+      <g fill="none" stroke-linecap="round" stroke-width="2.5">
+        <path d="M126 130 L292 86" stroke="#2563eb" stroke-opacity=".65"></path>
+        <path d="M292 86 L505 112" stroke="#2563eb" stroke-opacity=".45"></path>
+        <path d="M126 130 L220 258" stroke="#0f766e" stroke-opacity=".65"></path>
+        <path d="M220 258 L405 286" stroke="#0f766e" stroke-opacity=".45"></path>
+        <path d="M505 112 L574 250" stroke="#dc2626" stroke-opacity=".55"></path>
+        <path d="M292 86 L346 214" stroke="#7c3aed" stroke-opacity=".55"></path>
+        <path d="M405 286 L574 250" stroke="#b45309" stroke-opacity=".5"></path>
+      </g>
+      <g font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="750" text-anchor="middle" fill="#334155">
+        <circle cx="116" cy="122" r="36" fill="#2563eb" opacity=".13"></circle>
+        <circle cx="116" cy="122" r="28" fill="#2563eb" stroke="#fff" stroke-width="2"></circle>
+        <text x="116" y="173">{label_openai}</text>
+        <circle cx="292" cy="82" r="40" fill="#7c3aed" opacity=".13"></circle>
+        <circle cx="292" cy="82" r="31" fill="#7c3aed" stroke="#fff" stroke-width="2"></circle>
+        <text x="292" y="135">{label_narrative}</text>
+        <circle cx="505" cy="105" r="31" fill="#0f766e" opacity=".13"></circle>
+        <circle cx="505" cy="105" r="23" fill="#0f766e" stroke="#fff" stroke-width="2"></circle>
+        <text x="505" y="150">{label_entity}</text>
+        <circle cx="220" cy="256" r="33" fill="#b45309" opacity=".13"></circle>
+        <circle cx="220" cy="256" r="25" fill="#b45309" stroke="#fff" stroke-width="2"></circle>
+        <text x="220" y="304">{label_theme}</text>
+        <circle cx="405" cy="286" r="35" fill="#dc2626" opacity=".13"></circle>
+        <circle cx="405" cy="286" r="27" fill="#dc2626" stroke="#fff" stroke-width="2"></circle>
+        <text x="405" y="338">Capital Wars</text>
+        <circle cx="574" cy="250" r="39" fill="#f59e0b" opacity=".15"></circle>
+        <circle cx="574" cy="250" r="30" fill="#f59e0b" stroke="#fff" stroke-width="2"></circle>
+        <text x="574" y="306">Oil Supply Shock</text>
+        <circle cx="574" cy="68" r="28" fill="#0f766e" opacity=".13"></circle>
+        <circle cx="574" cy="68" r="21" fill="#0f766e" stroke="#fff" stroke-width="2"></circle>
+        <text x="574" y="111">{label_article}</text>
+      </g>
+    </svg>
+    """
+
+
+def _render_command_center(
+    metrics: dict[str, int],
+    preview_graph: dict[str, Any] | None,
+    filtered_articles: pd.DataFrame,
+    filtered_narratives: pd.DataFrame,
+    selected_week: str,
+    search_term: str,
+) -> None:
+    node_count, edge_count, graph_week = _graph_preview_stats(preview_graph, metrics)
+    article_label = _first_nonempty_value(filtered_articles, "title", "Alpha trial")
+    narrative_label = _first_nonempty_value(filtered_narratives, "name", "AI Demand vs Supply")
+    question = search_term or f"What changed in {selected_week if selected_week != 'All' else 'the latest graph'}?"
+    answer = _first_sentence(
+        _first_nonempty_value(
+            filtered_articles,
+            "summary",
+            "Graph facts, article summaries, and citations are ready for the current scope.",
+        ),
+        185,
+    )
+    labels = {
+        "source": "OpenAI",
+        "narrative": narrative_label[:24],
+        "entity": "Microsoft",
+        "theme": "Fed",
+        "article": article_label[:18],
+    }
+    graph_svg = _render_graph_preview_svg(labels)
+    st.markdown(
+        f"""
+        <div class="na-command-center">
+          <section class="na-panel">
+            <div class="na-panel-head">
+              <div>
+                <div class="na-panel-title">Relationship Graph</div>
+                <div class="na-panel-copy">Week-scoped evidence network | {escape(graph_week)}</div>
+              </div>
+              <div class="na-chip-row">
+                <span class="na-chip">{node_count} nodes</span>
+                <span class="na-chip teal">{edge_count} links</span>
+                <span class="na-chip amber">Compare off</span>
+              </div>
+            </div>
+            <div class="na-graph-stage">{graph_svg}</div>
+          </section>
+          <section class="na-panel dark">
+            <div class="na-panel-head">
+              <div>
+                <div class="na-panel-title">Ask Graph</div>
+                <div class="na-panel-copy">GraphRAG answer with citations</div>
+              </div>
+            </div>
+            <div class="na-question-card">
+              <span class="na-question-label">Question</span>
+              <strong>{escape(question)}</strong>
+            </div>
+            <div class="na-answer-card">
+              <span class="na-answer-label">Fast answer</span>
+              <p>{escape(answer)}</p>
+            </div>
+            <div class="na-chip-row">
+              <span class="na-chip">graph facts</span>
+              <span class="na-chip teal">citations</span>
+              <span class="na-chip amber">LLM optional</span>
+            </div>
+          </section>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _trend_status_counts(trend_df: pd.DataFrame, filtered_narratives: pd.DataFrame) -> dict[str, int]:
+    if not trend_df.empty and "trend_status" in trend_df.columns:
+        counts = trend_df["trend_status"].fillna("").astype(str).str.upper().value_counts().to_dict()
+        return {
+            "New": int(counts.get("NEW", 0)),
+            "Strengthening": int(counts.get("STRENGTHENING", 0)),
+            "Recurring": int(counts.get("RECURRING", 0)),
+            "Weakening": int(counts.get("WEAKENING", 0)),
+        }
+    if not filtered_narratives.empty and "status" in filtered_narratives.columns:
+        counts = filtered_narratives["status"].fillna("").astype(str).str.lower().value_counts().to_dict()
+        return {
+            "New": int(counts.get("emerging", 0)),
+            "Strengthening": int(counts.get("strengthening", 0)),
+            "Recurring": int(counts.get("stable", 0)),
+            "Weakening": int(counts.get("weakening", 0)),
+        }
+    return {"New": 0, "Strengthening": 0, "Recurring": 0, "Weakening": 0}
+
+
+def _render_trend_rows(counts: dict[str, int]) -> str:
+    colors = {
+        "New": "#0f766e",
+        "Strengthening": "#2563eb",
+        "Recurring": "#64748b",
+        "Weakening": "#b45309",
+    }
+    max_count = max([*counts.values(), 1])
+    rows = []
+    for label in ["New", "Strengthening", "Recurring", "Weakening"]:
+        value = counts.get(label, 0)
+        width = max(4, int((value / max_count) * 100)) if value else 4
+        rows.append(
+            f'<div class="na-trend-row">'
+            f'<span>{escape(label)}</span>'
+            f'<div class="na-trend-bar">'
+            f'<div class="na-trend-fill" style="--bar-width:{width}%;--bar-color:{colors[label]};"></div>'
+            f'</div>'
+            f'<strong>{value}</strong>'
+            f'</div>'
+        )
+    return "".join(rows)
+
+
+def _render_lower_command_panels(
+    metrics: dict[str, int],
+    filtered_articles: pd.DataFrame,
+    filtered_narratives: pd.DataFrame,
+    trend_df: pd.DataFrame,
+    selected_week: str,
+    data_backend: str,
+) -> None:
+    trend_counts = _trend_status_counts(trend_df, filtered_narratives)
+    if filtered_articles.empty:
+        article_title = "No article selected"
+        article_summary = "Adjust filters to inspect an article extraction."
+        article_category = "None"
+        article_importance = "0"
+    else:
+        article = filtered_articles.sort_values(
+            by=["importance_score", "published_date"],
+            ascending=[False, False],
+        ).iloc[0]
+        article_title = str(article.get("title") or "Untitled")
+        article_summary = _first_sentence(str(article.get("summary") or ""), 170)
+        article_category = str(article.get("category") or "Uncategorized")
+        article_importance = str(article.get("importance_score") or "0")
+    trend_rows = _render_trend_rows(trend_counts)
+    st.markdown(
+        f"""
+        <div class="na-lower-grid">
+          <section class="na-panel">
+            <div class="na-panel-title">Narrative Movement</div>
+            <div class="na-panel-copy">{escape(selected_week)} trend status</div>
+            <div style="height:1rem;"></div>
+            {trend_rows}
+          </section>
+          <section class="na-panel">
+            <div class="na-panel-title">Article Workbench</div>
+            <div class="na-panel-copy">Selected extraction</div>
+            <div class="na-article-title">{escape(article_title)}</div>
+            <p class="na-article-copy">{escape(article_summary)}</p>
+            <div class="na-chip-row">
+              <span class="na-chip">{escape(article_category)}</span>
+              <span class="na-chip amber">Importance {escape(article_importance)}</span>
+              <span class="na-chip violet">{len(filtered_narratives)} narratives</span>
+            </div>
+          </section>
+          <section class="na-panel">
+            <div class="na-panel-title">Pipeline Health</div>
+            <div class="na-panel-copy">Current dashboard readout</div>
+            <div class="na-pipeline-row"><span>Graph source</span><span class="na-chip teal">{escape(data_backend)}</span></div>
+            <div class="na-pipeline-row"><span>Articles in scope</span><span class="na-chip">{len(filtered_articles)}</span></div>
+            <div class="na-pipeline-row"><span>Total graph edges</span><span class="na-chip">{metrics.get('graph_edges', 0)}</span></div>
+            <div class="na-pipeline-row"><span>Registry</span><span class="na-chip teal">Ready</span></div>
+          </section>
+        </div>
         """,
         unsafe_allow_html=True,
     )
@@ -2343,7 +3531,12 @@ def _render_chat_text(content: str) -> None:
     st.markdown(str(content).replace("$", r"\$"))
 
 
-def _render_ask_graph_tab(selected_week: str) -> None:
+def _render_ask_graph_tab(
+    selected_week: str,
+    default_backend: str = "Neo4j",
+    *,
+    neo4j_available: bool = True,
+) -> None:
     _render_section_intro(
         "Ask The Graph",
         "Ask for event chains, relationship logic, narratives, and article evidence with graph-backed citations.",
@@ -2354,14 +3547,22 @@ def _render_ask_graph_tab(selected_week: str) -> None:
     with control_left:
         st.caption(f"Scope: {chat_week or 'All indexed weeks'}")
     with control_middle:
+        if not neo4j_available:
+            st.info("Graph chat is unavailable because Neo4j is not reachable.")
+            return
+        backend_options = ["Neo4j"]
         graph_backend = st.selectbox(
             "GraphRAG backend",
-            options=["SQLite", "Neo4j"],
-            index=0,
-            key="graph_rag_backend",
+            options=backend_options,
+            index=backend_options.index(default_backend) if default_backend in backend_options else 0,
+            key="graph_rag_backend_source",
         )
     with control_right:
-        deep_immediately = st.toggle("Deep answer immediately", value=False, key="graph_rag_deep_now")
+        deep_immediately = st.toggle(
+            "Deep answer immediately",
+            value=False,
+            key="graph_rag_deep_now",
+        )
 
     if "graph_chat_messages" not in st.session_state:
         st.session_state.graph_chat_messages = []
@@ -2442,7 +3643,7 @@ def _render_ask_graph_tab(selected_week: str) -> None:
                 week=chat_week,
                 use_llm=deep_immediately,
                 deep_search=deep_immediately,
-                backend="neo4j" if graph_backend == "Neo4j" else "sqlite",
+                backend="neo4j",
             )
         except Exception as exc:
             backend_name = graph_backend
@@ -2461,7 +3662,7 @@ def _render_ask_graph_tab(selected_week: str) -> None:
             "result": result.model_dump(),
             "question": prompt,
             "week": chat_week,
-            "backend": "neo4j" if graph_backend == "Neo4j" else "sqlite",
+            "backend": "neo4j",
         }
     )
     st.rerun()
@@ -2476,21 +3677,37 @@ def main() -> None:
     )
     inject_dashboard_css()
 
-    if not DB_PATH.exists():
-        st.error("Database not found. Run weekly extraction first.")
-        return
+    registry_version = _path_version(PROCESSED_MANIFEST_PATH)
+    data_backend = "Processed JSON"
+    neo4j_warning = ""
 
-    if not ensure_database_schema():
-        return
-    db_version = _path_version(DB_PATH)
+    if neo4j_dashboard_available(0):
+        try:
+            metrics = load_metrics_neo4j(0)
+            articles_df = load_articles_neo4j(0)
+            narratives_df = load_narratives_neo4j(0)
+            entities_df = load_entities_neo4j(0)
+            data_backend = "Neo4j"
+        except Exception as exc:
+            neo4j_warning = f"Neo4j dashboard read failed; using processed JSON fallback. Details: {exc}"
+            data_backend = "Processed JSON"
 
-    metrics = load_metrics(db_version)
-    articles_df = load_articles(db_version)
-    narratives_df = load_narratives(db_version)
-    entities_df = load_entities(db_version)
+    if data_backend == "Processed JSON":
+        metrics = load_metrics(registry_version)
+        articles_df = load_articles(registry_version)
+        narratives_df = load_narratives(registry_version)
+        entities_df = load_entities(registry_version)
+        if articles_df.empty:
+            st.error("Neo4j is unavailable and no processed extraction artifacts were found. Run the pipeline first.")
+            if neo4j_warning:
+                st.caption(neo4j_warning)
+            return
 
     st.sidebar.markdown("## Filters")
     st.sidebar.caption("Scope the intelligence view before drilling into articles, narratives, and graph relationships.")
+    st.sidebar.caption(f"Primary graph source: {data_backend}")
+    if neo4j_warning:
+        st.sidebar.warning(neo4j_warning)
     week_options = ["All", *sorted([value for value in articles_df["week_label"].dropna().unique()], reverse=True)]
     source_options = ["All", *sorted([value for value in articles_df["source"].dropna().unique() if value])]
     category_options = ["All", *sorted([value for value in articles_df["category"].dropna().unique() if value])]
@@ -2581,7 +3798,11 @@ def main() -> None:
     )
 
     with ask_tab:
-        _render_ask_graph_tab(selected_week)
+        _render_ask_graph_tab(
+            selected_week,
+            default_backend=data_backend,
+            neo4j_available=data_backend == "Neo4j",
+        )
 
     with overview_tab:
         _render_overview_tab(filtered_articles, filtered_narratives, selected_week)
@@ -2752,7 +3973,21 @@ def main() -> None:
         if selected_week == "All":
             st.info("Select a specific week in the sidebar to view narrative trends.")
         else:
-            trend_df = load_narrative_trends(selected_week, db_version)
+            trend_warning = ""
+            if data_backend == "Neo4j":
+                try:
+                    trend_df = load_narrative_trends_neo4j(selected_week, 0)
+                except Exception as exc:
+                    trend_warning = f"Neo4j narrative trend read failed; showing processed JSON fallback. Details: {exc}"
+                    trend_df = load_narrative_trends(selected_week, registry_version)
+            elif data_backend == "Processed JSON":
+                trend_df = load_narrative_trends(selected_week, registry_version)
+            else:
+                st.info("Narrative trend data is unavailable because Neo4j could not be read.")
+                return
+
+            if trend_warning:
+                st.warning(trend_warning)
             if search_term:
                 trend_df = trend_df[
                     trend_df["name"].str.contains(search_term, case=False, na=False)
@@ -2854,9 +4089,16 @@ def main() -> None:
             "Use the left control rail to narrow the network, while keeping the graph centered for easier scanning.",
             kicker="Graph",
         )
-        available_graph_weeks = list_available_graph_weeks()
+        available_graph_weeks = (
+            list_available_graph_weeks_neo4j(0)
+            if data_backend == "Neo4j"
+            else list_available_graph_weeks()
+        )
         if not available_graph_weeks:
-            st.info("Graph export not found. Run python -m src.export_graph --format json first.")
+            if data_backend == "Neo4j":
+                st.info("No Neo4j graph weeks found. Run the pipeline or sync Neo4j first.")
+            else:
+                st.info("Graph export not found. Run python -m src.export_graph --format json first.")
         else:
             latest_index = len(available_graph_weeks) - 1
             control_top_left, control_top_right = st.columns([0.55, 0.45], gap="large")
@@ -2881,22 +4123,28 @@ def main() -> None:
                 if compare_with_previous and previous_graph_week is None:
                     st.caption("No previous week snapshot is available yet.")
 
-            current_graph_path = _graph_snapshot_path(selected_graph_week)
-            current_graph = load_graph_snapshot(
-                selected_graph_week,
-                _path_version(current_graph_path),
-            )
+            if data_backend == "Neo4j":
+                current_graph = load_graph_snapshot_neo4j(selected_graph_week, 0)
+            else:
+                current_graph_path = _graph_snapshot_path(selected_graph_week)
+                current_graph = load_graph_snapshot(
+                    selected_graph_week,
+                    _path_version(current_graph_path),
+                )
             if current_graph is None:
                 st.info(f"Graph snapshot not found for {selected_graph_week}.")
                 return
 
             previous_graph = None
             if compare_with_previous and previous_graph_week is not None:
-                previous_graph_path = _graph_snapshot_path(previous_graph_week)
-                previous_graph = load_graph_snapshot(
-                    previous_graph_week,
-                    _path_version(previous_graph_path),
-                )
+                if data_backend == "Neo4j":
+                    previous_graph = load_graph_snapshot_neo4j(previous_graph_week, 0)
+                else:
+                    previous_graph_path = _graph_snapshot_path(previous_graph_week)
+                    previous_graph = load_graph_snapshot(
+                        previous_graph_week,
+                        _path_version(previous_graph_path),
+                    )
 
             if compare_with_previous and previous_graph is not None:
                 graph_payload, comparison_summary, emerging_entities = build_comparison_payload(

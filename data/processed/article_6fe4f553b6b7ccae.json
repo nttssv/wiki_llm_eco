@@ -1,0 +1,136 @@
+{
+  "article_id": "article_6fe4f553b6b7ccae",
+  "original_file_path": "/app/data/raw_articles/Business_OpenAIXSpaceXGrok_3May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Business",
+    "title": "Schumpeter",
+    "subtitle": "SpaceX, OpenAI and Anthropic are already public companies Investors have countless ways to bet on their success",
+    "published_date": "29 Apr 2026",
+    "category": "Business",
+    "summary": "SpaceX's impending IPO is set to reshape public markets, with significant implications for companies like Tesla and Alphabet. The rise of speculative investments linked to SpaceX and other AI firms like OpenAI and Anthropic highlights a trend of concentrated value in a few major firms amidst a decline in the number of listed companies.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "SpaceX",
+        "type": "Company",
+        "role": "Subject of IPO",
+        "description": "A rocket-maker and AI lab controlled by Elon Musk, planning to go public."
+      },
+      {
+        "name": "Tesla",
+        "type": "Company",
+        "role": "Related Company",
+        "description": "An electric car manufacturer with ties to SpaceX through shared technology and leadership."
+      },
+      {
+        "name": "Alphabet",
+        "type": "Company",
+        "role": "Investor",
+        "description": "Parent company of Google, holding a significant stake in SpaceX."
+      },
+      {
+        "name": "OpenAI",
+        "type": "Company",
+        "role": "Related Company",
+        "description": "An AI lab planning to list its shares, impacting public markets."
+      },
+      {
+        "name": "Anthropic",
+        "type": "Company",
+        "role": "Related Company",
+        "description": "An AI lab also planning to go public, affecting market dynamics."
+      },
+      {
+        "name": "EchoStar",
+        "type": "Company",
+        "role": "Related Company",
+        "description": "A telecom company benefiting from its investment in SpaceX."
+      },
+      {
+        "name": "SoftBank",
+        "type": "Company",
+        "role": "Investor",
+        "description": "A conglomerate with significant investments in OpenAI."
+      },
+      {
+        "name": "Zoom",
+        "type": "Company",
+        "role": "Investor",
+        "description": "A video-conferencing company with stakes in Anthropic."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-29",
+        "event_summary": "SpaceX plans to go public with a valuation of $2 trillion.",
+        "location": "USA",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2026-04-29",
+        "event_summary": "OpenAI and Anthropic also plan to list their shares this year.",
+        "location": "USA",
+        "importance_score": 7
+      }
+    ],
+    "themes": [
+      {
+        "name": "Market Dynamics",
+        "description": "The impact of major tech firms on public markets and investment strategies."
+      },
+      {
+        "name": "Speculative Investments",
+        "description": "The rise of speculative vehicles linked to high-profile companies."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Concentration of Value",
+        "thesis": "The value of American firms is becoming more concentrated among a few major players.",
+        "status": "strengthening",
+        "importance_score": 8
+      },
+      {
+        "name": "Transformation of Investment Landscape",
+        "thesis": "The ways to invest in major firms are multiplying, changing the nature of American capitalism.",
+        "status": "emerging",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "SpaceX",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Public Markets",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Tesla",
+        "relationship": "RELATED_TO",
+        "target_node": "SpaceX",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Alphabet",
+        "relationship": "SUPPORTS",
+        "target_node": "SpaceX",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "OpenAI",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Public Markets",
+        "confidence": 0.75
+      },
+      {
+        "source_node": "Anthropic",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Public Markets",
+        "confidence": 0.75
+      }
+    ]
+  }
+}

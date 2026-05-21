@@ -1,0 +1,112 @@
+{
+  "article_id": "article_7a8d4b86e43f3fae",
+  "original_file_path": "/app/data/raw_articles/Business_Cognitive_surrender_3May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Business",
+    "title": "Bartleby",
+    "subtitle": "AI and the danger of cognitive surrender How much should managers let bots do the thinking?",
+    "published_date": "30 Apr 2026",
+    "category": "Business",
+    "summary": "The article discusses the cognitive effects of AI on decision-making and critical thinking in the workplace. It highlights the risks of 'cognitive surrender' where reliance on AI diminishes personal problem-solving skills. Managers are encouraged to foster critical thinking among employees to mitigate these risks.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Mark LaCour",
+        "type": "Person",
+        "role": "Researcher",
+        "description": "Conducted a study on the effects of calculators on students' mathematical performance."
+      },
+      {
+        "name": "Louisa Dahmani",
+        "type": "Person",
+        "role": "Researcher",
+        "description": "Studied the impact of GPS usage on spatial memory."
+      },
+      {
+        "name": "Steven Shaw",
+        "type": "Person",
+        "role": "Researcher",
+        "description": "Coined the term 'cognitive surrender' and studied its implications with AI."
+      },
+      {
+        "name": "Gideon Nave",
+        "type": "Person",
+        "role": "Researcher",
+        "description": "Collaborated with Steven Shaw on cognitive surrender research."
+      },
+      {
+        "name": "INSEAD",
+        "type": "Organization",
+        "role": "Institution",
+        "description": "Conducted a study on AI assistance in chess training."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2019",
+        "event_summary": "Study on calculators' impact on students' trust in incorrect answers.",
+        "location": "University of Louisiana at Lafayette",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2026",
+        "event_summary": "Research on cognitive surrender and AI's impact on critical thinking.",
+        "location": "Wharton School, University of Pennsylvania",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2026",
+        "event_summary": "Study on AI-assisted chess training and its effects on performance.",
+        "location": "INSEAD",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "Cognitive Offloading",
+        "description": "The practice of delegating cognitive tasks to technology, which can enhance efficiency but also lead to diminished personal skills."
+      },
+      {
+        "name": "AI in the Workplace",
+        "description": "The increasing reliance on AI tools in business settings and the implications for employee critical thinking."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Cognitive Surrender",
+        "thesis": "The reliance on AI can lead to a decline in critical thinking and problem-solving skills among employees.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Managerial Responsibility",
+        "thesis": "Managers should actively promote critical thinking to counteract the risks associated with AI reliance.",
+        "status": "strengthening",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Steven Shaw",
+        "relationship": "LED_BY",
+        "target_node": "Cognitive Surrender",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "AI in the Workplace",
+        "relationship": "AFFECTS",
+        "target_node": "Cognitive Surrender",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Mark LaCour",
+        "relationship": "RELATED_TO",
+        "target_node": "Cognitive Offloading",
+        "confidence": 0.7
+      }
+    ]
+  }
+}

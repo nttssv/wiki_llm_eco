@@ -1,0 +1,144 @@
+{
+  "article_id": "article_623bea2b0d0831b6",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Business_AI_Assistant_26Apr2026.docx",
+  "chart_references": [
+    "OpenAI and Google also seem to be going after different kinds of advertisers. Google’s Direct Offers allow companies to promote a discount code for a product the user is researching in AI Mode. OpenAI, meanwhile, is focused on brand-building ads designed to burnish a firm’s image rather than trigger a click. So far 81% of its ads fall into that category, by Similarweb’s analysis. OpenAI may reckon that users deep in a coding or editing session are unlikely to break off to pursue an offer."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Business",
+    "title": "The salesman in the machine",
+    "subtitle": "Why your AI assistant is suddenly selling to you Sponsored chats are changing the way digital advertising works",
+    "published_date": "19 Apr 2026",
+    "category": "Business",
+    "summary": "AI chatbots are evolving into sales tools, integrating advertisements into user conversations. This shift poses significant implications for both the AI and advertising industries, as companies like OpenAI and Google explore monetization strategies through ads in chat interactions. Early experiments show varied approaches and user responses, with potential for rapid growth in ad revenue.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "OpenAI",
+        "type": "Company",
+        "role": "AI Developer",
+        "description": "Develops ChatGPT and is testing ad integration."
+      },
+      {
+        "name": "Google",
+        "type": "Company",
+        "role": "Search Engine Provider",
+        "description": "Testing ads in its AI Mode."
+      },
+      {
+        "name": "Microsoft",
+        "type": "Company",
+        "role": "Tech Company",
+        "description": "Incorporated ads into its Copilot."
+      },
+      {
+        "name": "Meta",
+        "type": "Company",
+        "role": "Social Media Company",
+        "description": "Passing insights from chats to improve ad targeting."
+      },
+      {
+        "name": "Amazon",
+        "type": "Company",
+        "role": "E-commerce Company",
+        "description": "Allows brands to sponsor replies through its assistant."
+      },
+      {
+        "name": "Similarweb",
+        "type": "Data Provider",
+        "role": "Market Research",
+        "description": "Provides data on ad integration in chatbots."
+      },
+      {
+        "name": "Caelean Barnes",
+        "type": "Person",
+        "role": "Analyst",
+        "description": "Comments on OpenAI's ad service performance."
+      },
+      {
+        "name": "Harel Amir",
+        "type": "Person",
+        "role": "Analyst",
+        "description": "Discusses the new category of advertising."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-19",
+        "event_summary": "OpenAI and Google are testing ads in their chatbots.",
+        "location": "",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2026",
+        "event_summary": "OpenAI expects to generate $2.5bn in ad revenue this year.",
+        "location": "",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2027",
+        "event_summary": "OpenAI projects ad revenue to reach $11bn.",
+        "location": "",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2030",
+        "event_summary": "OpenAI aims for $100bn in ad revenue.",
+        "location": "",
+        "importance_score": 9
+      }
+    ],
+    "themes": [
+      {
+        "name": "AI in Advertising",
+        "description": "The integration of AI technology into advertising strategies."
+      },
+      {
+        "name": "Monetization of AI",
+        "description": "Exploring revenue generation methods for AI services."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Shift to AI Advertising",
+        "thesis": "AI chatbots are transitioning into advertising platforms, changing the landscape of digital marketing.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "User Engagement with Ads",
+        "thesis": "Users are not deterred by ads in chatbots, maintaining engagement despite sponsored content.",
+        "status": "strengthening",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "OpenAI",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Advertising",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Google",
+        "relationship": "EXPANDS_TO",
+        "target_node": "Advertising",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "ChatGPT",
+        "relationship": "AFFECTS",
+        "target_node": "User Engagement",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "AI Advertising",
+        "relationship": "RELATED_TO",
+        "target_node": "Digital Marketing",
+        "confidence": 0.75
+      }
+    ]
+  }
+}

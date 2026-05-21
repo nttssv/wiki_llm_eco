@@ -29,6 +29,15 @@ INLINE_DATE_PATTERN = re.compile(
     r"[A-Za-z]{3,9}\s+\d{1,2}(?:st|nd|rd|th)?\s+\d{4}"
     r")\b"
 )
+FILENAME_DATE_PATTERNS = (
+    re.compile(r"(?P<date>\d{1,2}[A-Za-z]{3,9}\d{4})"),
+    re.compile(r"(?P<date>\d{1,2}_[A-Za-z]{3,9}_\d{4})", re.IGNORECASE),
+)
+FILENAME_SOURCE_ALIASES = {
+    "FT": "Financial Times",
+    "WSJ": "Wall Street Journal",
+    "NYT": "New York Times",
+}
 IGNORED_SUBTITLE_PARAGRAPHS = {
     "share",
     "listen to this story",
@@ -58,12 +67,22 @@ def _normalise_metadata_key(label: str) -> str | None:
     return None
 
 
+def _normalize_source_value(value: str) -> str:
+    cleaned = value.strip()
+    if not cleaned:
+        return cleaned
+    return FILENAME_SOURCE_ALIASES.get(cleaned.upper(), cleaned)
+
+
 def _extract_metadata(paragraphs: list[str]) -> tuple[dict[str, str], set[int]]:
     metadata: dict[str, str] = {}
     consumed_indexes: set[int] = set()
 
     for index, paragraph in enumerate(paragraphs[:12]):
-        match = re.match(r"^(?P<label>[A-Za-z ][A-Za-z /-]{1,40}):\s*(?P<value>.+)$", paragraph)
+        match = re.match(
+            r"^(?P<label>[A-Za-z][A-Za-z /-]{0,40}?)(?::\s*|\s+)(?P<value>.+)$",
+            paragraph,
+        )
         if not match:
             continue
 
@@ -71,10 +90,38 @@ def _extract_metadata(paragraphs: list[str]) -> tuple[dict[str, str], set[int]]:
         if key is None:
             continue
 
-        metadata[key] = match.group("value").strip()
+        value = match.group("value").strip()
+        if key == "source":
+            value = _normalize_source_value(value)
+        metadata[key] = value
         consumed_indexes.add(index)
 
     return metadata, consumed_indexes
+
+
+def _extract_filename_date(path: Path) -> str:
+    stem = path.stem
+    for pattern in FILENAME_DATE_PATTERNS:
+        match = pattern.search(stem)
+        if match is None:
+            continue
+        raw_date = match.group("date")
+        if "_" in raw_date:
+            candidate = raw_date.replace("_", " ").title()
+        else:
+            candidate = re.sub(r"^(\d{1,2})([A-Za-z]{3,9})(\d{4})$", r"\1 \2 \3", raw_date).title()
+        parsed = parse_article_date(candidate)
+        if parsed is not None:
+            return parsed.strftime("%d %b %Y")
+    return ""
+
+
+def _extract_filename_source(path: Path) -> str:
+    stem = path.stem
+    last_token = stem.rsplit("_", 1)[-1].strip()
+    if not last_token or not last_token.isalpha():
+        return ""
+    return _normalize_source_value(last_token)
 
 
 def _extract_published_date(paragraphs: list[str], consumed_indexes: set[int]) -> str:
@@ -128,6 +175,16 @@ def read_docx_article(path: Path) -> RawArticleDocument:
         published_date = _extract_published_date(paragraphs, consumed_indexes)
         if published_date:
             metadata["published_date"] = published_date
+
+    if not metadata.get("published_date"):
+        published_date = _extract_filename_date(path)
+        if published_date:
+            metadata["published_date"] = published_date
+
+    if metadata.get("source", "Unknown") == "Unknown":
+        source = _extract_filename_source(path)
+        if source:
+            metadata["source"] = source
 
     if "subtitle" not in metadata:
         subtitle_parts: list[str] = []

@@ -1,0 +1,88 @@
+{
+  "article_id": "article_c80ab64c9d7cda5c",
+  "original_file_path": "/app/data/raw_articles/Science_Epigen_3May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Leaders",
+    "title": "Exercise and the epigenome",
+    "subtitle": "Time to edit some biological metaphors Not everything is in your DNA",
+    "published_date": "30 Apr 2026",
+    "category": "Leaders",
+    "summary": "The article discusses the implications of epigenomic medicine, emphasizing how environmental factors can influence gene expression and challenge deterministic views of genetics. It highlights the potential for biotech advancements to improve health while also addressing the cultural misconceptions surrounding genetics.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Sabastian Sawe",
+        "type": "Person",
+        "role": "Athlete",
+        "description": "Kenyan athlete who finished the London Marathon in under two hours."
+      },
+      {
+        "name": "epigenome",
+        "type": "Biological Concept",
+        "role": "Subject of Study",
+        "description": "A set of markers on DNA that influence gene expression and can be affected by environmental factors."
+      },
+      {
+        "name": "biotech companies",
+        "type": "Organization",
+        "role": "Industry",
+        "description": "Companies working on techniques to modify epigenomic tags for medical applications."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-26",
+        "event_summary": "Sabastian Sawe finishes the London Marathon in under two hours.",
+        "location": "London",
+        "importance_score": 9
+      }
+    ],
+    "themes": [
+      {
+        "name": "Epigenomics",
+        "description": "The study of the epigenome and its impact on gene expression and health."
+      },
+      {
+        "name": "Cultural Misconceptions",
+        "description": "The tendency to attribute human abilities and traits to genetic determinism."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Epigenomic Medicine",
+        "thesis": "Advancements in epigenomic medicine could reshape our understanding of genetics and health.",
+        "status": "emerging",
+        "importance_score": 7
+      },
+      {
+        "name": "Cultural Views on Genetics",
+        "thesis": "Cultural narratives often oversimplify the role of genetics in human abilities.",
+        "status": "strengthening",
+        "importance_score": 6
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "epigenome",
+        "relationship": "AFFECTS",
+        "target_node": "gene expression",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "biotech companies",
+        "relationship": "SUPPORTS",
+        "target_node": "epigenomic medicine",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Sabastian Sawe",
+        "relationship": "RELATED_TO",
+        "target_node": "London Marathon",
+        "confidence": 0.95
+      }
+    ]
+  }
+}

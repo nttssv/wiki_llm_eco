@@ -5,9 +5,10 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-week="$(date +%F)"
 extractor="llm"
 mode="docker"
+neo4j_write="true"
+neo4j_embed_assets="false"
 python_bin="python"
 
 if [[ -x "$SCRIPT_DIR/.venv/bin/python" ]]; then
@@ -16,16 +17,25 @@ elif command -v python3 >/dev/null 2>&1; then
   python_bin="python3"
 fi
 
+week="$("$python_bin" - <<'PY'
+from datetime import date
+
+from src.date_utils import week_end_for_date
+
+print(week_end_for_date(date.today()).isoformat())
+PY
+)"
+
 usage() {
   cat <<'EOF'
 Usage:
-  ./run_pipeline.sh [--week YYYY-MM-DD] [--extractor mock|llm] [--mode local|docker]
+  ./run_pipeline.sh [--week YYYY-MM-DD] [--extractor mock|llm] [--mode local|docker] [--neo4j-write|--no-neo4j-write] [--neo4j-embed-assets]
 
 Examples:
   ./run_pipeline.sh
   ./run_pipeline.sh --week 2026-04-26
-  ./run_pipeline.sh --week 2026-04-26
   ./run_pipeline.sh --week 2026-04-26 --extractor llm --mode local
+  ./run_pipeline.sh --no-neo4j-write
 EOF
 }
 
@@ -42,6 +52,20 @@ while [[ $# -gt 0 ]]; do
     --mode)
       mode="${2:-}"
       shift 2
+      ;;
+    --neo4j-write)
+      neo4j_write="true"
+      shift
+      ;;
+    --no-neo4j-write)
+      neo4j_write="false"
+      neo4j_embed_assets="false"
+      shift
+      ;;
+    --neo4j-embed-assets)
+      neo4j_write="true"
+      neo4j_embed_assets="true"
+      shift
       ;;
     -h|--help)
       usage
@@ -66,9 +90,27 @@ if [[ "$extractor" != "mock" && "$extractor" != "llm" ]]; then
 fi
 
 if [[ "$mode" == "local" ]]; then
-  "$python_bin" -m src.process_new_docs --week "$week" --extractor "$extractor"
+  command=("$python_bin" -m src.process_new_docs --week "$week" --extractor "$extractor")
+  if [[ "$neo4j_write" == "true" ]]; then
+    command+=(--neo4j-write)
+  else
+    command+=(--no-neo4j-write)
+  fi
+  if [[ "$neo4j_embed_assets" == "true" ]]; then
+    command+=(--neo4j-embed-assets)
+  fi
+  "${command[@]}"
 elif [[ "$mode" == "docker" ]]; then
-  docker compose run --rm narrative_agent python -m src.process_new_docs --week "$week" --extractor "$extractor"
+  command=(docker compose run --rm narrative_agent python -m src.process_new_docs --week "$week" --extractor "$extractor")
+  if [[ "$neo4j_write" == "true" ]]; then
+    command+=(--neo4j-write)
+  else
+    command+=(--no-neo4j-write)
+  fi
+  if [[ "$neo4j_embed_assets" == "true" ]]; then
+    command+=(--neo4j-embed-assets)
+  fi
+  "${command[@]}"
 else
   echo "Mode must be 'local' or 'docker'." >&2
   exit 1

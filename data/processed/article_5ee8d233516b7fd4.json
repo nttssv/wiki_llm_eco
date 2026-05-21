@@ -1,0 +1,140 @@
+{
+  "article_id": "article_5ee8d233516b7fd4",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Finance_American_corp_profit_26Apr2026.docx",
+  "chart_references": [
+    "IN MARKETS, NARRATIVES can matter as much as hard data. Investors make decisions based on the stories they tell one another. Over the past seven weeks the tales being swapped have been of war in Iran, its effect on global energy markets and presidential social-media activity. The S&P 500, America’s benchmark index of stocks, has moved up and down with Donald Trump’s estimates of the odds of an end to the conflict. It surged to an all-time high on April 17th as America and Iran agreed to let traffic resume in the Strait of Hormuz (see chart 1). It dipped on April 20th after the deal collapsed.",
+    "Chart: The Economist",
+    "Such bullishness about profit growth is rare and usually reserved for recoveries after deep recessions, from which America has been mercifully spared since the covid-19 pandemic in 2020. In the past two decades analysts have been more optimistic only twice, during the economic rebound from that virus-induced downturn and during an earlier one after the global financial heart attack of 2007-09. Earnings growth over the next year is now expected to beat even the profit bonanza that followed the Tax Cuts and Jobs Act passed in late 2017, a law that included the landmark corporate-tax cut of the first Trump administration (see chart 2).",
+    "Chart: The Economist",
+    "If you exclude big tech, American profit growth looks a bit less impressive. But it is still enviable. FactSet expects earnings at the 493 companies in the S&P 500 that are not the “magnificent seven” technology stocks (Alphabet, Amazon, Apple, Meta, Microsoft, Nvidia and Tesla) to increase by 16% in 2026. Exclude all information-technology firms and index-wide profits may rise by 17%. That is, roughly, as much as Japan’s TOPIX is expected to generate including its tech stars, twice the figure for Europe’s STOXX 600 and five times that for Hong Kong’s Hang Seng index."
+  ],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Finance & economics",
+    "title": "War? What war?",
+    "subtitle": "American corporate profits keep shrugging off global tumult Earnings expectations are through the roof",
+    "published_date": "20 Apr 2026",
+    "category": "Finance & economics",
+    "summary": "Despite global tensions, American corporate profits are soaring, with S&P 500 earnings expected to rise significantly. The AI boom is a major contributor, with tech companies leading the growth. However, potential geopolitical and economic challenges loom.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "S&P 500",
+        "type": "Index",
+        "role": "Benchmark",
+        "description": "A stock market index that measures the stock performance of 500 large companies listed on stock exchanges in the United States."
+      },
+      {
+        "name": "Donald Trump",
+        "type": "Person",
+        "role": "Former President",
+        "description": "The 45th President of the United States, known for his controversial policies including a trade war."
+      },
+      {
+        "name": "Nvidia",
+        "type": "Company",
+        "role": "Tech Leader",
+        "description": "A leading technology company known for its graphics processing units and contributions to AI."
+      },
+      {
+        "name": "Broadcom",
+        "type": "Company",
+        "role": "Tech Competitor",
+        "description": "A global technology company that designs, develops, and supplies a broad range of semiconductor and infrastructure software solutions."
+      },
+      {
+        "name": "Micron",
+        "type": "Company",
+        "role": "Memory Chip Manufacturer",
+        "description": "A company that produces memory and storage solutions, crucial for AI applications."
+      },
+      {
+        "name": "Eli Lilly",
+        "type": "Company",
+        "role": "Pharmaceutical Company",
+        "description": "A global healthcare leader that develops and manufactures innovative medicines."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-17",
+        "event_summary": "S&P 500 surged to an all-time high as America and Iran agreed to resume traffic in the Strait of Hormuz.",
+        "location": "Strait of Hormuz",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2026-04-20",
+        "event_summary": "S&P 500 dipped after the agreement between America and Iran collapsed.",
+        "location": "Strait of Hormuz",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2026-04-30",
+        "event_summary": "Eli Lilly expected to report blowout results, contributing significantly to S&P 500 earnings.",
+        "location": "United States",
+        "importance_score": 5
+      }
+    ],
+    "themes": [
+      {
+        "name": "Corporate Profit Growth",
+        "description": "The significant increase in earnings for American corporations despite geopolitical tensions."
+      },
+      {
+        "name": "Impact of AI",
+        "description": "The role of artificial intelligence in driving corporate earnings and market optimism."
+      },
+      {
+        "name": "Geopolitical Risks",
+        "description": "Potential threats to economic stability stemming from ongoing conflicts and trade policies."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "American Resilience",
+        "thesis": "American corporations are thriving despite external pressures, showcasing resilience and innovation.",
+        "status": "strengthening",
+        "importance_score": 9
+      },
+      {
+        "name": "AI as a Growth Driver",
+        "thesis": "The AI boom is a key factor in the robust earnings growth of American companies.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Geopolitical Uncertainty",
+        "thesis": "Ongoing geopolitical tensions could pose risks to future economic growth and corporate profits.",
+        "status": "stable",
+        "importance_score": 6
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "S&P 500",
+        "relationship": "AFFECTS",
+        "target_node": "American Corporate Profits",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Donald Trump",
+        "relationship": "CHALLENGES",
+        "target_node": "American Economic Stability",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Nvidia",
+        "relationship": "SUPPORTS",
+        "target_node": "AI Growth",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Eli Lilly",
+        "relationship": "AFFECTS",
+        "target_node": "S&P 500 Earnings",
+        "confidence": 0.75
+      }
+    ]
+  }
+}

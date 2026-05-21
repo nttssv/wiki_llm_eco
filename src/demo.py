@@ -44,8 +44,8 @@ def main() -> None:
     )
     print("✅ Extraction complete")
 
-    print("🔍 Validating database...")
-    validation_result = _run([sys.executable, "-m", "src.validate_database"], check=False)
+    print("🔍 Validating processed registry...")
+    validation_result = _run([sys.executable, "-m", "src.validate_processed_registry"], check=False)
     if validation_result.returncode == 0:
         print("✅ Validation passed")
     else:

@@ -1,0 +1,176 @@
+{
+  "article_id": "article_4bf466efd0722293",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Business_millenial_brands_26Apr2026.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Business",
+    "title": "Mid-life crisis",
+    "subtitle": "From Allbirds to Glossier, millennial brands have lost their mojo They have been squeezed by competitors old and new",
+    "published_date": "21 Apr 2026",
+    "category": "Business",
+    "summary": "Millennial brands like Allbirds and Glossier are struggling as competition increases and customer acquisition costs rise. Allbirds plans to pivot to AI infrastructure after losing 99% of its market value since its peak. Other brands face similar challenges, with many unable to sustain their initial growth.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Allbirds",
+        "type": "Company",
+        "role": "Former sneaker brand",
+        "description": "A wool-sneaker brand that is transitioning to AI computing infrastructure."
+      },
+      {
+        "name": "Glossier",
+        "type": "Company",
+        "role": "Beauty brand",
+        "description": "A beauty label that has struggled to maintain its market position."
+      },
+      {
+        "name": "Warby Parker",
+        "type": "Company",
+        "role": "Eyewear retailer",
+        "description": "A spectacle merchant that gained popularity through online sales."
+      },
+      {
+        "name": "Dollar Shave Club",
+        "type": "Company",
+        "role": "Razors seller",
+        "description": "A brand that was acquired by Unilever and later sold a majority stake at a lower valuation."
+      },
+      {
+        "name": "Casper",
+        "type": "Company",
+        "role": "Mattress brand",
+        "description": "A mattress company that went public and later was taken private after significant value loss."
+      },
+      {
+        "name": "Rhode",
+        "type": "Company",
+        "role": "Lip-gloss brand",
+        "description": "A brand founded by Hailey Bieber that was sold to e.l.f. Beauty for up to $1bn."
+      },
+      {
+        "name": "e.l.f. Beauty",
+        "type": "Company",
+        "role": "Cosmetics business",
+        "description": "The company that acquired Rhode for a significant valuation."
+      },
+      {
+        "name": "Unilever",
+        "type": "Company",
+        "role": "Consumer-products conglomerate",
+        "description": "The company that bought Dollar Shave Club and later sold a majority stake."
+      },
+      {
+        "name": "Daniel Corsten",
+        "type": "Person",
+        "role": "Business analyst",
+        "description": "An analyst from IE Business School who commented on the challenges faced by millennial brands."
+      },
+      {
+        "name": "Camille Moore",
+        "type": "Person",
+        "role": "Branding consultant",
+        "description": "A consultant who noted the increased competition faced by millennial brands."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2021-11",
+        "event_summary": "Allbirds lost 99% of its market value since its peak.",
+        "location": "",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2020-02",
+        "event_summary": "Casper went public.",
+        "location": "",
+        "importance_score": 6
+      },
+      {
+        "event_date": "2021-11",
+        "event_summary": "Casper was taken private after losing around 70% of its value.",
+        "location": "",
+        "importance_score": 7
+      },
+      {
+        "event_date": "2023",
+        "event_summary": "Unilever sold a majority stake of Dollar Shave Club to a private-equity firm.",
+        "location": "",
+        "importance_score": 5
+      },
+      {
+        "event_date": "2022",
+        "event_summary": "Rhode was founded by Hailey Bieber.",
+        "location": "",
+        "importance_score": 4
+      },
+      {
+        "event_date": "2023",
+        "event_summary": "Glossier attempted to sell itself but could not find a buyer.",
+        "location": "",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "Millennial Brands",
+        "description": "The rise and fall of brands that initially thrived on millennial consumer enthusiasm."
+      },
+      {
+        "name": "AI Transition",
+        "description": "The shift of companies like Allbirds towards AI as a new business model."
+      },
+      {
+        "name": "Market Competition",
+        "description": "The increasing competition from both established brands and new entrants."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Decline of Millennial Brands",
+        "thesis": "Millennial brands are struggling to maintain their market positions due to rising competition and changing consumer acquisition costs.",
+        "status": "strengthening",
+        "importance_score": 8
+      },
+      {
+        "name": "Shift to AI",
+        "thesis": "Brands like Allbirds are pivoting to AI to survive in a challenging market.",
+        "status": "emerging",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Allbirds",
+        "relationship": "CHALLENGES",
+        "target_node": "Glossier",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Allbirds",
+        "relationship": "EXPANDS_TO",
+        "target_node": "AI computing infrastructure",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Glossier",
+        "relationship": "CHALLENGES",
+        "target_node": "Warby Parker",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "Dollar Shave Club",
+        "relationship": "SUCCESSOR",
+        "target_node": "Unilever",
+        "confidence": 0.6
+      },
+      {
+        "source_node": "Rhode",
+        "relationship": "SUPPORTS",
+        "target_node": "e.l.f. Beauty",
+        "confidence": 0.8
+      }
+    ]
+  }
+}

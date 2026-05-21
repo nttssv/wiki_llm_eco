@@ -1,0 +1,118 @@
+{
+  "article_id": "article_14d6a3c7e326798b",
+  "original_file_path": "/Users/nttssv/Documents/4.LLM_Wiki_eco/narrative_agent/data/raw_articles/Business_State_capitalism_26Apr2026.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Unknown",
+    "section": "Business",
+    "title": "Schumpeter",
+    "subtitle": "America’s descent into state capitalism is exaggerated Particularly by the state",
+    "published_date": "22 Apr 2026",
+    "category": "Business",
+    "summary": "The article critiques the notion that America is transitioning into state capitalism under President Trump, arguing that the government's attempts to control the economy are largely ineffective. It highlights the limitations of Trump's interventions in business and contrasts them with more robust state capitalism seen in other countries.",
+    "importance_score": 7,
+    "entities": [
+      {
+        "name": "Donald Trump",
+        "type": "Person",
+        "role": "President",
+        "description": "The President of the United States known for his interventionist economic policies."
+      },
+      {
+        "name": "Anthropic",
+        "type": "Company",
+        "role": "AI Lab",
+        "description": "An AI lab that faced government pressure regarding access to its models."
+      },
+      {
+        "name": "Nvidia",
+        "type": "Company",
+        "role": "Chipmaker",
+        "description": "A technology company involved in selling chips to China."
+      },
+      {
+        "name": "ByteDance",
+        "type": "Company",
+        "role": "Parent Company of TikTok",
+        "description": "The Chinese company that owns TikTok, involved in a sale to American investors."
+      },
+      {
+        "name": "Intel",
+        "type": "Company",
+        "role": "Chipmaker",
+        "description": "A major semiconductor manufacturer with government investment."
+      },
+      {
+        "name": "USA Rare Earth",
+        "type": "Company",
+        "role": "Rare Earths Producer",
+        "description": "A company involved in the production of rare earth materials."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-01-01",
+        "event_summary": "Trump proposed capping credit card interest rates at 10%.",
+        "location": "United States",
+        "importance_score": 5
+      },
+      {
+        "event_date": "2026-04-01",
+        "event_summary": "Trump suggested state intervention to rescue bankrupt airline Spirit.",
+        "location": "United States",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "State Capitalism",
+        "description": "The concept of government intervention in the economy, particularly in the context of the U.S. under Trump."
+      },
+      {
+        "name": "Economic Nationalism",
+        "description": "The trend of prioritizing national interests in economic policies, contrasting U.S. and European approaches."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Ineffectiveness of State Control",
+        "thesis": "Despite claims of state capitalism, Trump's administration has struggled to exert real control over the economy.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Dynamic Capitalism",
+        "thesis": "American capitalism is being reshaped by individual actions rather than bureaucratic directives.",
+        "status": "strengthening",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Donald Trump",
+        "relationship": "CHALLENGES",
+        "target_node": "Anthropic",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Donald Trump",
+        "relationship": "SUPPORTS",
+        "target_node": "Intel",
+        "confidence": 0.7
+      },
+      {
+        "source_node": "Nvidia",
+        "relationship": "EXPANDS_TO",
+        "target_node": "China",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "ByteDance",
+        "relationship": "RELATED_TO",
+        "target_node": "TikTok",
+        "confidence": 0.85
+      }
+    ]
+  }
+}

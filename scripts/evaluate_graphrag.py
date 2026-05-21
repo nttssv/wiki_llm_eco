@@ -32,12 +32,12 @@ def _relationship_key(fact: Any) -> tuple[str, str, str]:
     return (fact.source_node, fact.relationship, fact.target_node)
 
 
-def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
+def evaluate_case(case: dict[str, Any], backend: str | None = None) -> dict[str, Any]:
     result = answer_question(
         case["question"],
         week=case.get("week"),
         use_llm=False,
-        backend=case.get("backend", "sqlite"),
+        backend=backend or case.get("backend", "neo4j"),
     )
     relationships = {_relationship_key(fact) for fact in result.facts if fact.kind == "edge"}
     article_ids = {citation.article_id for citation in result.citations}
@@ -103,16 +103,13 @@ def main() -> None:
     )
     parser.add_argument(
         "--backend",
-        choices=["sqlite", "neo4j", "auto"],
-        help="Override backend for all eval cases.",
+        choices=["neo4j", "auto"],
+        help="Override backend for all eval cases. Defaults to each case backend, or Neo4j.",
     )
     args = parser.parse_args()
 
     cases = json.loads(Path(args.cases).read_text(encoding="utf-8"))
-    if args.backend:
-        for case in cases:
-            case["backend"] = args.backend
-    results = [evaluate_case(case) for case in cases]
+    results = [evaluate_case(case, backend=args.backend) for case in cases]
     print(json.dumps(results, indent=2, ensure_ascii=False))
 
     if not all(result["passed"] for result in results):

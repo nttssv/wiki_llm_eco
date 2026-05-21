@@ -1,0 +1,25 @@
+{
+  "article_id": "article_872407296c522a9f",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Business_Global_carmakers_desperately_want_to_be_more_Chinese_9May2026_Economist.docx",
+  "chart_references": [
+    "Yet the show also illustrated the extent to which foreign carmakers are looking to remake themselves in the image of their ascendant Chinese competitors. At events to launch new models Western executives from Volkswagen (VW) and Mercedes switched effortlessly between English and Mandarin. VW opted to round off its show with a display of interpretive Chinese dance set to electronic music; Mercedes went for a Chinese rap.",
+    "Chart: The Economist",
+    "Slowing the pace of China’s blistering rise is vital. The market share of foreign firms in China has almost halved in five years, to around 30% in 2025. Moreover, in 2023 China passed Japan to become the world’s largest exporter of cars (see chart). In 2025 over 8m of its vehicles went abroad, nearly a third more than the year before. In Europe over the past five years, Chinese brands have gone from almost nowhere to nearly 9% of all sales, estimates Schmidt Automotive Research, a consultancy. Incumbents are also under siege in markets from Mexico and Brazil to Indonesia and Malaysia."
+  ],
+  "extractor": "mock",
+  "extraction": {
+    "source": "Economist",
+    "section": "Business",
+    "title": "Red lights",
+    "subtitle": "Global carmakers desperately want to be more Chinese But partnering with local companies carries big risks",
+    "published_date": "03 May 2026",
+    "category": "Business",
+    "summary": "No mock extraction pattern matched this article. Replace mock extraction with an LLM-backed extractor.",
+    "importance_score": 3,
+    "entities": [],
+    "events": [],
+    "themes": [],
+    "narratives": [],
+    "graph_edges": []
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "article_id": "article_3ef6c19246f7cf33",
+  "original_file_path": "/app/data/raw_articles/Leaders_KevinWarsh_3May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Leaders",
+    "title": "Warsh and peace",
+    "subtitle": "How Kevin Warsh could save the Federal Reserve There is much to like about the next Fed chairman—if his backbone holds",
+    "published_date": "29 Apr 2026",
+    "category": "Leaders",
+    "summary": "Kevin Warsh is poised to become the next chairman of the Federal Reserve following the withdrawal of a criminal investigation into Jerome Powell. His ability to maintain the Fed's independence amidst political pressure from President Trump will be crucial, especially in light of rising inflation and oil prices. Warsh's proposed reforms include reducing the Fed's balance sheet and focusing on a broader range of data.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Kevin Warsh",
+        "type": "Person",
+        "role": "Nominee for Fed Chairman",
+        "description": "Formerly an inflation hawk, now nominated to lead the Federal Reserve."
+      },
+      {
+        "name": "Jerome Powell",
+        "type": "Person",
+        "role": "Current Fed Chairman",
+        "description": "The current chairman of the Federal Reserve, under investigation prior to Warsh's nomination."
+      },
+      {
+        "name": "Donald Trump",
+        "type": "Person",
+        "role": "Former President",
+        "description": "Political figure exerting pressure on the Fed for lower interest rates."
+      },
+      {
+        "name": "Lisa Cook",
+        "type": "Person",
+        "role": "Fed Governor",
+        "description": "Fed governor whose position may be threatened by political maneuvers."
+      },
+      {
+        "name": "Federal Reserve",
+        "type": "Organization",
+        "role": "Central Bank",
+        "description": "The central banking system of the United States."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-24",
+        "event_summary": "Department of Justice drops investigation into Jerome Powell.",
+        "location": "Washington, D.C.",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2026-04-29",
+        "event_summary": "Jerome Powell holds press conference, likely his last as Fed Chairman.",
+        "location": "Washington, D.C.",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2026-04-21",
+        "event_summary": "Kevin Warsh's confirmation hearing takes place.",
+        "location": "Washington, D.C.",
+        "importance_score": 7
+      }
+    ],
+    "themes": [
+      {
+        "name": "Central Bank Independence",
+        "description": "The importance of the Federal Reserve's autonomy from political influence."
+      },
+      {
+        "name": "Monetary Policy",
+        "description": "The strategies employed by the Federal Reserve to manage the economy."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Warsh's Leadership Potential",
+        "thesis": "Kevin Warsh's ability to navigate political pressures will define his legacy at the Fed.",
+        "status": "emerging",
+        "importance_score": 8
+      },
+      {
+        "name": "Inflation Management",
+        "thesis": "The Fed's response to rising inflation will be critical under Warsh's leadership.",
+        "status": "emerging",
+        "importance_score": 9
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Kevin Warsh",
+        "relationship": "SUCCESSOR",
+        "target_node": "Jerome Powell",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Donald Trump",
+        "relationship": "PRESSURE_ON",
+        "target_node": "Federal Reserve",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Kevin Warsh",
+        "relationship": "SUPPORTS",
+        "target_node": "Central Bank Independence",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Lisa Cook",
+        "relationship": "DEPENDS_ON",
+        "target_node": "Federal Reserve",
+        "confidence": 0.75
+      }
+    ]
+  }
+}

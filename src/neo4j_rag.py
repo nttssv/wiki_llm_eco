@@ -85,23 +85,25 @@ class Neo4jGraphRAGService(GraphRAGService):
             MATCH (article:Article)
             OPTIONAL MATCH (article)-[:MENTIONS]->(entity:Entity)
             WITH article, collect(toLower(entity.name)) AS entity_names
+            WITH article, entity_names,
+                 [
+                   term IN $terms WHERE
+                   toLower(article.title) CONTAINS term OR toLower(article.summary) CONTAINS term
+                   OR any(entity_name IN entity_names WHERE entity_name CONTAINS term)
+                 ] AS term_matches,
+                 [
+                   term IN $anchors WHERE
+                   toLower(article.title) CONTAINS term OR toLower(article.summary) CONTAINS term
+                   OR any(entity_name IN entity_names WHERE entity_name CONTAINS term)
+                 ] AS anchor_matches
             WHERE ($week IS NULL OR article.week = $week)
-              AND (
-                size($anchors) = 0 OR any(term IN $anchors WHERE
-                  toLower(article.title) CONTAINS term OR toLower(article.summary) CONTAINS term
-                  OR any(entity_name IN entity_names WHERE entity_name CONTAINS term)
-                )
-              )
-              AND (
-                size($anchors) > 0 OR size($terms) = 0 OR any(term IN $terms WHERE
-                  toLower(article.title) CONTAINS term OR toLower(article.summary) CONTAINS term
-                  OR any(entity_name IN entity_names WHERE entity_name CONTAINS term)
-                )
-              )
+              AND (size($anchors) = 0 OR size(anchor_matches) > 0)
+              AND (size($anchors) > 0 OR size($terms) = 0 OR size(term_matches) > 0)
             RETURN article.id AS article_id, article.title AS title, article.source AS source,
                    article.published_date AS published_date, article.summary AS summary,
-                   article.importance_score AS importance_score
-            ORDER BY article.published_date DESC, article.importance_score DESC
+                   article.importance_score AS importance_score,
+                   size(term_matches) + size(anchor_matches) AS match_score
+            ORDER BY match_score DESC, article.published_date DESC, article.importance_score DESC
             LIMIT 8
             """,
             terms=_fold_terms(terms),
@@ -134,24 +136,26 @@ class Neo4jGraphRAGService(GraphRAGService):
             """
             MATCH (source:Entity)-[rel:RELATES_TO]->(target:Entity)
             MATCH (article:Article {id: rel.evidence_article_id})
+            WITH source, rel, target, article,
+                 toLower(
+                   coalesce(source.name, '') + ' ' + coalesce(rel.relationship, '') + ' ' +
+                   coalesce(target.name, '') + ' ' + coalesce(article.title, '') + ' ' +
+                   coalesce(article.summary, '')
+                 ) AS haystack,
+                 toLower(coalesce(source.name, '') + ' ' + coalesce(target.name, '')) AS endpoint_haystack
+            WITH source, rel, target, article,
+                 [term IN $terms WHERE haystack CONTAINS term] AS term_matches,
+                 [term IN $anchors WHERE endpoint_haystack CONTAINS term] AS anchor_matches
             WHERE ($week IS NULL OR article.week = $week)
               AND (size($relationships) = 0 OR rel.relationship IN $relationships)
-              AND (
-                size($anchors) = 0 OR any(term IN $anchors WHERE
-                  toLower(source.name) CONTAINS term OR toLower(target.name) CONTAINS term
-                )
-              )
-              AND (
-                size($anchors) > 0 OR size($terms) = 0 OR any(term IN $terms WHERE
-                  toLower(source.name) CONTAINS term OR toLower(target.name) CONTAINS term
-                  OR toLower(article.title) CONTAINS term
-                )
-              )
+              AND (size($anchors) = 0 OR size(anchor_matches) > 0)
+              AND (size($anchors) > 0 OR size($terms) = 0 OR size(term_matches) > 0)
             RETURN source.name AS source_node, rel.relationship AS relationship,
                    target.name AS target_node, rel.confidence AS confidence,
                    article.id AS article_id, article.title AS title, article.source AS source,
-                   article.published_date AS published_date, article.summary AS summary
-            ORDER BY article.published_date DESC, rel.confidence DESC
+                   article.published_date AS published_date, article.summary AS summary,
+                   size(term_matches) + size(anchor_matches) AS match_score
+            ORDER BY match_score DESC, article.published_date DESC, rel.confidence DESC
             LIMIT 24
             """,
             terms=_fold_terms(terms),
@@ -186,21 +190,19 @@ class Neo4jGraphRAGService(GraphRAGService):
         rows = session.run(
             """
             MATCH (article:Article)-[:HAS_EVENT]->(ev:Event)
+            WITH article, ev,
+                 toLower(coalesce(ev.event_summary, '') + ' ' + coalesce(article.title, '')) AS haystack
+            WITH article, ev,
+                 [term IN $terms WHERE haystack CONTAINS term] AS term_matches,
+                 [term IN $anchors WHERE haystack CONTAINS term] AS anchor_matches
             WHERE ($week IS NULL OR article.week = $week)
-              AND (
-                size($anchors) = 0 OR any(term IN $anchors WHERE
-                  toLower(ev.event_summary) CONTAINS term OR toLower(article.title) CONTAINS term
-                )
-              )
-              AND (
-                size($anchors) > 0 OR size($terms) = 0 OR any(term IN $terms WHERE
-                  toLower(ev.event_summary) CONTAINS term OR toLower(article.title) CONTAINS term
-                )
-              )
+              AND (size($anchors) = 0 OR size(anchor_matches) > 0)
+              AND (size($anchors) > 0 OR size($terms) = 0 OR size(term_matches) > 0)
             RETURN article.id AS article_id, article.title AS title, article.source AS source,
                    article.published_date AS published_date, ev.event_date AS event_date,
-                   ev.event_summary AS event_summary
-            ORDER BY article.published_date DESC, ev.importance_score DESC
+                   ev.event_summary AS event_summary,
+                   size(term_matches) + size(anchor_matches) AS match_score
+            ORDER BY match_score DESC, article.published_date DESC, ev.importance_score DESC
             LIMIT 16
             """,
             terms=_fold_terms(terms),
@@ -230,23 +232,19 @@ class Neo4jGraphRAGService(GraphRAGService):
         rows = session.run(
             """
             MATCH (article:Article)-[:HAS_NARRATIVE]->(n:Narrative)
+            WITH article, n,
+                 toLower(coalesce(n.name, '') + ' ' + coalesce(n.thesis, '') + ' ' + coalesce(article.title, '')) AS haystack
+            WITH article, n,
+                 [term IN $terms WHERE haystack CONTAINS term] AS term_matches,
+                 [term IN $anchors WHERE haystack CONTAINS term] AS anchor_matches
             WHERE ($week IS NULL OR article.week = $week)
-              AND (
-                size($anchors) = 0 OR any(term IN $anchors WHERE
-                  toLower(n.name) CONTAINS term OR toLower(n.thesis) CONTAINS term
-                  OR toLower(article.title) CONTAINS term
-                )
-              )
-              AND (
-                size($anchors) > 0 OR size($terms) = 0 OR any(term IN $terms WHERE
-                  toLower(n.name) CONTAINS term OR toLower(n.thesis) CONTAINS term
-                  OR toLower(article.title) CONTAINS term
-                )
-              )
+              AND (size($anchors) = 0 OR size(anchor_matches) > 0)
+              AND (size($anchors) > 0 OR size($terms) = 0 OR size(term_matches) > 0)
             RETURN article.id AS article_id, article.title AS title, article.source AS source,
                    article.published_date AS published_date, n.name AS name, n.status AS status,
-                   n.thesis AS thesis
-            ORDER BY article.published_date DESC, n.importance_score DESC
+                   n.thesis AS thesis,
+                   size(term_matches) + size(anchor_matches) AS match_score
+            ORDER BY match_score DESC, article.published_date DESC, n.importance_score DESC
             LIMIT 16
             """,
             terms=_fold_terms(terms),
@@ -319,19 +317,19 @@ class Neo4jGraphRAGService(GraphRAGService):
         anchors: list[str],
         week: str | None,
     ) -> list[GraphFact]:
-        match_terms = anchors or terms
+        match_terms = _unique([*anchors, *terms])
         if not match_terms:
             return []
         rows = session.run(
             """
             MATCH (article:Article)-[:HAS_CHUNK]->(chunk:Chunk)
-            WHERE ($week IS NULL OR article.week = $week)
-              AND any(term IN $terms WHERE
-                toLower(chunk.text) CONTAINS term OR toLower(article.title) CONTAINS term
-              )
+            WITH article, chunk,
+                 toLower(coalesce(chunk.text, '') + ' ' + coalesce(article.title, '')) AS haystack
+            WITH article, chunk, [term IN $terms WHERE haystack CONTAINS term] AS matches
+            WHERE ($week IS NULL OR article.week = $week) AND size(matches) > 0
             RETURN article.id AS article_id, article.title AS title, article.source AS source,
-                   article.published_date AS published_date, chunk.text AS text, 1.0 AS score
-            ORDER BY article.published_date DESC, chunk.chunk_index ASC
+                   article.published_date AS published_date, chunk.text AS text, toFloat(size(matches)) AS score
+            ORDER BY size(matches) DESC, article.published_date DESC, chunk.chunk_index ASC
             LIMIT 12
             """,
             terms=_fold_terms(match_terms),

@@ -1,0 +1,130 @@
+{
+  "article_id": "article_f48b06fde517baf6",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Finance_Economics_Can_Bill_Ackman_save_the_closed_end_fund_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Finance & economics",
+    "title": "Buttonwood",
+    "subtitle": "Can Bill Ackman save the closed-end fund? An outspoken financier wants to build a modern-day Berkshire Hathaway",
+    "published_date": "05 May 2026",
+    "category": "Finance & economics",
+    "summary": "Bill Ackman raised $5 bn to launch Pershing Square USA, the largest US‑listed closed‑end fund, hoping to overcome chronic NAV discounts that plague the asset class. By listing domestically and retaining a large manager stake, he seeks to attract stable capital and replicate the outperformance of his earlier Pershing Square Holdings, while recent activist activity (Saba Capital vs. Edinburgh Worldwide) underscores the risks of discount‑driven takeovers.",
+    "importance_score": 9,
+    "entities": [
+      {
+        "name": "Saba Capital",
+        "type": "Organization",
+        "role": "hedge fund",
+        "description": "Activist hedge fund that won a campaign against Edinburgh Worldwide Investment Trust."
+      },
+      {
+        "name": "Pershing Square USA",
+        "type": "Organization",
+        "role": "closed‑end fund",
+        "description": "Investment firm that raised $5bn for a new closed‑end fund listed in the US."
+      },
+      {
+        "name": "Pershing Square Holdings",
+        "type": "Organization",
+        "role": "closed‑end fund",
+        "description": "Existing closed‑end fund managed by Ackman and listed in London."
+      },
+      {
+        "name": "CEF Advisers",
+        "type": "Organization",
+        "role": "research firm",
+        "description": "Research firm that tracks closed‑end fund discount trends."
+      },
+      {
+        "name": "Bill Ackman",
+        "type": "Person",
+        "role": "fund manager",
+        "description": "Prominent activist investor and founder of Pershing Square funds."
+      },
+      {
+        "name": "Warren Buffett",
+        "type": "Person",
+        "role": "investor",
+        "description": "World‑renowned value investor and CEO of Berkshire Hathaway."
+      },
+      {
+        "name": "Benjamin Graham",
+        "type": "Person",
+        "role": "author",
+        "description": "Mentor of Buffett, author of value‑investing principles."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-29",
+        "event_summary": "Bill Ackman raised $5 billion to launch Pershing Square USA, the largest closed‑end fund ever listed in the US.",
+        "location": "United States",
+        "importance_score": 8
+      },
+      {
+        "event_date": "2026-04-30",
+        "event_summary": "Saba Capital won a hostile takeover campaign against Edinburgh Worldwide Investment Trust, highlighting NAV discount arbitrage.",
+        "location": "United Kingdom",
+        "importance_score": 6
+      }
+    ],
+    "themes": [
+      {
+        "name": "NAV discount dynamics",
+        "description": "Structural discounts in closed‑end funds and their impact on investor returns."
+      },
+      {
+        "name": "Fund structuring strategies",
+        "description": "Use of branding and domestic listings to mitigate liquidity and regulatory constraints."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Reviving the closed‑end fund model",
+        "thesis": "Bill Ackman's Pershing Square USA aims to eliminate persistent NAV discounts by leveraging a domestic listing, large manager stake, and strong branding, potentially restoring investor confidence in closed‑end funds.",
+        "status": "emerging",
+        "importance_score": 9
+      },
+      {
+        "name": "NAV discount as a market inefficiency",
+        "thesis": "Long‑standing discounts to NAV in closed‑end funds create arbitrage opportunities and attract activist takeovers, reflecting structural frictions rather than manager performance.",
+        "status": "stable",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Pershing Square USA",
+        "relationship": "LED_BY",
+        "target_node": "Bill Ackman",
+        "confidence": 0.95
+      },
+      {
+        "source_node": "Pershing Square USA",
+        "relationship": "SUCCESSOR",
+        "target_node": "Pershing Square Holdings",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Saba Capital",
+        "relationship": "CHALLENGES",
+        "target_node": "Edinburgh Worldwide Investment Trust",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Bill Ackman",
+        "relationship": "SUPPORTS",
+        "target_node": "Modern‑day Berkshire Hathaway concept",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "NAV discount",
+        "relationship": "RELATED_TO",
+        "target_node": "Closed‑end fund performance",
+        "confidence": 0.75
+      }
+    ]
+  }
+}

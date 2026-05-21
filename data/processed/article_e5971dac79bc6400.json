@@ -1,0 +1,112 @@
+{
+  "article_id": "article_e5971dac79bc6400",
+  "original_file_path": "/app/data/raw_articles/Science_Exercise_3May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Science & technology",
+    "title": "Well Informed",
+    "subtitle": "Is exercise as effective as treatments for depression and anxiety? Some big studies say yes. Many experts have reservations",
+    "published_date": "24 Apr 2026",
+    "category": "Science & technology",
+    "summary": "Recent studies suggest that exercise may be as effective as therapy or antidepressants in treating depression and anxiety, though experts caution about biases in the research. Aerobic activities are particularly beneficial, and the mechanisms behind these effects are still being explored.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Cochrane review",
+        "type": "Study",
+        "role": "Analysis",
+        "description": "A meta-analysis of health-care research assessing the effects of exercise on depression."
+      },
+      {
+        "name": "British Journal of Sports Medicine",
+        "type": "Publication",
+        "role": "Source",
+        "description": "Published a meta-meta-analysis on the effects of exercise on mental health."
+      },
+      {
+        "name": "Jonathan Roiser",
+        "type": "Person",
+        "role": "Expert",
+        "description": "Professor of neuroscience at University College London, critical of the comparisons made in exercise studies."
+      },
+      {
+        "name": "endocannabinoids",
+        "type": "Chemical",
+        "role": "Mechanism",
+        "description": "Chemicals produced by the body that may contribute to mood improvements from exercise."
+      },
+      {
+        "name": "dopamine",
+        "type": "Chemical",
+        "role": "Neurotransmitter",
+        "description": "Involved in motivation and reward, its transmission is increased by exercise."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-01-01",
+        "event_summary": "Cochrane review published, analyzing 69 RCTs on exercise and depression.",
+        "location": "Britain and Ireland",
+        "importance_score": 9
+      },
+      {
+        "event_date": "2026-02-01",
+        "event_summary": "Meta-meta-analysis published in the British Journal of Sports Medicine, involving over 1,000 trials.",
+        "location": "",
+        "importance_score": 8
+      }
+    ],
+    "themes": [
+      {
+        "name": "Mental Health",
+        "description": "Exploration of exercise as a treatment for depression and anxiety."
+      },
+      {
+        "name": "Exercise Science",
+        "description": "Study of the physiological and psychological effects of exercise."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Effectiveness of Exercise",
+        "thesis": "Exercise may be as effective as traditional treatments for mental health issues.",
+        "status": "emerging",
+        "importance_score": 7
+      },
+      {
+        "name": "Skepticism in Research",
+        "thesis": "Experts express concerns about biases in exercise studies compared to conventional treatments.",
+        "status": "strengthening",
+        "importance_score": 8
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Cochrane review",
+        "relationship": "RELATED_TO",
+        "target_node": "Mental Health",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "British Journal of Sports Medicine",
+        "relationship": "RELATED_TO",
+        "target_node": "Exercise Science",
+        "confidence": 0.85
+      },
+      {
+        "source_node": "Jonathan Roiser",
+        "relationship": "CHALLENGES",
+        "target_node": "Effectiveness of Exercise",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Exercise",
+        "relationship": "SUPPORTS",
+        "target_node": "Mental Health",
+        "confidence": 0.9
+      }
+    ]
+  }
+}

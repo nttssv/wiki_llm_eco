@@ -1,0 +1,88 @@
+{
+  "article_id": "article_0510544be17202ea",
+  "original_file_path": "/app/data/raw_articles/Finance_Kalshi_3May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "llm",
+  "extraction": {
+    "source": "Economist",
+    "section": "Finance & economics",
+    "title": "In odds we trust",
+    "subtitle": "How Kalshi can help the Federal Reserve Prediction markets may be a win for central banking",
+    "published_date": "30 Apr 2026",
+    "category": "Finance & economics",
+    "summary": "Kalshi's prediction markets are gaining attention from the Federal Reserve as a potential tool for real-time economic forecasting, outperforming traditional methods in accuracy for interest rate predictions and other economic indicators.",
+    "importance_score": 8,
+    "entities": [
+      {
+        "name": "Kalshi",
+        "type": "Company",
+        "role": "Prediction Market",
+        "description": "A peer-to-peer betting platform where users can wager on various outcomes, including economic indicators."
+      },
+      {
+        "name": "Federal Reserve",
+        "type": "Institution",
+        "role": "Central Bank",
+        "description": "The central banking system of the United States, responsible for monetary policy."
+      },
+      {
+        "name": "Kevin Warsh",
+        "type": "Person",
+        "role": "Incoming Chair",
+        "description": "The incoming chair of the Federal Reserve, known for advocating real-time economic indicators."
+      },
+      {
+        "name": "Anthony Diercks",
+        "type": "Person",
+        "role": "Researcher",
+        "description": "A researcher at the Federal Reserve who assessed the potential of Kalshi for economic forecasting."
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-30",
+        "event_summary": "Kalshi's prediction markets attract attention from the Federal Reserve for their accuracy in forecasting economic indicators.",
+        "location": "United States",
+        "importance_score": 9
+      }
+    ],
+    "themes": [
+      {
+        "name": "Prediction Markets",
+        "description": "Markets that allow users to bet on the outcome of future events, providing real-time data for economic forecasting."
+      },
+      {
+        "name": "Central Banking",
+        "description": "The management of a country's currency, money supply, and interest rates by its central bank."
+      }
+    ],
+    "narratives": [
+      {
+        "name": "Integration of Prediction Markets in Central Banking",
+        "thesis": "The Federal Reserve is considering the integration of prediction markets like Kalshi to enhance its economic forecasting capabilities.",
+        "status": "emerging",
+        "importance_score": 7
+      }
+    ],
+    "graph_edges": [
+      {
+        "source_node": "Federal Reserve",
+        "relationship": "SUPPORTS",
+        "target_node": "Kalshi",
+        "confidence": 0.8
+      },
+      {
+        "source_node": "Kevin Warsh",
+        "relationship": "LED_BY",
+        "target_node": "Federal Reserve",
+        "confidence": 0.9
+      },
+      {
+        "source_node": "Anthony Diercks",
+        "relationship": "RELATED_TO",
+        "target_node": "Kalshi",
+        "confidence": 0.7
+      }
+    ]
+  }
+}

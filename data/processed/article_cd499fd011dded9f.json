@@ -1,0 +1,21 @@
+{
+  "article_id": "article_cd499fd011dded9f",
+  "original_file_path": "/app/data/raw_articles/_review_9May2026_Economist_docx/Finance_Economics_DeepSeek_and_Alibaba_rescue_Chinas_office_landlords_9May2026_Economist.docx",
+  "chart_references": [],
+  "extractor": "mock",
+  "extraction": {
+    "source": "Economist",
+    "section": "Finance & economics",
+    "title": "The rent is too damn AI",
+    "subtitle": "DeepSeek and Alibaba rescue China's office landlords Technology firms are reviving (a few) Chinese commercial-property markets",
+    "published_date": "07 May 2026",
+    "category": "Finance & economics",
+    "summary": "No mock extraction pattern matched this article. Replace mock extraction with an LLM-backed extractor.",
+    "importance_score": 3,
+    "entities": [],
+    "events": [],
+    "themes": [],
+    "narratives": [],
+    "graph_edges": []
+  }
+}

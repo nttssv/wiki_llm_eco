@@ -3,5 +3,12 @@
 .venv/
 __pycache__/
 .DS_Store
+**/._*
+.playwright-mcp/
 data/raw_articles/*.docx
 data/raw_articles/~$*.docx
+data/backups/
+data/neo4j/
+data/reports/
+logs/neo4j/
+output/

@@ -15,5 +15,19 @@
     ],
     "expected_no_explicit_valuation": true,
     "expected_answer_phrases": ["Sâu chuỗi sự kiện", "Luận điểm từ graph"]
+  },
+  {
+    "id": "openai_chatbot_advertising",
+    "question": "OpenAI có thử advertising sử dụng chatbot?",
+    "expected_article_ids": [
+      "article_623bea2b0d0831b6"
+    ],
+    "expected_relationships": [
+      ["OpenAI", "EXPANDS_TO", "Advertising"]
+    ],
+    "expected_answer_phrases": [
+      "OpenAI and Google are testing ads in their chatbots",
+      "The salesman in the machine"
+    ]
   }
 ]
